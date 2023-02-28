@@ -1,5 +1,5 @@
-import { Fragment } from "react"; 
-import { useLocation } from "react-router-dom"; 
+import { Fragment, useEffect } from "react"; 
+import { useLocation, useNavigate } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
@@ -7,6 +7,17 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
 const MyAccount = () => {
   let { pathname } = useLocation();
+
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login-register');
+    }
+  }, [navigate]);
+
 
   return (
     <Fragment>

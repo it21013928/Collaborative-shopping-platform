@@ -1,5 +1,6 @@
 const express = require('express')
 const {
+    getUsers,
     registerUser,
     deleteUser,
     updateUser,
@@ -9,8 +10,11 @@ const {
 
 const router = express.Router()
 
+// GET users
+router.get('/', getUsers)
+
 // POST a new user
-router.post('/', registerUser)
+router.post('/register', registerUser)
 
 // DELETE a user
 router.delete('/:id', deleteUser)

@@ -4,12 +4,19 @@ const validator = require("validator");
 
 const User = require("../models/userModel");
 
+// get all users
+const getUsers = async (req, res) => {
+  const users = await User.find({});
+  res.status(200).json(users)
+}
+
+// register new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, confirmPassword, role } = req.body;
 
     // Check name or email or password is empty
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !confirmPassword) {
       return res.status(400).json({ message: "All fields must be filled" });
     }
 
@@ -22,6 +29,13 @@ const registerUser = async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ message: "Email already exists" });
+    }
+
+    // Check password and confirm password are equal or not
+    if (!(password === confirmPassword)) {
+      return res.status(400).json({
+        error: "Password and confirm password mismatch",
+      });
     }
 
     // Check if password is strong enough
@@ -47,7 +61,7 @@ const registerUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.status(201).json({ token, userId: user._id, role: user.role });
+    res.status(200).json({ token, userId: user._id, role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -130,6 +144,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  getUsers,
   deleteUser,
   updateUser,
   loginUser,
