@@ -1,10 +1,8 @@
 import React, { Fragment } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { watch } from "react-hook-form";
-import axios from "axios";
 
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
@@ -12,22 +10,17 @@ import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
+import { login, registerAccount } from "../../api/auth";
+
 const LoginRegister = () => {
   let { pathname } = useLocation();
 
   // Login
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/my-account');
-    }
-  }, [navigate]);
-
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -40,15 +33,10 @@ const LoginRegister = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/users/login", {
-        email,
-        password,
-      });
-      const token = response.data.token;
-      localStorage.setItem("token", token);
+      await login(email, password);
       navigate("/my-account");
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
     }
   };
 
@@ -62,13 +50,9 @@ const LoginRegister = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("/api/users/register", data);
-      console.log(response.data);
-      if (response.status === 200) {
-        window.location.reload();
-      }
-    } catch (err) {
-      console.error(err);
+      await registerAccount(data);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
     }
   };
 
