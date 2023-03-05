@@ -1,14 +1,34 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
-
+const mongoose = require("mongoose");
 const User = require("../models/userModel");
 
 // get all users
 const getUsers = async (req, res) => {
   const users = await User.find({});
-  res.status(200).json(users)
-}
+  res.status(200).json(users);
+};
+
+// get a single user
+const getUser = async (req, res) => {
+  const userId = req.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).json({ error: "User does not exsist" });
+  }
+
+  try {
+    const user = await User.findById(userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 // register new user
 const registerUser = async (req, res) => {
@@ -55,19 +75,20 @@ const registerUser = async (req, res) => {
     await user.save();
 
     // Create JWT token
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    // const token = jwt.sign(
+    //   { userId: user._id, role: user.role },
+    //   process.env.JWT_SECRET,
+    //   { expiresIn: "1h" }
+    // );
 
-    res.status(200).json({ token, userId: user._id, role: user.role });
+    res.status(200).json({ userId: user._id, role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
+// login user
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -98,6 +119,7 @@ const loginUser = async (req, res) => {
   }
 };
 
+// update user
 const updateUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -125,6 +147,7 @@ const updateUser = async (req, res) => {
   }
 };
 
+// delete user
 const deleteUser = async (req, res) => {
   try {
     // Find user by ID
@@ -144,6 +167,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  getUser,
   getUsers,
   deleteUser,
   updateUser,
