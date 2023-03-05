@@ -39,20 +39,13 @@ const App = () => {
           }
         >
           <Routes>
-
             {/* Homepages */}
 
-            <Route
-              path={process.env.PUBLIC_URL + "/"}
-              element={<Home />}
-            />
+            <Route path={process.env.PUBLIC_URL + "/"} element={<Home />} />
 
             {/* Shop pages */}
-            
-            <Route
-              path={process.env.PUBLIC_URL + "/shop"}
-              element={<Shop />}
-            />
+
+            <Route path={process.env.PUBLIC_URL + "/shop"} element={<Shop />} />
 
             {/* Shop product pages */}
             <Route
@@ -69,17 +62,19 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/contact"}
               element={<Contact />}
             />
+            
             <Route
               path={process.env.PUBLIC_URL + "/my-account"}
               element={<MyAccount />}
             />
+
             <Route
               path={process.env.PUBLIC_URL + "/login-register"}
               element={<LoginRegister />}
             />
 
             <Route path={process.env.PUBLIC_URL + "/cart"} element={<Cart />} />
-            
+
             <Route
               path={process.env.PUBLIC_URL + "/wishlist"}
               element={<Wishlist />}
