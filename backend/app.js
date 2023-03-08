@@ -19,8 +19,10 @@ app.use(cors());
 
 // Set up routes
 const userRoutes = require("./src/routes/userRoutes");
-app.use("/api/users", userRoutes);
+const productRoutes = require("./src/routes/productRoutes");
 
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
 
 mongoose.set("strictQuery", false);
 // Connect to the database

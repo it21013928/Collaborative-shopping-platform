@@ -62,8 +62,21 @@ const getAllproducts = async (req, res) => {
 //Update a product
 const updateProduct = async (req, res) => {
   try {
-    const { name, price, quantity, decription, image, rating, category } =
-      req.body;
+    const {
+      name,
+      price,
+      quantity,
+      image,
+      shortDescription,
+      fullDescription,
+      tag,
+      rating,
+      category,
+      saleCount,
+      newItem,
+      offerDate,
+      discount,
+    } = req.body;
 
     // Find product by ID
     const product = await Product.findById(req.params.id);
@@ -72,13 +85,19 @@ const updateProduct = async (req, res) => {
     }
 
     // Update product
-    product.name = name;
-    product.price = price;
-    product.quantity = quantity;
-    product.decription = decription;
-    product.image = image;
+    product.name = name || product.name;
+    product.price = price || product.price;
+    product.quantity = quantity || product.quantity;
+    product.image = image || product.image;
+    product.shortDescription = shortDescription || product.shortDescription;
+    product.fullDescription = fullDescription || product.fullDescription;
+    product.tag = tag || product.tag;
     product.rating = rating;
     product.category = category;
+    product.saleCount = saleCount || product.saleCount;
+    product.newItem = newItem || product.newItem;
+    product.offerDate = offerDate || product.offerDate;
+    product.discount = discount || product.discount;
 
     await product.save();
     res.json({ message: "Product updated successfully" });
