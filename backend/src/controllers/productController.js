@@ -1,14 +1,26 @@
-const Product = require("..models/productModel");
+const Product = require("../models/productModel");
 
 //CREATE a Product
 const createProduct = async (req, res) => {
   try {
-    const { name, price, quantity, description } = req.body;
+    const {
+      name,
+      price,
+      quantity,
+      image,
+      shortDescription,
+      fullDescription,
+      tag,
+      rating,
+      category,
+      newItem,
+      discount,
+    } = req.body;
 
     //Check if the product name, price, quantiry, description is empty
-    if (!name || !quantity || !price || !description) {
+    if (!name || !quantity || !price || !shortDescription) {
       return res.status(400).json({
-        message: "name, quantity, price or description fields are empty",
+        message: "name, quantity, price or short description fields are empty",
       });
     }
 
@@ -17,6 +29,29 @@ const createProduct = async (req, res) => {
     if (existingProduct) {
       return res.status(409).json({ message: "Product name already exists" });
     }
+
+    //Create the new product
+    const product = new Product({
+      name,
+      quantity,
+      price,
+      image,
+      shortDescription,
+      fullDescription,
+      tag,
+      rating,
+      category,
+      newItem,
+      discount,
+    });
+    await product.save();
+
+    res.status(201).json({
+      productID: product._id,
+      name: product.name,
+      quantity: product.quantity,
+      price: product.price,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -92,8 +127,8 @@ const updateProduct = async (req, res) => {
     product.shortDescription = shortDescription || product.shortDescription;
     product.fullDescription = fullDescription || product.fullDescription;
     product.tag = tag || product.tag;
-    product.rating = rating;
-    product.category = category;
+    product.rating = rating || product.rating;
+    product.category = category || product.category;
     product.saleCount = saleCount || product.saleCount;
     product.newItem = newItem || product.newItem;
     product.offerDate = offerDate || product.offerDate;

@@ -25,6 +25,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 
 mongoose.set("strictQuery", false);
+
 // Connect to the database
 mongoose
   .connect(process.env.MONGO_URI)
