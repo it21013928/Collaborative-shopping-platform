@@ -17,20 +17,20 @@ const createProduct = async (req, res) => {
       discount,
     } = req.body;
 
-    //Check if the product name, price, quantiry, description is empty
-    if (!name || !quantity || !price || !shortDescription) {
+    // Check name price quantity is empty
+    if (!name || !price || !quantity) {
       return res.status(400).json({
-        message: "name, quantity, price or short description fields are empty",
+        message: "Product name, price, quantity fields must be filled",
       });
     }
 
-    // Check if product name already exists
-    const existingProduct = await Product.findOne({ name });
-    if (existingProduct) {
-      return res.status(409).json({ message: "Product name already exists" });
+    // Check product already exists
+    const productName = await Product.findOne({ name });
+    if (productName) {
+      return res.status(401).json({ message: "Product already exists." });
     }
 
-    //Create the new product
+    // Create new user
     const product = new Product({
       name,
       quantity,
@@ -46,14 +46,9 @@ const createProduct = async (req, res) => {
     });
     await product.save();
 
-    res.status(201).json({
-      productID: product._id,
-      name: product.name,
-      quantity: product.quantity,
-      price: product.price,
-    });
-  } catch (error) {
-    console.error(error);
+    res.status(201).json({ name: name, quantity: quantity, price: price });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -75,19 +70,43 @@ const getProduct = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+/////////////////////////////////////////////////APP CRASHED AFTER GETTING THE RESPONES!////////////////////////////////
+
+//GET Product by Name
+const getProductByName = async (req, res) => {
+  try {
+    // Find product
+    const productName = await Product.findByName(req.params.name);
+    const product = Product.find(
+      (product) => product.name.toLowerCase() === productName.toLowerCase()
+    );
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    //Get product
+    res.send(product);
+    res.json({ message: "Product got successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+////////////////////////////////////////////////////////////////DOES NOT WORK!////////////////////////////////
 
 //GET all products
 const getAllproducts = async (req, res) => {
   try {
     // Find product
     const product = await Product.find();
+
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      res.status(404).send("Products not found");
+      console.log("No products found");
+    } else {
+      res.send(product);
+      console.log("All products got successfully");
     }
-
-    res.send(product);
-
-    res.json({ message: "All products got successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -164,6 +183,7 @@ const deleteProduct = async (req, res) => {
 module.exports = {
   createProduct,
   getProduct,
+  getProductByName,
   getAllproducts,
   updateProduct,
   deleteProduct,

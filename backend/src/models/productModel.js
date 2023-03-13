@@ -16,19 +16,19 @@ const productSchema = new Schema({
   },
   image: {
     type: [String],
-    required: true,
+    required: false,
   },
   shortDescription: {
     type: String,
-    required: true,
+    required: false,
   },
   fullDescription: {
     type: String,
-    required: true,
+    required: false,
   },
   tag: {
     type: [String],
-    required: true,
+    required: false,
   },
   rating: {
     type: Number,

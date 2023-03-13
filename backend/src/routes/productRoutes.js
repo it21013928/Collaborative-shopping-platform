@@ -3,6 +3,7 @@ const express = require("express");
 const {
   createProduct,
   getProduct,
+  getProductByName,
   getAllproducts,
   updateProduct,
   deleteProduct,
@@ -11,10 +12,13 @@ const {
 const router = express.Router(); //
 
 //CREATE a new product
-router.post("/", createProduct);
+router.post("/create", createProduct);
 
-//GET a product
+//GET a product by ID
 router.get("/:id", getProduct);
+
+//GET a product by name
+router.get("/getProductByName/:name", getProductByName);
 
 //GET all products
 router.get("/", getAllproducts);
