@@ -11,7 +11,7 @@ const HomePlants = () => {
   return (
     <Fragment>
       <SEO
-        titleTemplate="Plants Home"
+        titleTemplate="Home"
         description="Plants home of flone react minimalist eCommerce template."
       />
       <LayoutTwo footerBgClass="bg-gray-4">

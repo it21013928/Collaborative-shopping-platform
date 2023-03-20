@@ -1,13 +1,60 @@
 import React, { Fragment } from "react";
-import { Link, useLocation } from "react-router-dom"; 
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
+
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
+import { login, registerAccount } from "../../api/auth";
+
 const LoginRegister = () => {
   let { pathname } = useLocation();
+
+  // Login
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      navigate("/my-account");
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+    }
+  };
+
+  // Register
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      await registerAccount(data);
+    } catch (error) {
+      setErrorMessage(error.response.data.message);
+    }
+  };
 
   return (
     <Fragment>
@@ -17,11 +64,14 @@ const LoginRegister = () => {
       />
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
-        <Breadcrumb 
+        <Breadcrumb
           pages={[
-            {label: "Home", path: process.env.PUBLIC_URL + "/" },
-            {label: "Login Register", path: process.env.PUBLIC_URL + pathname }
-          ]} 
+            { label: "Home", path: process.env.PUBLIC_URL + "/" },
+            {
+              label: "Login Register",
+              path: process.env.PUBLIC_URL + pathname,
+            },
+          ]}
         />
         <div className="login-register-area pt-100 pb-100">
           <div className="container">
@@ -45,16 +95,20 @@ const LoginRegister = () => {
                       <Tab.Pane eventKey="login">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={handleLoginSubmit}>
                               <input
-                                type="text"
-                                name="user-name"
-                                placeholder="Username"
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={handleEmailChange}
                               />
                               <input
                                 type="password"
-                                name="user-password"
+                                name="password"
                                 placeholder="Password"
+                                value={password}
+                                onChange={handlePasswordChange}
                               />
                               <div className="button-box">
                                 <div className="login-toggle-btn">
@@ -75,22 +129,72 @@ const LoginRegister = () => {
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
-                              <input
-                                type="text"
-                                name="user-name"
-                                placeholder="Username"
-                              />
-                              <input
-                                type="password"
-                                name="user-password"
-                                placeholder="Password"
-                              />
-                              <input
-                                name="user-email"
-                                placeholder="Email"
-                                type="email"
-                              />
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                              <div>
+                                <input
+                                  type="text"
+                                  name="user-name"
+                                  placeholder="Username"
+                                  {...register("name", { required: true })}
+                                />
+                                {errors.name && (
+                                  <span>This field is required</span>
+                                )}
+                              </div>
+                              <div>
+                                <input
+                                  name="user-email"
+                                  placeholder="Email"
+                                  type="email"
+                                  {...register("email", { required: true })}
+                                />
+                                {errors.email && (
+                                  <span>This field is required</span>
+                                )}
+                              </div>
+                              <div>
+                                <input
+                                  type="password"
+                                  name="user-password"
+                                  placeholder="Password"
+                                  {...register("password", {
+                                    required: true,
+                                    pattern:
+                                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                                  })}
+                                />
+                                {errors.password?.type === "required" && (
+                                  <span>This field is required</span>
+                                )}
+                                {errors.password?.type === "pattern" && (
+                                  <span>
+                                    Password must contain at least 8 characters
+                                    including lowercase, uppercase, and special
+                                    characters.
+                                  </span>
+                                )}
+                              </div>
+                              <div>
+                                <input
+                                  type="password"
+                                  name="user-password"
+                                  placeholder="Password"
+                                  {...register("confirmPassword", {
+                                    required: true,
+                                    validate: (value) =>
+                                      value === watch("password"),
+                                  })}
+                                />
+                                {errors.confirmPassword?.type ===
+                                  "required" && (
+                                  <span>This field is required</span>
+                                )}
+                                {errors.confirmPassword?.type ===
+                                  "validate" && (
+                                  <span>Passwords do not match</span>
+                                )}
+                              </div>
+
                               <div className="button-box">
                                 <button type="submit">
                                   <span>Register</span>
