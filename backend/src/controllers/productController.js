@@ -63,30 +63,30 @@ const getProduct = async (req, res) => {
     }
 
     //Get product
-    res.send(product);
-    res.json({ message: "Product got successfully" });
+    console.error("***Product got successfully***");
+    return res.status(200).send(product);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
-/////////////////////////////////////////////////APP CRASHED AFTER GETTING THE RESPONES!////////////////////////////////
 
 //GET Product by Name
 const getProductByName = async (req, res) => {
+  const productName = req.params.name;
   try {
     // Find product
-    const productName = await Product.findByName(req.params.name);
-    const product = Product.find(
-      (product) => product.name.toLowerCase() === productName.toLowerCase()
-    );
+    const product = await Product.findOne({ name: productName }).exec();
+    // const product = Product.find(
+    //   (product) => product.name.toLowerCase() === productName.toLowerCase()
+    // );
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
     //Get product
-    res.send(product);
-    res.json({ message: "Product got successfully" });
+    console.error("***Product got successfully***");
+    return res.status(200).json(product);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
