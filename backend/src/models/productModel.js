@@ -7,27 +7,52 @@ const productSchema = new Schema({
     required: true,
   },
   price: {
-    type: float,
+    type: Number,
     required: true,
   },
   quantity: {
-    type: number,
-    required: true,
-  },
-  decription: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {
+    type: [String],
+    required: false,
+  },
+  shortDescription: {
     type: String,
+    required: false,
+  },
+  fullDescription: {
+    type: String,
+    required: false,
+  },
+  tag: {
+    type: [String],
     required: false,
   },
   rating: {
-    type: number,
+    type: Number,
     required: false,
   },
   category: {
-    type: String,
+    type: [String],
+    required: false,
+  },
+  saleCount: {
+    type: Number,
+    required: false,
+  },
+  newItem: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  offerEnd: {
+    type: Date,
+    required: false,
+  },
+  discount: {
+    type: Number,
     required: false,
   },
 });
