@@ -62,7 +62,7 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/contact"}
               element={<Contact />}
             />
-            
+
             <Route
               path={process.env.PUBLIC_URL + "/my-account"}
               element={<MyAccount />}
