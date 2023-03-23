@@ -24,7 +24,6 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
-const Dashboard = lazy(() => import("./admin/pages/dashboard.js"));
 const App = () => {
   return (
     <Router>
@@ -87,11 +86,6 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/checkout"}
               element={<Checkout />}
-            />
-
-            <Route
-              path={process.env.PUBLIC_URL + "/dashboard"}
-              element={<Dashboard />}
             />
 
             <Route path="*" element={<NotFound />} />
