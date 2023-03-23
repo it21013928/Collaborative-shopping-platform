@@ -13,7 +13,7 @@ import "./pages.css";
 
 export default function () {
   const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(false);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
