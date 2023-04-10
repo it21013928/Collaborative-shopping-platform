@@ -19,7 +19,7 @@ app.use(cors());
 
 // Set up routes
 const userRoutes = require("./src/routes/userRoutes");
-app.use("/api/users", userRoutes);
+app.use("/", userRoutes);
 
 
 mongoose.set("strictQuery", false);
@@ -29,7 +29,7 @@ mongoose
   .then(() => {
     // listen for request
     app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
+      console.log(`User is listening at http://localhost:${port}`);
     });
   })
   .catch((error) => {
