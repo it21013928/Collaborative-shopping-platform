@@ -25,6 +25,10 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const Dashboard = lazy(() => import("./admin/pages/dashboard.js"));
+
+//Product Imports
+const ProductInput = lazy(() => import("./admin/pages/productInput.js"));
+
 const App = () => {
   return (
     <Router>
@@ -92,6 +96,12 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/dashboard"}
               element={<Dashboard />}
+            />
+
+            {/* Product Routes */}
+            <Route
+              path={process.env.PUBLIC_URL + "/productInput"}
+              element={<ProductInput />}
             />
 
             <Route path="*" element={<NotFound />} />

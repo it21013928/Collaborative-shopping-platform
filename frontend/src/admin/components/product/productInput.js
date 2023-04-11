@@ -1,11 +1,9 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 
 import Header from "../../layout/Header";
 
-export default function () {
+const ProductInputForm = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -20,4 +18,5 @@ export default function () {
       </Box>
     </div>
   );
-}
+};
+export default ProductInputForm;

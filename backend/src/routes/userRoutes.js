@@ -10,13 +10,10 @@ const {
   loginUser,
 } = require("../controllers/userController");
 
-
 const router = express.Router();
 
 // POST a new user
 router.post("/", registerUser);
-
-const router = express.Router();
 
 // GET user
 router.get("/me", authMiddleware, getUser);
