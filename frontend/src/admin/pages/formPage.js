@@ -19,7 +19,9 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"Profile Form"} />
+          <div className="slideBar">
+            <Sidebar selected={"Profile Form"} />
+          </div>
           <main className="content">
             <Topbar />
             <Box m="20px">

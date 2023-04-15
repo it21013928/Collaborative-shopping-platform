@@ -19,7 +19,9 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"Manage Team"} />
+          <div className="slideBar">
+            <Sidebar selected={"Manage Team"} />
+          </div>
           <main className="content">
             <Topbar />
             <Box m="20px">
