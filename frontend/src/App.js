@@ -31,6 +31,7 @@ const Form = lazy(() => import("./admin/pages/formPage"));
 const Contacts = lazy(() => import("./admin/pages/contactsPage"));
 const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
 const Faq = lazy(() => import("./admin/pages/faqPage"));
+const Tracking = lazy(() => import("./admin/pages/tracking"));
 const Team = lazy(() => import("./admin/pages/teamPage"));
 
 const App = () => {
@@ -124,6 +125,11 @@ const App = () => {
             <Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
 
             <Route path={process.env.PUBLIC_URL + "/faq"} element={<Faq />} />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/tracking"}
+              element={<Tracking />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
