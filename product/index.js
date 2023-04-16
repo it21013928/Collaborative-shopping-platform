@@ -22,6 +22,7 @@ const productRoutes = require("./src/routes/productRoutes");
 app.use("/", productRoutes);
 
 mongoose.set("strictQuery", false);
+
 // Connect to the database
 mongoose
   .connect(process.env.MONGO_URI)
