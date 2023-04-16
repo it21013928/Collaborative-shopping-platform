@@ -24,6 +24,19 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
+const Dashboard = lazy(() => import("./admin/pages/dashboardPage"));
+const Calendar = lazy(() => import("./admin/pages/calendarPage"));
+
+const Form = lazy(() => import("./admin/pages/formPage"));
+const Contacts = lazy(() => import("./admin/pages/contactsPage"));
+const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
+const Faq = lazy(() => import("./admin/pages/faqPage"));
+const Team = lazy(() => import("./admin/pages/teamPage"));
+
+const Customers = lazy(() => import("./admin/pages/customersPage"));
+const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
+const Sellers = lazy(() => import("./admin/pages/sellersPage"));
+
 const App = () => {
   return (
     <Router>
@@ -62,7 +75,7 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/contact"}
               element={<Contact />}
             />
-            
+
             <Route
               path={process.env.PUBLIC_URL + "/my-account"}
               element={<MyAccount />}
@@ -87,6 +100,37 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/checkout"}
               element={<Checkout />}
             />
+
+            {/* ---------admin-------------- */}
+
+            <Route
+              path={process.env.PUBLIC_URL + "/dashboard"}
+              element={<Dashboard />}
+            />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/calendar"}
+              element={<Calendar />}
+            />
+
+            <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
+
+            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
+            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
+            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
+            <Route
+              path={process.env.PUBLIC_URL + "/contacts"}
+              element={<Contacts />}
+            />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/invoices"}
+              element={<Invoices />}
+            />
+
+            <Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
+
+            <Route path={process.env.PUBLIC_URL + "/faq"} element={<Faq />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

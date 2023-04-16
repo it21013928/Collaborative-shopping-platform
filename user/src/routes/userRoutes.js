@@ -8,6 +8,9 @@ const {
   deleteUser,
   updateUser,
   loginUser,
+  getCustomers,
+  getSellers,
+  getModerators,
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -17,6 +20,15 @@ router.get("/me", authMiddleware, getUser);
 
 // GET users
 router.get("/", getUsers);
+
+// GET customers
+router.get("/customers", getCustomers);
+
+// GET sellers
+router.get("/sellers", getSellers);
+
+// GET moderators
+router.get("/moderators", getModerators);
 
 // POST a new user
 router.post("/register", registerUser);

@@ -10,6 +10,24 @@ const getUsers = async (req, res) => {
   res.status(200).json(users);
 };
 
+// get all customers
+const getCustomers = async (req, res) => {
+  const users = await User.find({ role: "client" });
+  res.status(200).json(users);
+};
+
+// get all sellers
+const getSellers = async (req, res) => {
+  const users = await User.find({ role: "seller" });
+  res.status(200).json(users);
+};
+
+// get all moderators
+const getModerators = async (req, res) => {
+  const users = await User.find({ role: "admin" });
+  res.status(200).json(users);
+};
+
 // get a single user
 const getUser = async (req, res) => {
   const userId = req.userId;
@@ -19,7 +37,7 @@ const getUser = async (req, res) => {
   }
 
   try {
-    const user = await User.findById(userId).select('-password');
+    const user = await User.findById(userId).select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -173,4 +191,7 @@ module.exports = {
   updateUser,
   loginUser,
   registerUser,
+  getCustomers,
+  getSellers,
+  getModerators,
 };
