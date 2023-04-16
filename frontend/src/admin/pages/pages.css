@@ -8,11 +8,12 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
+  overflow-y: auto;
 }
 
 .app {
   display: flex;
-  position: relative;
+  position: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -32,4 +33,10 @@ body,
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.slideBar {
+  flex: none;
+  overflow: visible;
+  overflow-y: scroll;
 }

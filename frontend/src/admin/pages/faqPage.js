@@ -19,7 +19,9 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"FAQ Page"} />
+          <div className="slideBar">
+            <Sidebar selected={"FAQ Page"} />
+          </div>
           <main className="content">
             <Topbar />
             <Box m="20px">

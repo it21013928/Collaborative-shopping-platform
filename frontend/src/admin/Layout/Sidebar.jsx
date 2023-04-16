@@ -165,6 +165,105 @@ const Sidebar = (props) => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Data
+              </Typography>
+              <Item
+                title="Manage Team"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Contacts Information"
+                to="/contacts"
+                icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Invoices Balances"
+                to="/invoices"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              ></Typography>
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Data
+              </Typography>
+              <Item
+                title="Manage Team"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Contacts Information"
+                to="/contacts"
+                icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Invoices Balances"
+                to="/invoices"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              ></Typography>
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Data
+              </Typography>
+              <Item
+                title="Manage Team"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Contacts Information"
+                to="/contacts"
+                icon={<ContactsOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Invoices Balances"
+                to="/invoices"
+                icon={<ReceiptOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ m: "15px 0 5px 20px" }}
+              ></Typography>
               Pages
             </Typography>
             <Item
@@ -185,35 +284,6 @@ const Sidebar = (props) => {
               title="FAQ Page"
               to="/faq"
               icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Users
-            </Typography>
-            <Item
-              title="Moderators"
-              to="/moderators"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Sellers"
-              to="/sellers"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Customers"
-              to="/customers"
-              icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

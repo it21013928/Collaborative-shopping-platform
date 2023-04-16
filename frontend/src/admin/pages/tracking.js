@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "../Layout/Topbar";
 import Sidebar from "../Layout/Sidebar";
-import Contacts from "../components/contacts";
+import Tracking from "../components/tracking";
 import { Box } from "@mui/material";
 import Header from "../Layout/Header";
 
@@ -20,7 +20,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Contacts Information"} />
+            <Sidebar selected={"Manage Team"} />
           </div>
           <main className="content">
             <Topbar />
@@ -31,12 +31,9 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header
-                  title="Contacts Information"
-                  subtitle="Welcome to your Contacts Information"
-                />
+                <Header title="Team" subtitle="Welcome to your Team" />
               </Box>
-              <Contacts />
+              <Tracking />
             </Box>
           </main>
         </div>
