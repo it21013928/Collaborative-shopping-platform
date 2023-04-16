@@ -18,7 +18,6 @@ export default function () {
           <Sidebar isSidebar={isSidebar} />
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
-
             <ProductInput />
           </main>
         </div>

@@ -1,5 +1,5 @@
 {
-  "name": "user",
+  "name": "product",
   "version": "1.0.0",
   "description": "Backend for user management as a microservice of collaborative shopping platform",
   "main": "index.js",
