@@ -3,7 +3,7 @@ import setAuthToken from "../utils/setAuthToken";
 
 export const login = async (email, password) => {
   try {
-    const response = await axios.post("/api/users/login", {
+    const response = await axios.post("/users/login", {
       email,
       password,
     });
@@ -19,7 +19,7 @@ export const login = async (email, password) => {
 
 export const registerAccount = async (data) => {
   try {
-    const response = await axios.post("/api/users/register", data);
+    const response = await axios.post("/users/register", data);
     console.log(response.data);
     if (response.status === 200) {
       window.location.reload();
