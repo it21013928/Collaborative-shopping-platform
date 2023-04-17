@@ -5,7 +5,7 @@ const user_port = process.env.USER_PORT;
 
 const express = require("express");
 const cors = require("cors");
-const proxy = require('express-http-proxy');
+const proxy = require("express-http-proxy");
 
 // express app
 const app = express();
