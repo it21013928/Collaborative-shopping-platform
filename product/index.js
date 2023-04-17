@@ -20,9 +20,10 @@ app.use(cors());
 // Set up routes
 const productRoutes = require("./src/routes/productRoutes");
 app.use("/", productRoutes);
+// const userRoutes = require("./src/routes/userRoutes");
+// app.use("/", userRoutes);
 
 mongoose.set("strictQuery", false);
-
 // Connect to the database
 mongoose
   .connect(process.env.MONGO_URI)
@@ -30,6 +31,7 @@ mongoose
     // listen for request
     app.listen(port, () => {
       console.log(`Product is listening at http://localhost:${port}`);
+      // console.log(`User is listening at http://localhost:${port}`);
     });
   })
   .catch((error) => {
