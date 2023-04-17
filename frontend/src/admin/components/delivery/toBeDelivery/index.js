@@ -102,14 +102,17 @@ export default function () {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
         {orders ? (
           <DataGrid
             rows={orders}
             columns={columns}
-            components={{ Toolbar: GridToolbar }}
             getRowId={getRowId}
+            components={{ Toolbar: GridToolbar }}
           />
         ) : (
           <p>Loading...</p>
