@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import { mockDataTeam } from "../../../data/mockData";
@@ -25,8 +25,16 @@ export default function () {
   }, []);
 
   useEffect(() => {}, [orders]);
-
+  const handleButtonClick = (id) => {
+    console.log(`Button clicked for row with id ${id}`);
+    // perform action with the id
+  };
   const columns = [
+    {
+      field: "_id",
+      headerName: "Order ID",
+      flex: 1,
+    },
     {
       field: "CustomerID",
       headerName: "Customer ID",
@@ -46,6 +54,21 @@ export default function () {
       field: "Status",
       headerName: "Status",
       flex: 1,
+    },
+    {
+      field: "button",
+      headerName: "",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <Button
+            color="secondary"
+            onClick={() => handleButtonClick(params.row._id)}
+          >
+            Ship now
+          </Button>
+        );
+      },
     },
   ];
   const getRowId = (row) => row.CustomerID;

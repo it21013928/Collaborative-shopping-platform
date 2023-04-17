@@ -20,7 +20,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Manage Team"} />
+            <Sidebar selected={"To Be shipped"} />
           </div>
           <main className="content">
             <Topbar />

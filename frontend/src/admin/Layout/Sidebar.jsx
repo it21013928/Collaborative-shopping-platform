@@ -226,7 +226,7 @@ const Sidebar = (props) => {
             </Typography>
             <Item
               title="To Be shipped"
-              to="/moderators"
+              to="/toBeDelivery"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
