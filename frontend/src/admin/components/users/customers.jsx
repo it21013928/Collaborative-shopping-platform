@@ -17,6 +17,7 @@ const Customers = () => {
     const fetchCustomers = async () => {
       try {
         const response = await getCustomers();
+        console.log(response);
         await setCustomers(response);
       } catch (error) {
         console.error(error);
@@ -104,13 +105,13 @@ const Customers = () => {
           },
         }}
       >
-        {customers ?
-        <DataGrid
-          rows={customers}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }}
-        />
-        : (
+        {customers ? (
+          <DataGrid
+            rows={customers}
+            columns={columns}
+            components={{ Toolbar: GridToolbar }}
+          />
+        ) : (
           <p>Loading...</p>
         )}
       </Box>

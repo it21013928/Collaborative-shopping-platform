@@ -39,6 +39,10 @@ const Sellers = lazy(() => import("./admin/pages/sellersPage"));
 
 const Tracking = lazy(() => import("./admin/pages/tracking"));
 
+// Delivery
+
+const ToBeDelivery = lazy(() => import("./admin/pages/toBeDeliveryPage"));
+
 const App = () => {
   return (
     <Router>
@@ -117,9 +121,18 @@ const App = () => {
 
             <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
 
-            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
-            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
-            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
+            <Route
+              path={process.env.PUBLIC_URL + "/moderators"}
+              element={<Moderators />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/sellers"}
+              element={<Sellers />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/customers"}
+              element={<Customers />}
+            />
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}
@@ -137,6 +150,13 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/tracking"}
               element={<Tracking />}
+            />
+
+            {/* Delivery Admin */}
+
+            <Route
+              path={process.env.PUBLIC_URL + "/toBeDelivery"}
+              element={<ToBeDelivery />}
             />
 
             <Route path="*" element={<NotFound />} />
