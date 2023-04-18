@@ -67,7 +67,7 @@ const updateOrder = async (req, res) => {
     if (order) {
         
         
-        order.Status = "Completed";
+        order.Status = "Confirmed";
 
         const updatedOrder = await order.save();
 
