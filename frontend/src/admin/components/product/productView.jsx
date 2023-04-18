@@ -31,11 +31,11 @@ const Products = () => {
 
   const columns = [
     { 
-      field: "_id", 
+      field: "productId", 
       headerName: "ID", 
       flex: 2 },
     {
-      field: "productName",
+      field: "name",
       headerName: "Product Name",
       flex: 1,
     },

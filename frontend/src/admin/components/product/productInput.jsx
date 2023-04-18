@@ -1,4 +1,4 @@
-import { Box, Button, TextField, InputLabel, InputAdornment, FormControl, FormGroup, FormControlLabel, Checkbox, Select } from "@mui/material";
+import { Box, Button, TextField, InputLabel, FormControl, Select } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -11,7 +11,8 @@ import {Link} from 'react-router-dom';
 const ProductInputForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const [productName , setProductName] = useState('');
+  const [productId , setProductId] = useState('');
+  const [name , setName] = useState('');
   const [price , setPrice] = useState();
   const [quantity , setQuantity] = useState('');
   const [shortDescription , setShortDescription] = useState('');
@@ -50,18 +51,30 @@ const ProductInputForm = () => {
             >
               {/* <InputLabel htmlFor="my-input">Product Name</InputLabel> */}
               <TextField
-                required
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Product ID"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.productId}
+                name="productId"
+                error={!!touched.productId && !!errors.productId}
+                helperText={touched.productId && errors.productId}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
                 label="Product Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.productName}
-                name="productName"
-                error={!!touched.productName && !!errors.productName}
-                helperText={touched.productName && errors.productName}
-                sx={{ gridColumn: "span 4" }}
+                value={values.name}
+                name="name"
+                error={!!touched.name && !!errors.name}
+                helperText={touched.name && errors.name}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -127,18 +140,20 @@ const ProductInputForm = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={"defualt"}
             onChange={handleChange}
-            sx={{ gridColumn: "span 2" }}
+            value={values.category}
+            name="category"
+            error={!!touched.category && !!errors.category}
+            helperText={touched.category && errors.category}
+            sx={{ gridColumn: "span 1" }}
           >
-            <option value={"defualt"}>Select a Category</option>
-            <option value={"1"}>Category 1</option>
-            <option value={"2"}>Category 2</option>
+            <option value={null}>Select a Category</option>
+            <option value={1}>Category 1</option>
+            <option value={2}>Category 2</option>
           </Select>
-
-<br />
+          
           <InputLabel htmlFor="my-input">Images</InputLabel>
-          <FormControl sx={{ gridColumn: "span 2" }}>
+          <FormControl sx={{ gridColumn: "span 1" }}>
             <input
               accept="image/*"
               style={{ display: "none" }}
@@ -165,7 +180,8 @@ const ProductInputForm = () => {
 };
 
 const checkoutSchema = yup.object().shape({
-  productName: yup.string().required("required"),
+  productId: yup.string().required("required"),
+  name: yup.string().required("required"),
   quantity: yup.string().required("required"),
   price: yup.string().required("required"),
   // contact: yup
@@ -173,8 +189,10 @@ const checkoutSchema = yup.object().shape({
   //   .matches(phoneRegExp, "Phone number is not valid")
   //   .required("required"),
 });
+
 const initialValues = {
-  productName: "",
+  productId: "",
+  name: "",
   quantity: "",
   price: "",
   shortDescription: "",

@@ -4,6 +4,7 @@ const Product = require("../models/productModel");
 const createProduct = async (req, res) => {
   try {
     const {
+      productId,
       name,
       price,
       quantity,
@@ -18,9 +19,9 @@ const createProduct = async (req, res) => {
     } = req.body;
 
     // Check name price quantity is empty
-    if (!name || !price || !quantity) {
+    if (!id || !name || !price || !quantity) {
       return res.status(400).json({
-        message: "Product name, price, quantity fields must be filled",
+        message: "Product id, name, price, quantity fields must be filled",
       });
     }
 
@@ -32,6 +33,7 @@ const createProduct = async (req, res) => {
 
     // Create new user
     const product = new Product({
+      productId,
       name,
       quantity,
       price,
@@ -46,7 +48,14 @@ const createProduct = async (req, res) => {
     });
     await product.save();
 
-    res.status(201).json({ name: name, quantity: quantity, price: price });
+    res
+      .status(201)
+      .json({
+        productId: productId,
+        name: name,
+        quantity: quantity,
+        price: price,
+      });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -105,7 +114,7 @@ const getAllproducts = async (req, res) => {
       console.log("No products found");
     } else {
       res.send(product);
-      console.log("All products got successfully");
+      console.log("***All products got successfully***");
     }
   } catch (err) {
     console.error(err);
@@ -117,6 +126,7 @@ const getAllproducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const {
+      productId,
       name,
       price,
       quantity,
@@ -139,6 +149,7 @@ const updateProduct = async (req, res) => {
     }
 
     // Update product
+    product.productId = id || product.productId;
     product.name = name || product.name;
     product.price = price || product.price;
     product.quantity = quantity || product.quantity;
