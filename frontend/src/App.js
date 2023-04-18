@@ -42,6 +42,7 @@ const Tracking = lazy(() => import("./admin/pages/tracking"));
 // Delivery
 
 const ToBeDelivery = lazy(() => import("./admin/pages/toBeDeliveryPage"));
+const ShippingDetails = lazy(() => import("./admin/pages/shippingDetailsPage"));
 
 const App = () => {
   return (
@@ -157,6 +158,11 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/toBeDelivery"}
               element={<ToBeDelivery />}
+            />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/shippingDetails"}
+              element={<ShippingDetails />}
             />
 
             <Route path="*" element={<NotFound />} />

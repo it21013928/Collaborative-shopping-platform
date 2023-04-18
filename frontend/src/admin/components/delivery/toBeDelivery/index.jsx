@@ -8,6 +8,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../Layout/Header";
 import { useEffect, useState } from "react";
 import order from "../../../../api/order";
+import { Link } from "react-router-dom";
 
 export default function () {
   const theme = useTheme();
@@ -25,10 +26,13 @@ export default function () {
   }, []);
 
   useEffect(() => {}, [orders]);
+
   const handleButtonClick = (id) => {
-    console.log(`Button clicked for row with id ${id}`);
+    localStorage.setItem("orderID", id);
+    window.location.href = "/shippingDetails";
     // perform action with the id
   };
+
   const columns = [
     {
       field: "_id",

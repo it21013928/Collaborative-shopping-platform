@@ -3,6 +3,7 @@ require("dotenv").config();
 const port = process.env.PORT;
 const user_port = process.env.USER_PORT;
 const order_port = process.env.ORDER_PORT;
+const delivery_port = process.env.DELIVERY_PORT;
 
 const express = require("express");
 const cors = require("cors");
@@ -18,6 +19,7 @@ app.use(cors());
 // Set up routes
 app.use("/users", proxy(`http://localhost:${user_port}`));
 app.use("/orders", proxy(`http://localhost:${order_port}`));
+app.use("/delivery", proxy(`http://localhost:${delivery_port}`));
 
 app.listen(port, () => {
   console.log(`Gateway is listening at http://localhost:${port}`);

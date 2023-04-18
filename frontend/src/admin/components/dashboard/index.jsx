@@ -25,7 +25,9 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-        ></Box>
+        >
+          nnvb
+        </Box>
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
