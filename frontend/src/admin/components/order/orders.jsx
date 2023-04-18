@@ -3,74 +3,66 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
 import { getCustomers } from "../../../api/user";
+//import { getOrders } from "../../../api/order";
 import Header from "../../Layout/Header";
 import { useTheme } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
+import axios from 'axios';
 
-const Customers = () => {
+
+
+const Orders = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [customers, setCustomers] = useState(null);
+  const [orders, setOrders] = useState(null);
 
   useEffect(() => {
-    const fetchCustomers = async () => {
+    // Function to fetch orders
+    const fetchOrders = async () => {
       try {
-        const response = await getCustomers();
-        await setCustomers(response);
+        const response = await axios.get(`http://localhost:8000/orders/`); // Replace '/api/orders' with your backend API endpoint for fetching orders
+        setOrders(response.data); // Set the orders data to state
       } catch (error) {
-        console.error(error);
+        console.error(error); // Log any errors to the console
       }
     };
 
-    fetchCustomers();
-  }, []);
+    fetchOrders(); // Call the fetchOrders function
+  }, []); // Empty dependency array to run the effect only once, equivalent to componentDidMount
 
   useEffect(() => {
-    // console.log(customers);
-  }, [customers]);
+    // Code to run when orders state changes
+    // console.log(orders);
+  }, [orders]);
 
+  
 
+  
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 2 },
+    { field: "_id", headerName: "ID", flex: 2 },
     {
-      field: "name",
-      headerName: "Name",
+      field: "Status",
+      headerName: "Status",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "Date",
+      headerName: "Date created",
       flex: 1,
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "ShipingAddress",
+      headerName: "Shipping Address",
       flex: 1,
     },
-    {
-      field: "address",
-      headerName: "Address",
-      flex: 2,
-    },
-    {
-      field: "city",
-      headerName: "City",
-      flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
-    },
-    {
-      field: "role",
-      headerName: "Role",
-      flex: 1,
-    },
+    
+     
+    
   ];
+  const getRowId = (row) => row.CustomerID;
 
   return (
     <Box m="0">
@@ -106,11 +98,11 @@ const Customers = () => {
           },
         }}
       >
-        {customers ?
+        {orders ?
         <DataGrid
-          rows={customers}
+          rows={orders}
           columns={columns}
-          
+          getRowId={getRowId}
           components={{ Toolbar: GridToolbar }}
         />
         : (
@@ -121,4 +113,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Orders;

@@ -38,6 +38,7 @@ const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
 
 const Tracking = lazy(() => import("./admin/pages/tracking"));
+const Orders = lazy(() => import("./admin/pages/ordersPage"));
 
 const App = () => {
   return (
@@ -123,6 +124,11 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}
+            />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/orders"}
+              element={<Orders />}
             />
 
             <Route

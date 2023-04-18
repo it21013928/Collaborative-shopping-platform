@@ -10,7 +10,7 @@ const createOrder = async(req, res) => {
 
         Status: req.body.status,
 
-        DeliveryStatus: req.body.delevary_status,
+        
 
         CustomerName: req.body.recieverName,
 
@@ -65,8 +65,8 @@ const updateOrder = async (req, res) => {
     //sendEmail("sahanpradeeptha@gmail.com", 'Your order has been updated', `Dear valued customer, Your order has been successfully delivered to you.`)
 
     if (order) {
-        order.isDelivered = true;
-        order.deliveredAt = Date.now();
+        
+        
         order.Status = "Completed";
 
         const updatedOrder = await order.save();
