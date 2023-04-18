@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const port = process.env.PORT;
+const port = process.env.PRODUCT_PORT;
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -20,6 +20,7 @@ app.use(cors());
 // Set up routes
 const productRoutes = require("./src/routes/productRoutes");
 app.use("/", productRoutes);
+
 // const userRoutes = require("./src/routes/userRoutes");
 // app.use("/", userRoutes);
 

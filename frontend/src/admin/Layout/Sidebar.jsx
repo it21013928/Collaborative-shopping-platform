@@ -166,6 +166,7 @@ const Sidebar = (props) => {
               sx={{ m: "15px 0 5px 20px" }}
             >
 
+{/* Product Sidebar Begin*/}
               Product
             </Typography>
             <Item
@@ -176,7 +177,7 @@ const Sidebar = (props) => {
               setSelected={setSelected}
             />
             <Item
-              title="Calendar"
+              title="View All Products"
               to="/calendar"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
@@ -189,8 +190,7 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
-
+{/* Product Sidebar End*/}
 
             <Typography
               variant="h6"

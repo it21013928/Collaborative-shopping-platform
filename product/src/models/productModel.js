@@ -26,10 +26,6 @@ const productSchema = new Schema({
     type: String,
     required: false,
   },
-  tag: {
-    type: [String],
-    required: false,
-  },
   rating: {
     type: Number,
     required: false,
@@ -46,14 +42,6 @@ const productSchema = new Schema({
     type: Boolean,
     required: false,
     default: true,
-  },
-  offerEnd: {
-    type: Date,
-    required: false,
-  },
-  discount: {
-    type: Number,
-    required: false,
   },
 });
 

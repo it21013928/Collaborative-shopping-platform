@@ -4,8 +4,19 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../Layout/Header";
 
+import React , {useState} from 'react';
+import Axios from 'axios';
+import {Link} from 'react-router-dom';
+
 const ProductInputForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const [productName , setProductName] = useState('');
+  const [price , setPrice] = useState();
+  const [quantity , setQuantity] = useState('');
+  const [shortDescription , setShortDescription] = useState('');
+  const [fullDescription , setFullDescription] = useState('');
+  const [category , setCategory] = useState('');
 
   const handleFormSubmit = (values) => {
     console.log(values);
@@ -109,13 +120,6 @@ const ProductInputForm = () => {
                 helperText={touched.fullDescription && errors.fullDescription}
                 sx={{ gridColumn: "span 4" }}
               />
-              <InputLabel htmlFor="my-input">  Select tags</InputLabel>
-              <FormControl sx={{ gridColumn: "span 2" }}>
-                <FormGroup>
-                  <FormControlLabel control={<Checkbox />} label="tag1" />
-                  <FormControlLabel control={<Checkbox />} label="tag1" />
-                </FormGroup>       
-              </FormControl>
           
           <InputLabel id="demo-simple-select-label">
             Select a Category
@@ -150,7 +154,7 @@ const ProductInputForm = () => {
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Insert a Product
               </Button>
             </Box>
           </form>
