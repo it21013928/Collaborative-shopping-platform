@@ -7,7 +7,7 @@ import Header from "../../../Layout/Header";
 import order from "../../../../api/order";
 import "./index.css";
 import Model from "react-modal";
-import { Axios } from "axios";
+import Axios from "axios";
 export default function () {
   const orderID = localStorage.getItem("orderID");
   console.log("FFFFFFFF" + orderID);
@@ -42,35 +42,38 @@ export default function () {
 
   const sendDataToAPI = async (e) => {
     console.log("AAAAAAAA");
+
     if (true) {
       const data = new FormData();
 
       data.append("imageRecipt", fileData);
-
+      console.log("BBBBBBBBBBBB");
+      console.log(fileData);
       fetch("http://localhost:8000/delivery/trackingBill", {
         method: "POST",
         body: data,
       })
         .then((result) => {
+          console.log(result);
           console.log("File sent successful");
           console.log(fileData);
-          setfileName("");
-          setFileData(null);
+          // setfileName("");
+          // setFileData(null);
         })
         .catch((error) => {
           console.log(error.message);
         });
-
+      console.log("CCCCCCCCCC");
       await Axios.post("http://localhost:8000/delivery/", {
         orderId,
         trackingNo,
         status,
         file,
       });
-
+      console.log("CCCCCCCCCC");
       setTimeout(() => {
         window.location = "/dashboard";
-      }, 3000);
+      }, 300);
     }
   };
 
