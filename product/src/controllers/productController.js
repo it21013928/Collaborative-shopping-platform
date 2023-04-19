@@ -11,23 +11,22 @@ const createProduct = async (req, res) => {
       image,
       shortDescription,
       fullDescription,
-      tag,
       rating,
       category,
       newItem,
-      discount,
+      date,
     } = req.body;
 
     // Check name price quantity is empty
-    if (!id || !name || !price || !quantity) {
+    if (!productId || !name || !price || !quantity) {
       return res.status(400).json({
         message: "Product id, name, price, quantity fields must be filled",
       });
     }
 
     // Check product already exists
-    const productName = await Product.findOne({ name });
-    if (productName) {
+    const id = await Product.findOne({ productId });
+    if (id) {
       return res.status(401).json({ message: "Product already exists." });
     }
 
@@ -40,22 +39,19 @@ const createProduct = async (req, res) => {
       image,
       shortDescription,
       fullDescription,
-      tag,
       rating,
       category,
       newItem,
-      discount,
+      date,
     });
     await product.save();
 
-    res
-      .status(201)
-      .json({
-        productId: productId,
-        name: name,
-        quantity: quantity,
-        price: price,
-      });
+    res.status(201).json({
+      productId: productId,
+      name: name,
+      quantity: quantity,
+      price: price,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -86,9 +82,7 @@ const getProductByName = async (req, res) => {
   try {
     // Find product
     const product = await Product.findOne({ name: productName }).exec();
-    // const product = Product.find(
-    //   (product) => product.name.toLowerCase() === productName.toLowerCase()
-    // );
+
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -133,13 +127,10 @@ const updateProduct = async (req, res) => {
       image,
       shortDescription,
       fullDescription,
-      tag,
       rating,
       category,
       saleCount,
       newItem,
-      offerDate,
-      discount,
     } = req.body;
 
     // Find product by ID

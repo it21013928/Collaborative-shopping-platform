@@ -19,7 +19,7 @@ const productSchema = new Schema({
     required: true,
   },
   image: {
-    type: [String],
+    type: String,
     required: false,
   },
   shortDescription: {
@@ -46,6 +46,11 @@ const productSchema = new Schema({
     type: Boolean,
     required: false,
     default: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+    $dateToString: { fromat: "%Y-%m-%d %H:%M" },
   },
 });
 
