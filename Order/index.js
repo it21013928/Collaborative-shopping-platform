@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require("express");
 require("dotenv").config();
 const cors = require("cors");
 const port = process.env.PORT;
@@ -20,8 +20,6 @@ app.use(cors());
   return res.status(200).json({"msg": "Hello from order"})   
 })*/
 
-
-
 // Connect to the database
 mongoose
   .connect(process.env.MONGO_URI)
@@ -35,7 +33,6 @@ mongoose
     console.log(error);
   });
 
-
-  //Routes
-  const orderRoutes = require("./src/routes/orderRoutes")
-  app.use("/", orderRoutes)
+//Routes
+const orderRoutes = require("./src/routes/orderRoutes");
+app.use("/", orderRoutes);

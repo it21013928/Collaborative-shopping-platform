@@ -42,14 +42,14 @@ export default function () {
 
   const sendDataToAPI = async (e) => {
     console.log("AAAAAAAA");
-
+    e.preventDefault();
     if (true) {
       const data = new FormData();
 
-      data.append("imageRecipt", fileData);
+      data.append("image", fileData);
       console.log("BBBBBBBBBBBB");
       console.log(fileData);
-      fetch("http://localhost:8000/delivery/trackingBill", {
+      fetch("http://localhost:8002/trackingBill", {
         method: "POST",
         body: data,
       })
@@ -71,9 +71,6 @@ export default function () {
         file,
       });
       console.log("CCCCCCCCCC");
-      setTimeout(() => {
-        window.location = "/dashboard";
-      }, 300);
     }
   };
 
