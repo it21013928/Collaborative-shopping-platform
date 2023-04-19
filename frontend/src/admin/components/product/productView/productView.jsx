@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
-import { getProducts } from "../../../api/product";
-import Header from "../../Layout/Header";
+import { tokens } from "../../../theme";
+// import { mockDataContacts } from "../../../../data/mockData";
+import { getProducts } from "../../../../api/product";
+// import Header from "../../../../Layout/Header";
 import { useTheme } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
 

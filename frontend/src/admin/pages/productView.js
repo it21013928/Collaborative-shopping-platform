@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "../Layout/Topbar";
 import Sidebar from "../Layout/Sidebar";
 import Form from "../components/form";
-import ProductView from "../components/product/productView";
+import ProductView from "../components/product/productView/productView";
 import { Box } from "@mui/material";
 import Header from "../Layout/Header";
 

@@ -1,34 +1,17 @@
-import { Box, Button, TextField, InputLabel, Select, useTheme } from "@mui/material";
-import { Formik } from "formik";
-// import { tokens } from "../../../theme";
-import * as yup from "yup";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../Layout/Header";
-
-import React , {useState} from 'react';
-import Axios from 'axios';
-import {Link} from 'react-router-dom';
-
-function convertToBase64(file){
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result)
-    };
-    fileReader.onerror = (error) => {
-      reject(error)
-    }
-  })
-}
-
+import { Box, Button, IconButton, TextField, InputLabel, Select, Typography, useTheme, Input } from "@mui/material";
+import { tokens } from "../../../theme";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import { useEffect, useState } from "react";
+import Header from "../../../Layout/Header";
+import './prodcutInputcss.css';
+import avatar from '../../../assets/product/profile.png';
+import Axios from "axios";
 
 const ProductInputForm = () => {
 
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-
-  const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [productId , setProductId] = useState('');
   const [name , setName] = useState('');
@@ -36,30 +19,49 @@ const ProductInputForm = () => {
   const [quantity , setQuantity] = useState('');
   const [shortDescription , setShortDescription] = useState('');
   const [fullDescription , setFullDescription] = useState('');
-  const [category , setCategory] = useState('');
+  const [category , setCategory] = useState(null);
   const [image, setImage] = useState("");
   const [imageName, setImageName] = useState("");
+  
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image};
+    console.log(product);
+
+    fetch('http://localhost:8002/product/create', {
+      method: 'POST',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify(product)
+    }).then(() => {
+      console.log('new product added');
+      // window.location = "/productView";
+    })
   };
 
   const handleFileUpload = async (e) => {
-    const file = e.target;
+    const file = e.target.files[0];
     console.log(file);
-    // const base64 = await convertToBase64(file);
-    // console.log(base64)
-    // setPostImage({ ...postImage, myFile : base64 })
+    const base64 = await convertToBase64(file);
+    setImage(base64)
   }
 
-  const handleChange = (e) => {
-    // setFileData(e.target.files[0]);
-    // setfileName(e.target.files[0].name);
-  };
+  // const handleFileUpload = async (e) => {
+    
+  //   const file = e.target;
+  //   console.log(file);
+  //   // const base64 = await convertToBase64(file);
+  //   // console.log(base64)
+  //   // setPostImage({ ...postImage, myFile : base64 })
+  // }
 
+  // const handleChange = (e) => {
+  //   // setFileData(e.target.files[0]);
+  //   // setfileName(e.target.files[0].name);
+  // };
 
   return (
-    <Box m="20px">
+        <Box m="20px">
       <Header title="INSERT A PRODUCT" subtitle="Insert a New Product" />
 
           <form onSubmit={handleFormSubmit}>
@@ -67,17 +69,16 @@ const ProductInputForm = () => {
               display="grid"
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
+              sx={{ gridColumn: "span 4" }}
             >
               {/* <InputLabel htmlFor="my-input">Product Name</InputLabel> */}
               <TextField
                 fullWidth
+                required
                 variant="filled"
                 type="text"
                 label="Product ID"
-                onChange={handleChange}
+                onChange={(e) => setProductId(e.target.value)}
                 value={productId}
                 name="productId"
                 sx={{ gridColumn: "span 2" }}
@@ -85,10 +86,11 @@ const ProductInputForm = () => {
 
               <TextField
                 fullWidth
+                required
                 variant="filled"
                 type="text"
                 label="Product Name"
-                onChange={handleChange}
+                onChange={(e) => setName(e.target.value)}
                 value={name}
                 name="name"
                 sx={{ gridColumn: "span 2" }}
@@ -96,10 +98,11 @@ const ProductInputForm = () => {
 
               <TextField
                 fullWidth
+                required
                 variant="filled"
-                type="text"
+                type="number"
                 label="Quantity"
-                onChange={handleChange}
+                onChange={(e) => setQuantity(e.target.value)}
                 value={quantity}
                 name="quantity"
                 sx={{ gridColumn: "span 2" }}
@@ -107,10 +110,11 @@ const ProductInputForm = () => {
 
               <TextField
                 fullWidth
+                required
                 variant="filled"
-                type="text"
+                type="number"
                 label="Price"
-                onChange={handleChange}
+                onChange={(e) => setPrice(e.target.value)}
                 value={price}
                 name="price"
                 sx={{ gridColumn: "span 2" }}
@@ -122,7 +126,7 @@ const ProductInputForm = () => {
                 variant="filled"
                 type="text"
                 label="Short Description"
-                onChange={handleChange}
+                onChange={(e) => setShortDescription(e.target.value)}
                 value={shortDescription}
                 name="shortDescription"
                 sx={{ gridColumn: "span 4" }}
@@ -134,42 +138,46 @@ const ProductInputForm = () => {
                 variant="filled"
                 type="text"
                 label="Full Description"
-                onChange={handleChange}
+                onChange={(e) => setFullDescription(e.target.value)}
                 value={fullDescription}
                 name="fullDescription"
                 sx={{ gridColumn: "span 4" }}
               />
           
-              <InputLabel id="demo-simple-select-label">
+              <label id="demo-simple-select-label">
                 Select a Category
-              </InputLabel>
-              <Select
+              </label>
+              <select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                onChange={handleChange}
+                onChange={(e) => setCategory(e.target.value)}
                 value={category}
                 name="category"
                 sx={{ gridColumn: "span 1" }}
               >
-                <option value={null}>Select a Category</option>
+                <option value={null}>Select an Option</option>
                 <option value={1}>Category 1</option>
                 <option value={2}>Category 2</option>
-              </Select>
+              </select>
           
-              <InputLabel htmlFor="my-input">Image</InputLabel>
-              {/* <FormControl sx={{ gridColumn: "span 1" }}> */}
-                <input 
-                  id="raised-button-file"
-                  type="file"
-                  name="image"
-                  accept=".jpeg, .png, .jpg"
-                  onchange={(e) => handleFileUpload(e)}
-                  style={{ display: "none" }}
-                  sx={{ gridColumn: "span 1" }}
-                />
+              <label>Image</label>
 
-<button type='submit'>Upload image</button>
-              {/* </FormControl> */}
+          <label htmlFor="img-upload" className='custom-file-upload'>
+            <img src={avatar} alt="" />
+          </label>
+
+          <input
+          id="img-upload"
+          type="file"
+          name="myFile"
+          lable="Image"
+          accept='.jpeg, .png, .jpg'
+          onChange={(e) => handleFileUpload(e)}
+          style={{ display: "none" }}
+          sx={{ gridColumn: "span 1" }}
+         />
+
+{/* <button htmlFor="img-upload" >Upload image</button> */}
 
             </Box>
 
@@ -184,26 +192,17 @@ const ProductInputForm = () => {
   );
 };
 
-const checkoutSchema = yup.object().shape({
-  productId: yup.string().required("required"),
-  name: yup.string().required("required"),
-  quantity: yup.string().required("required"),
-  price: yup.string().required("required"),
-  // contact: yup
-  //   .string()
-  //   .matches(phoneRegExp, "Phone number is not valid")
-  //   .required("required"),
-});
-
-const initialValues = {
-  productId: "",
-  name: "",
-  quantity: "",
-  price: "",
-  shortDescription: "",
-  fullDescription: "",
-};
-
 export default ProductInputForm;
 
-
+function convertToBase64(file){
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    };
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+}
