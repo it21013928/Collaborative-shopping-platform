@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "../Layout/Topbar";
 import Sidebar from "../Layout/Sidebar";
 import Form from "../components/form";
+import ProductView from "../components/product/productView/productView";
 import { Box } from "@mui/material";
 import Header from "../Layout/Header";
 
@@ -20,7 +21,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Profile Form"} />
+            <Sidebar selected={"View All Products"} />
           </div>
           <main className="content">
             <Topbar />
@@ -31,10 +32,10 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header title="FORM" subtitle="Welcome to your form" />
+                <Header title="PRODUCTS" subtitle="View All Products" />
               </Box>
               {/* ///////////////////////////////////////////////////////////////////////////////////////////////////// */}
-              <Form />
+              <ProductView />
             </Box>
           </main>
         </div>

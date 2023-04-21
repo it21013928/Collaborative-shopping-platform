@@ -165,6 +165,39 @@ const Sidebar = (props) => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
+
+{/* Product Sidebar Begin*/}
+              Product
+            </Typography>
+            <Item
+              title="Product Insert Form"
+              to="/form"
+              icon={<PersonOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="View All Products"
+              to="/calendar"
+              icon={<CalendarTodayOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="FAQ Page"
+              to="/faq"
+              icon={<HelpOutlineOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+{/* Product Sidebar End*/}
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+
               Pages
             </Typography>
             <Item
