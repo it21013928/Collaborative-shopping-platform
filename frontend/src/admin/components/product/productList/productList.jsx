@@ -1,33 +1,44 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-// import { mockDataContacts } from "../../../../data/mockData";
-import { getProducts } from "../../../../api/product";
-// import Header from "../../../../Layout/Header";
 import { useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
+import product from "../../../../api/product";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const service = new product();
   const [products, setProducts] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await getProducts();
-        await setProducts(response);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await getProducts();
+  //       await setProducts(response);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchProducts();
+  //   fetchProducts();
+  // }, []);
+
+  // useEffect(() => {
+  // }, [products]);
+
+  
+  useEffect( async () => {
+    await service.getProducts().then((Productdetails) => {
+    setProducts(Productdetails.data);
+    console.log(Productdetails.data);
+    });
   }, []);
 
-  useEffect(() => {
-  }, [products]);
+  useEffect(() => {}, [products]);
+
 
   const columns = [
     { 
@@ -50,18 +61,8 @@ const Products = () => {
       flex: 1,
     },
     {
-      field: "shortDescription",
-      headerName: "Short Description",
-      flex: 2,
-    },
-    {
       field: "saleCount",
       headerName: "Sale Count",
-      flex: 1,
-    },
-    {
-      field: "rating",
-      headerName: "Rating",
       flex: 1,
     },
     {
@@ -69,9 +70,31 @@ const Products = () => {
       headerName: "Category",
       flex: 1,
     },
+    {
+      field: "userId",
+      headerName: "User ID",
+      flex: 1,
+    },
+    {
+      field: "button",
+      headerName: "",
+      width: 100,
+      renderCell: (params) => {
+        return (
+          <Link to={{ pathname: `/factory-details/${params.row._id}`}}>
+            <Button color="secondary">View Details</Button>
+          </Link>
+          
+        );
+      },
+    },
   ];
 
+  const getRowId = (row) => row.productId;
+  
+  
   return (
+    
     <Box m="0">
       <Box
         m="0 0 0 0"
@@ -109,7 +132,10 @@ const Products = () => {
         <DataGrid
           rows={products}
           columns={columns}
+          getRowId={getRowId}
           components={{ Toolbar: GridToolbar }}
+          
+          
         />
         : (
           <p>Loading...</p>

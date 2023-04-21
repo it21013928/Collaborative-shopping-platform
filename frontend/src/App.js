@@ -41,7 +41,7 @@ const Tracking = lazy(() => import("./admin/pages/tracking"));
 
 //Product
 const ProductInput = lazy(() => import("./admin/pages/productInput"));
-const ProductView = lazy(() => import("./admin/pages/productView"));
+const ProductList = lazy(() => import("./admin/pages/productList"));
 
 const App = () => {
   return (
@@ -139,8 +139,8 @@ const App = () => {
               element={<ProductInput />}
             />
             <Route
-              path={process.env.PUBLIC_URL + "/productView"}
-              element={<ProductView />}
+              path={process.env.PUBLIC_URL + "/productList"}
+              element={<ProductList />}
             />
             {/* Product End*/}
             <Route path="*" element={<NotFound />} />

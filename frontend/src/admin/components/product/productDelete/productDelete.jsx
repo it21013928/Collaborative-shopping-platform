@@ -1,4 +1,5 @@
-import { Box, Button, IconButton, TextField, InputLabel, Select, Typography, useTheme, Input } from "@mui/material";
+import React from "react";
+import { Box, Button, useTheme, Modal, style } from "@mui/material";
 import { tokens } from "../../../theme";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
@@ -12,6 +13,10 @@ const ProductDeleteForm = ({id}) => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
     const handleDeleteSubmit = async (e) => {
         e.preventDefault()
@@ -31,16 +36,23 @@ const ProductDeleteForm = ({id}) => {
     }
 
   return (
-    <Box m="20px">
-      <Header title="Delete A PRODUCT" subtitle="Update an existing Product" />
-
-      <Box display="flex" justifyContent="end" mt="20px">
-        <Button type="submit" color="secondary" variant="contained">
-          Delete this Product
-        </Button>
+    <div class="DeleteModal">
+      <Button onClick={handleOpen}>Delete</Button>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
+      <Box sx={{ ...style, width: 400 }}>
+        <h2 id="parent-modal-title">Delete this Product</h2>
+        <p id="parent-modal-description">
+          Are you sure want to remove this product?
+        </p>
+        <Button onClick={handleDeleteSubmit}>Remove</Button>
       </Box>
-
-    </Box>
+    </Modal></div>
+    
   );
 };
 

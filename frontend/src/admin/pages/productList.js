@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Topbar from "../Layout/Topbar";
 import Sidebar from "../Layout/Sidebar";
 import Form from "../components/form";
-import ProductView from "../components/product/productView/productView";
+import ProductList from "../components/product/productList/productList";
 import { Box } from "@mui/material";
 import Header from "../Layout/Header";
 
@@ -35,7 +35,7 @@ export default function () {
                 <Header title="PRODUCTS" subtitle="View All Products" />
               </Box>
               {/* ///////////////////////////////////////////////////////////////////////////////////////////////////// */}
-              <ProductView />
+              <ProductList />
             </Box>
           </main>
         </div>
