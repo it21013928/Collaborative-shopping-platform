@@ -6,8 +6,13 @@ class ToDoService {
     return await axios.get(url);
   };
 
-  getProducts() {
+  getAllProducts() {
     const url = `http://localhost:8002/product/`;
+    return this.request(url);
+  }
+
+  getProduct() {
+    const url = `http://localhost:8002/product/:id`;
     return this.request(url);
   }
 }

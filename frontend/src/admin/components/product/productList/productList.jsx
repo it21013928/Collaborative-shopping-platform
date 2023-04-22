@@ -4,7 +4,7 @@ import { tokens } from "../../../theme";
 import { useTheme } from "@mui/material";
 import { React, useEffect, useState } from "react";
 import product from "../../../../api/product";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Products = () => {
   const theme = useTheme();
@@ -31,7 +31,7 @@ const Products = () => {
 
   
   useEffect( async () => {
-    await service.getProducts().then((Productdetails) => {
+    await service.getAllProducts().then((Productdetails) => {
     setProducts(Productdetails.data);
     console.log(Productdetails.data);
     });
@@ -81,7 +81,7 @@ const Products = () => {
       width: 100,
       renderCell: (params) => {
         return (
-          <Link to={{ pathname: `/factory-details/${params.row._id}`}}>
+          <Link to={{ pathname: `/productDetails/${params.row._id}`}}>
             <Button color="secondary">View Details</Button>
           </Link>
           

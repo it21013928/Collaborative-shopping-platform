@@ -149,7 +149,6 @@ const updateProduct = async (req, res) => {
     product.fullDescription = fullDescription || product.fullDescription;
     product.rating = rating || product.rating;
     product.category = category || product.category;
-    product.userId = userId || product.userId;
 
     await product.save();
     res.json({ message: "Product updated successfully" });

@@ -1,41 +1,113 @@
-import { Box, Button, IconButton, TextField, InputLabel, Select, Typography, useTheme, Input } from "@mui/material";
+import React from "react";
+import { Box, Button, TextField, useTheme, Modal } from "@mui/material";
 import { tokens } from "../../../theme";
-import { useState } from "react";
+import { useEffect, useState, useParams } from "react";
 import Header from "../../../Layout/Header";
-import './prodcutInputcss.css';
 import avatar from '../../../assets/product/profile.png';
-import { useNavigate } from "react-router-dom";
 
-const ProductInputForm = () => {
+const ProductUpdateForm = () => {
 
-  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [productId , setProductId] = useState('');
   const [name , setName] = useState('');
-  const [price , setPrice] = useState();
+  const [price , setPrice] = useState('');
   const [quantity , setQuantity] = useState('');
   const [shortDescription , setShortDescription] = useState('');
   const [fullDescription , setFullDescription] = useState('');
   const [category , setCategory] = useState(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
   
-  const handleFormSubmit = (e) => {
+  const { id } = useParams()
+
+  const [product, setProduct] = useState(
+    {
+      productId: "",
+      name: "",
+      price: "",
+      quantity: "",
+      shortDescription: "",
+      fullDescription: "",
+      category: "",
+      image: "",
+      __v: 0,
+      _id: ""
+    })
+
+    useEffect(() => {
+      const fetchProduct = async () => {
+        const response = await fetch(`/product/${id}`)
+        const json = await response.json()
+  
+        if (response.ok) {
+  
+          setProduct(
+            {
+              productId: `${json["productId"]}`,
+              name: `${json["name"]}`,
+              price: `${json["price"]}`,
+              quantity: `${json["quantity"]}`,
+              shortDescription: `${json["shortDescription"]}`,
+              fullDescription: `${json["fullDescription"]}`,
+              category: `${json["category"]}`,
+              image: `${json["image"]}`,
+              __v: 0,
+              _id: `${json["_id"]}`
+            })
+          
+          setProductId(json["productId"])
+          setName(json["name"])
+          setPrice(json["price"])
+          setQuantity(json["quantity"])
+          setShortDescription(json["shortDescription"])
+          setFullDescription(json["fullDescription"])
+          setCategory(json["category"])
+          setImage(json["image"])
+
+        } else {
+          console.log("failed")
+        }  
+      } 
+      fetchProduct() 
+    }, [setProduct])
+
+
+  const handleUpdateSubmit = async (e) => {
     e.preventDefault();
 
-    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image};
-    console.log(product);
-
-    fetch('http://localhost:8002/product/create', {
-      method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify(product)
-    }).then(() => {
-      console.log('new product added');
-      navigate("/productList");
+    const response = await fetch('http://localhost:8002//product/' + id, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        productId: productId,
+        name: name,
+        price: price,
+        quantity: quantity,
+        shortDescription: shortDescription,
+        fullDescription: fullDescription,
+        category: category,
+        image: image,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
     })
-  };
+
+    const json = await response.json()
+
+    if (!response.ok) {
+      console.log(json.error)
+    }
+
+    if (response.ok) {
+      console.log('Product updated successfully.', json)
+      window.location.reload();
+    }
+  }
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -44,25 +116,23 @@ const ProductInputForm = () => {
     setImage(base64)
   }
 
-  // const handleFileUpload = async (e) => {
-    
-  //   const file = e.target;
-  //   console.log(file);
-  //   // const base64 = await convertToBase64(file);
-  //   // console.log(base64)
-  //   // setPostImage({ ...postImage, myFile : base64 })
-  // }
-
-  // const handleChange = (e) => {
-  //   // setFileData(e.target.files[0]);
-  //   // setfileName(e.target.files[0].name);
-  // };
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
         <Box m="20px">
-      <Header title="INSERT A PRODUCT" subtitle="Insert a New Product" />
+      <Header title="UPADATE A PRODUCT" subtitle="Update an existing Product" />
 
-          <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleOpen}>
             <Box
               display="grid"
               gap="30px"
@@ -77,7 +147,7 @@ const ProductInputForm = () => {
                 type="text"
                 label="Product ID"
                 onChange={(e) => setProductId(e.target.value)}
-                value={productId}
+                value={product["productId"]}
                 name="productId"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -89,7 +159,7 @@ const ProductInputForm = () => {
                 type="text"
                 label="Product Name"
                 onChange={(e) => setName(e.target.value)}
-                value={name}
+                value={product["name"]}
                 name="name"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -101,7 +171,7 @@ const ProductInputForm = () => {
                 type="number"
                 label="Quantity"
                 onChange={(e) => setQuantity(e.target.value)}
-                value={quantity}
+                value={product["quantity"]}
                 name="quantity"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -113,7 +183,7 @@ const ProductInputForm = () => {
                 type="number"
                 label="Price"
                 onChange={(e) => setPrice(e.target.value)}
-                value={price}
+                value={product["price"]}
                 name="price"
                 sx={{ gridColumn: "span 2" }}
               />
@@ -125,7 +195,7 @@ const ProductInputForm = () => {
                 type="text"
                 label="Short Description"
                 onChange={(e) => setShortDescription(e.target.value)}
-                value={shortDescription}
+                value={product["shortDescription"]}
                 name="shortDescription"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -137,7 +207,7 @@ const ProductInputForm = () => {
                 type="text"
                 label="Full Description"
                 onChange={(e) => setFullDescription(e.target.value)}
-                value={fullDescription}
+                value={product["fullDescription"]}
                 name="fullDescription"
                 sx={{ gridColumn: "span 4" }}
               />
@@ -149,7 +219,7 @@ const ProductInputForm = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={(e) => setCategory(e.target.value)}
-                value={category}
+                value={product["category"]}
                 name="category"
                 sx={{ gridColumn: "span 1" }}
               >
@@ -181,16 +251,35 @@ const ProductInputForm = () => {
 
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
-                    Insert a Product
+                    Update a Product
                   </Button>
                 </Box>
+
+                <div class="UpdateModal">
+      
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
+      <Box sx={{ ...style, width: 400 }}>
+        <h2 id="parent-modal-title">Update this Product</h2>
+        <p id="parent-modal-description">
+          Are you sure want to update this product?
+        </p>
+        <Button onClick={handleUpdateSubmit}>Update</Button>
+      </Box>
+    </Modal></div>
+
+    
           </form>
 
     </Box>
   );
 };
 
-export default ProductInputForm;
+export default ProductUpdateForm;
 
 function convertToBase64(file){
   return new Promise((resolve, reject) => {
