@@ -36,3 +36,7 @@ mongoose
 //Routes
 const orderRoutes = require("./src/routes/orderRoutes");
 app.use("/", orderRoutes);
+
+//Order products Routes
+const orderProductRoutes = require("./src/routes/orderedProductsRoutes");
+app.use("/orderProduct", orderProductRoutes);

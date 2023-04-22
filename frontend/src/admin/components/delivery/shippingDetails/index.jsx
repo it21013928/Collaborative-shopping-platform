@@ -9,30 +9,47 @@ import "./index.css";
 import Model from "react-modal";
 import Axios from "axios";
 export default function () {
-  const orderID = localStorage.getItem("orderID");
-  console.log("FFFFFFFF" + orderID);
+  // const orderID = localStorage.getItem("orderID");
+  // console.log("FFFFFFFF" + orderID);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const service = new order();
 
-  const [orders, setOrders] = useState(null);
-  const [orderId, setOrderID] = useState("dsdsdsd");
+  const [singleOrder, setSingleOrder] = useState("");
+  const [productList, setProductList] = useState(null);
+  const [orderId, setOrderID] = useState();
   const [trackingNo, setTrackingNo] = useState();
   const [file, setfileName] = useState("");
   const [status, setStatus] = useState("shipped");
   const [visible, setVisible] = useState(false);
   const [fileData, setFileData] = useState(null);
   const [fileExtension, setfileExtension] = useState("");
+
+  // setOrderID(localStorage.getItem("orderID"));
+
   useEffect(async () => {
-    await service.getPaidOrders().then((Orderdetails) => {
-      setOrders(Orderdetails.data);
-      console.log(Orderdetails.data);
-    });
+    await service
+      .getSingleOrder(localStorage.getItem("orderID"))
+      .then((Orderdetails) => {
+        setSingleOrder(Orderdetails.data[0]);
+        console.log(Orderdetails.data[0]);
+      });
   }, []);
 
-  useEffect(() => {}, [orders]);
+  useEffect(() => {}, [singleOrder]);
+
+  useEffect(async () => {
+    await service
+      .getOrderProducts(localStorage.getItem("orderID"))
+      .then((Productdetails) => {
+        setProductList(Productdetails.data);
+        console.log(Productdetails.data);
+      });
+  }, []);
+
+  useEffect(() => {}, [productList]);
 
   const handleButtonClick = (id) => {
     localStorage.setItem("orderID", id);
@@ -40,6 +57,9 @@ export default function () {
     // perform action with the id
   };
 
+  console.log("AAAAAAAAAAAAAAAAAAA");
+  console.log(singleOrder.CustomerID);
+  // console.log(singleOrder[0].CustomerID);
   const sendDataToAPI = async (e) => {
     console.log("AAAAAAAA");
     e.preventDefault();
@@ -63,7 +83,7 @@ export default function () {
         .catch((error) => {
           console.log(error.message);
         });
-      console.log("CCCCCCCCCC");
+
       await Axios.post("http://localhost:8000/delivery/", {
         orderId,
         trackingNo,
@@ -76,47 +96,22 @@ export default function () {
 
   const columns = [
     {
-      field: "_id",
-      headerName: "Order ID",
+      field: "ProductID",
+      headerName: "Product ID",
       flex: 1,
     },
     {
-      field: "CustomerID",
-      headerName: "Customer ID",
+      field: "ProductName",
+      headerName: "Product Name",
       flex: 1,
     },
     {
-      field: "CustomerName",
-      headerName: "Customer Name",
+      field: "Quantity",
+      headerName: "Quantity",
       flex: 1,
-    },
-    {
-      field: "Date",
-      headerName: "Date",
-      flex: 1,
-    },
-    {
-      field: "Status",
-      headerName: "Status",
-      flex: 1,
-    },
-    {
-      field: "button",
-      headerName: "",
-      width: 100,
-      renderCell: (params) => {
-        return (
-          <Button
-            color="secondary"
-            onClick={() => handleButtonClick(params.row._id)}
-          >
-            Ship now
-          </Button>
-        );
-      },
     },
   ];
-  const getRowId = (row) => row.CustomerID;
+  const getRowId = (row) => row._id;
 
   const fileChangeHandler = (e) => {
     setFileData(e.target.files[0]);
@@ -212,7 +207,8 @@ export default function () {
                   color={colors.grey[100]}
                   style={{ display: "inline" }}
                 >
-                  Place order ID
+                  {/* {singleOrder[0]._id} */}
+                  {singleOrder._id}
                 </Typography>
               </div>
               <div className="spacer">
@@ -229,25 +225,7 @@ export default function () {
                   variant="h5"
                   style={{ display: "inline" }}
                 >
-                  Place order Date
-                </Typography>
-              </div>
-              <div className="spacer">
-                <Typography
-                  style={{ display: "inline" }}
-                  variant="h4"
-                  fontWeight="400"
-                  color={colors.grey[100]}
-                >
-                  Customer id :
-                </Typography>
-                {"  "}
-                <Typography
-                  color={colors.grey[100]}
-                  variant="h5"
-                  style={{ display: "inline" }}
-                >
-                  Place customer ID
+                  {singleOrder.Date}
                 </Typography>
               </div>
               <div className="spacer">
@@ -264,7 +242,7 @@ export default function () {
                   variant="h5"
                   style={{ display: "inline" }}
                 >
-                  Place current status
+                  {singleOrder.Status}
                 </Typography>
               </div>
               <div className="spacer">
@@ -282,7 +260,7 @@ export default function () {
                   variant="h5"
                   style={{ display: "inline" }}
                 >
-                  Place reciever name
+                  {singleOrder.CustomerName}
                 </Typography>
               </div>
               <div className="spacer">
@@ -300,7 +278,7 @@ export default function () {
                   variant="h5"
                   style={{ display: "inline" }}
                 >
-                  Place reciever address
+                  {singleOrder.ShipingAddress}
                 </Typography>
               </div>
               <div className="spacer">
@@ -318,7 +296,7 @@ export default function () {
                   variant="h5"
                   style={{ display: "inline" }}
                 >
-                  Place Contact Number
+                  {singleOrder.Phone}
                 </Typography>
               </div>
               <div style={{ marginBottom: "15px", marginTop: "15px" }}>
@@ -366,9 +344,9 @@ export default function () {
                   },
                 }}
               >
-                {orders ? (
+                {productList ? (
                   <DataGrid
-                    rows={orders}
+                    rows={productList}
                     columns={columns}
                     getRowId={getRowId}
                   />

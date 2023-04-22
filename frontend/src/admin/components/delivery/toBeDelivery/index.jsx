@@ -75,7 +75,7 @@ export default function () {
       },
     },
   ];
-  const getRowId = (row) => row.CustomerID;
+  const getRowId = (row) => row._id;
   return (
     <Box m="20px">
       <Header title="TEAM" subtitle="Managing the Team Members" />

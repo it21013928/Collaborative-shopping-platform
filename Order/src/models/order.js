@@ -4,9 +4,8 @@ const orderSchema = mongoose.Schema({
   CustomerID: { type: String },
   Status: { type: String },
   Date: {
-    type: Date,
-    default: Date.now,
-    $dateToString: { fromat: "%Y-%m-%d %H:%M" },
+    type: String,
+    default: () => new Date().toISOString().slice(0, 10),
   },
   CustomerName: { type: String },
   ShipingAddress: { type: String },

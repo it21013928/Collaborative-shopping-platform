@@ -15,5 +15,13 @@ class ToDoService {
     const url = `http://localhost:8000/orders/paidOrders`;
     return this.request(url);
   }
+  getSingleOrder(orderID) {
+    const url = `http://localhost:8000/orders/getorderbyorderid/${orderID}`;
+    return this.request(url);
+  }
+  getOrderProducts(orderID) {
+    const url = `http://localhost:8000/orders/orderProduct/view/${orderID}`;
+    return this.request(url);
+  }
 }
 export default ToDoService;
