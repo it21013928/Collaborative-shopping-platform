@@ -197,6 +197,13 @@ const Sidebar = (props) => {
               Users
             </Typography>
             <Item
+              title="Create"
+              to="/create-user"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Moderators"
               to="/moderators"
               icon={<PeopleOutlinedIcon />}

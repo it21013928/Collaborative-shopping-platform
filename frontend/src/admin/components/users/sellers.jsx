@@ -2,16 +2,36 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
+import { getSellers } from "../../../api/user";
 import Header from "../../Layout/Header";
 import { useTheme } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
 
 const Sellers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const [sellers, setSellers] = useState(null);
+
+  useEffect(() => {
+    const fetchSellers = async () => {
+      try {
+        const response = await getSellers();
+        await setSellers(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchSellers();
+  }, []);
+
+  useEffect(() => {
+    // console.log(customers);
+  }, [sellers]);
+
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "id", headerName: "ID", flex: 2 },
     {
       field: "name",
       headerName: "Name",
@@ -19,11 +39,9 @@ const Sellers = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "email",
+      headerName: "Email",
+      flex: 1,
     },
     {
       field: "phone",
@@ -31,14 +49,9 @@ const Sellers = () => {
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
       field: "address",
       headerName: "Address",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "city",
@@ -50,17 +63,18 @@ const Sellers = () => {
       headerName: "Zip Code",
       flex: 1,
     },
+    {
+      field: "role",
+      headerName: "Role",
+      flex: 1,
+    },
   ];
 
   return (
-    <Box m="20px">
-      <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+    <Box m="0">
       <Box
-        m="40px 0 0 0"
-        height="75vh"
+        m="0 0 0 0"
+        height="100vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -90,11 +104,15 @@ const Sellers = () => {
           },
         }}
       >
+        {sellers ?
         <DataGrid
-          rows={mockDataContacts}
+          rows={sellers}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
+        : (
+          <p>Loading...</p>
+        )}
       </Box>
     </Box>
   );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Topbar from "../Layout/Topbar";
 import Sidebar from "../Layout/Sidebar";
-import Sellers from "../components/users/sellers";
+import UserForm from "../components/userForm";
 import { Box } from "@mui/material";
 import Header from "../Layout/Header";
 
@@ -19,7 +19,9 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"Contacts Information"} />
+          <div className="slideBar">
+            <Sidebar selected={"Profile Form"} />
+          </div>
           <main className="content">
             <Topbar />
             <Box m="20px">
@@ -29,12 +31,9 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header
-                  title="Sellers"
-                  subtitle="List of Sellers"
-                />
+                <Header title="CREATE USER" subtitle="Create a New User Profile" />
               </Box>
-              <Sellers />
+              <UserForm />
             </Box>
           </main>
         </div>
