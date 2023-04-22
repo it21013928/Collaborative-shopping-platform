@@ -170,26 +170,20 @@ const Sidebar = (props) => {
               Product
             </Typography>
             <Item
-              title="Product Insert Form"
-              to="/form"
+              title="Insert a Product"
+              to="/productInput"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="View All Products"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+              to="/productList"
+              icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
 {/* Product Sidebar End*/}
 
             <Typography

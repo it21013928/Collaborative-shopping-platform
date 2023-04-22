@@ -21,7 +21,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Product Insert Form"} />
+            <Sidebar selected={"Insert a Product"} />
           </div>
           <main className="content">
             <Topbar />

@@ -9,18 +9,14 @@ const TabProduct = ({
   spaceTopClass,
   spaceBottomClass,
   bgColorClass,
-  category,
+  category
 }) => {
   return (
     <div
-      className={clsx(
-        "product-area",
-        spaceTopClass,
-        spaceBottomClass,
-        bgColorClass
-      )}
+      className={clsx("product-area", spaceTopClass, spaceBottomClass, bgColorClass)}
     >
       <div className="container">
+        <SectionTitle titleText="DAILY DEALS!" positionClass="text-center" />
         <Tab.Container defaultActiveKey="bestSeller">
           <Nav
             variant="pills"
@@ -84,7 +80,7 @@ TabProduct.propTypes = {
   bgColorClass: PropTypes.string,
   category: PropTypes.string,
   spaceBottomClass: PropTypes.string,
-  spaceTopClass: PropTypes.string,
+  spaceTopClass: PropTypes.string
 };
 
 export default TabProduct;

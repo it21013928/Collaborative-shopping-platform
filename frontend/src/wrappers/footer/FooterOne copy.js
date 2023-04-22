@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import FooterCopyright from "../../components/footer/FooterCopyright";
 import FooterNewsletter from "../../components/footer/FooterNewsletter";
 
-const FooterFour = ({
+const FooterOne = ({
   backgroundColorClass,
   spaceTopClass,
   spaceBottomClass,
@@ -35,9 +35,8 @@ const FooterFour = ({
           >
             {/* footer copyright */}
             <FooterCopyright
-              footerLogo="/assets/img/logo/logo-2.png"
+              footerLogo="/assets/img/logo/logo.png"
               spaceBottomClass="mb-30"
-              colorClass="copyright-white"
             />
           </div>
           <div
@@ -45,7 +44,7 @@ const FooterFour = ({
               sideMenu ? "col-xl-2 col-sm-4" : "col-lg-2 col-sm-4"
             }`}
           >
-            <div className="footer-widget footer-widget-white mb-30 ml-30">
+            <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
                 <h3>ABOUT US</h3>
               </div>
@@ -81,8 +80,8 @@ const FooterFour = ({
             <div
               className={`${
                 sideMenu
-                  ? "footer-widget footer-widget-white mb-30 ml-95"
-                  : "footer-widget footer-widget-white mb-30 ml-50"
+                  ? "footer-widget mb-30 ml-95"
+                  : "footer-widget mb-30 ml-50"
               }`}
             >
               <div className="footer-title">
@@ -116,8 +115,8 @@ const FooterFour = ({
             <div
               className={`${
                 sideMenu
-                  ? "footer-widget footer-widget-white mb-30 ml-145"
-                  : "footer-widget footer-widget-white mb-30 ml-75"
+                  ? "footer-widget mb-30 ml-145"
+                  : "footer-widget mb-30 ml-75"
               }`}
             >
               <div className="footer-title">
@@ -175,8 +174,6 @@ const FooterFour = ({
               spaceBottomClass="mb-30"
               spaceLeftClass="ml-70"
               sideMenu={sideMenu}
-              colorClass="subscribe-style-white"
-              widgetColorClass="footer-widget-white"
             />
           </div>
         </div>
@@ -185,7 +182,7 @@ const FooterFour = ({
   );
 };
 
-FooterFour.propTypes = {
+FooterOne.propTypes = {
   backgroundColorClass: PropTypes.string,
   containerClass: PropTypes.string,
   extraFooterClass: PropTypes.string,
@@ -196,4 +193,4 @@ FooterFour.propTypes = {
   spaceRightClass: PropTypes.string,
 };
 
-export default FooterFour;
+export default FooterOne;
