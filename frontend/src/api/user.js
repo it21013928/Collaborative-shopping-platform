@@ -16,6 +16,21 @@ export const myAccount = async (token) => {
     });
 };
 
+export const getUserId = async (token) => {
+  return axios
+    .get("/users/id", setAuthToken(token))
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response.status === 401) {
+        localStorage.removeItem("token"); // delete token from local storage
+        return null;
+      }
+    });
+};
+
 export const updateUser = async (userData) => {
   const token = localStorage.getItem("token");
   setAuthToken(token);

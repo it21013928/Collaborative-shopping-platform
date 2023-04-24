@@ -11,12 +11,16 @@ const {
   getCustomers,
   getSellers,
   getModerators,
+  getUserId,
 } = require("../controllers/userController");
 
 const router = express.Router();
 
 // GET user
 router.get("/me", authMiddleware, getUser);
+
+// GET user Id
+router.get("/id", authMiddleware, getUserId);
 
 // GET users
 router.get("/", getUsers);

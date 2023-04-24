@@ -28,11 +28,11 @@ const Form = () => {
   };
 
   return (
-    <Box m="20px">
+    <Box m="10px 500px 10px 100px">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="grid"
-          gap="30px"
+          gap="10px"
           gridTemplateColumns="repeat(4, minmax(0, 1fr))"
           sx={{
             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },

@@ -1,4 +1,5 @@
 require("dotenv").config();
+const secret = process.env.JWT_SECRET;
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -42,6 +43,35 @@ const getUser = async (req, res) => {
 
   try {
     const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// get user Id
+const getUserId = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, secret);
+    req.userId = decoded.userId;
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const userId = req.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).json({ error: "User does not exsist" });
+  }
+
+  try {
+    const user = await User.findById(userId).select("id");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -212,4 +242,5 @@ module.exports = {
   getCustomers,
   getSellers,
   getModerators,
+  getUserId,
 };
