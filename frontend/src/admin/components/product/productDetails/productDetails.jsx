@@ -260,7 +260,7 @@ const ProductDetailsPage = () => {
               <label>Image</label>
 
           <label htmlFor="img-upload" className='custom-file-upload'>
-            <img src={avatar} alt="" />
+            <img className="default-img" src={image} alt="" />
           </label>
 
           <input

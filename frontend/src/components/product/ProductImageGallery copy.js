@@ -55,12 +55,23 @@ const ProductImageGallery = ({ product }) => {
         )}
         {product?.image?.length ? (
           <Swiper options={gallerySwiperParams}>
-            <img
-              src={product.image}
-              style={{ maxWidth: "100%", maxHeight: "100%", display: "block" }}
-              atl="Product Image"
-            />
-
+            {/* {product.image.map((single, key) => (
+              <SwiperSlide key={key}>
+                <button
+                  className="lightgallery-button"
+                  onClick={() => setIndex(key)}
+                >
+                  <i className="pe-7s-expand1"></i>
+                </button>
+                <div className="single-image">
+                  <img
+                    src={process.env.PUBLIC_URL + single}
+                    className="img-fluid"
+                    alt=""
+                  />
+                </div>
+              </SwiperSlide>
+            ))} */}
             <AnotherLightbox
               open={index >= 0}
               index={index}

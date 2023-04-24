@@ -100,7 +100,7 @@ const ProductDescriptionInfo = ({
             <span>Size</span>
             <div className="pro-details-size-content">
               {product.variation &&
-                product.variation.map((single) => {
+                product.variation.map(single => {
                   return single.color === selectedProductColor
                     ? single.size.map((singleSize, key) => {
                         return (
@@ -177,27 +177,17 @@ const ProductDescriptionInfo = ({
             </button>
           </div>
           <div className="pro-details-cart btn-hover">
-            {product.quantity > 0 ? (
+            {productStock && productStock > 0 ? (
               <button
                 onClick={() =>
-                  dispatch(
-                    addToCart({
-                      ...product,
-                      quantity: quantityCount,
-                      selectedProductColor: selectedProductColor
-                        ? selectedProductColor
-                        : product.selectedProductColor
-                        ? product.selectedProductColor
-                        : null,
-                      selectedProductSize: selectedProductSize
-                        ? selectedProductSize
-                        : product.selectedProductSize
-                        ? product.selectedProductSize
-                        : null,
-                    })
-                  )
+                  dispatch(addToCart({
+                    ...product,
+                    quantity: quantityCount,
+                    selectedProductColor: selectedProductColor ? selectedProductColor : product.selectedProductColor ? product.selectedProductColor : null,
+                    selectedProductSize: selectedProductSize ? selectedProductSize : product.selectedProductSize ? product.selectedProductSize : null
+                  }))
                 }
-                disabled={product.quantity <= 0}
+                disabled={productCartQty >= productStock}
               >
                 {" "}
                 Add To Cart{" "}
@@ -206,18 +196,102 @@ const ProductDescriptionInfo = ({
               <button disabled>Out of Stock</button>
             )}
           </div>
-          <div className="pro-details-wishlist"></div>
-          <div className="pro-details-compare"></div>
+          <div className="pro-details-wishlist">
+            <button
+              className={wishlistItem !== undefined ? "active" : ""}
+              disabled={wishlistItem !== undefined}
+              title={
+                wishlistItem !== undefined
+                  ? "Added to wishlist"
+                  : "Add to wishlist"
+              }
+              onClick={() => dispatch(addToWishlist(product))}
+            >
+              <i className="pe-7s-like" />
+            </button>
+          </div>
+          <div className="pro-details-compare">
+            <button
+              className={compareItem !== undefined ? "active" : ""}
+              disabled={compareItem !== undefined}
+              title={
+                compareItem !== undefined
+                  ? "Added to compare"
+                  : "Add to compare"
+              }
+              onClick={() => dispatch(addToCompare(product))}
+            >
+              <i className="pe-7s-shuffle" />
+            </button>
+          </div>
         </div>
       )}
       {product.category ? (
         <div className="pro-details-meta">
-          <span>Category :</span>
-          <ul>{product.category}</ul>
+          <span>Categories :</span>
+          <ul>
+            {product.category.map((single, key) => {
+              return (
+                <li key={key}>
+                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                    {single}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       ) : (
         ""
       )}
+      {product.tag ? (
+        <div className="pro-details-meta">
+          <span>Tags :</span>
+          <ul>
+            {product.tag.map((single, key) => {
+              return (
+                <li key={key}>
+                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                    {single}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : (
+        ""
+      )}
+
+      <div className="pro-details-social">
+        <ul>
+          <li>
+            <a href="//facebook.com">
+              <i className="fa fa-facebook" />
+            </a>
+          </li>
+          <li>
+            <a href="//dribbble.com">
+              <i className="fa fa-dribbble" />
+            </a>
+          </li>
+          <li>
+            <a href="//pinterest.com">
+              <i className="fa fa-pinterest-p" />
+            </a>
+          </li>
+          <li>
+            <a href="//twitter.com">
+              <i className="fa fa-twitter" />
+            </a>
+          </li>
+          <li>
+            <a href="//linkedin.com">
+              <i className="fa fa-linkedin" />
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };
@@ -230,7 +304,7 @@ ProductDescriptionInfo.propTypes = {
   finalDiscountedPrice: PropTypes.number,
   finalProductPrice: PropTypes.number,
   product: PropTypes.shape({}),
-  wishlistItem: PropTypes.shape({}),
+  wishlistItem: PropTypes.shape({})
 };
 
 export default ProductDescriptionInfo;

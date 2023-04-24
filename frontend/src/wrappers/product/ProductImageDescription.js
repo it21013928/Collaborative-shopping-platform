@@ -6,20 +6,30 @@ import ProductImageGallery from "../../components/product/ProductImageGallery";
 import ProductDescriptionInfo from "../../components/product/ProductDescriptionInfo";
 import ProductImageGallerySideThumb from "../../components/product/ProductImageGallerySideThumb";
 import ProductImageFixed from "../../components/product/ProductImageFixed";
+import { useEffect } from "react";
 
-const ProductImageDescription = ({ spaceTopClass, spaceBottomClass, galleryType, product }) => {
+const ProductImageDescription = ({
+  spaceTopClass,
+  spaceBottomClass,
+  galleryType,
+  product,
+}) => {
   const currency = useSelector((state) => state.currency);
   const { cartItems } = useSelector((state) => state.cart);
   const { wishlistItems } = useSelector((state) => state.wishlist);
   const { compareItems } = useSelector((state) => state.compare);
-  const wishlistItem = wishlistItems.find(item => item.id === product.id);
-  const compareItem = compareItems.find(item => item.id === product.id);
+  const wishlistItem = wishlistItems.find((item) => item.id === product.id);
+  const compareItem = compareItems.find((item) => item.id === product.id);
 
   const discountedPrice = getDiscountPrice(product.price, product.discount);
   const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
   const finalDiscountedPrice = +(
     discountedPrice * currency.currencyRate
   ).toFixed(2);
+
+  useEffect(() => {
+    console.log("product", product);
+  }, []);
 
   return (
     <div className={clsx("shop-area", spaceTopClass, spaceBottomClass)}>
