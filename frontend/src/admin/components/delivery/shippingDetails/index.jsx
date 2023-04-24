@@ -1,4 +1,11 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  useTheme,
+  TextField,
+} from "@mui/material";
 import { tokens } from "../../../theme";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
@@ -8,6 +15,11 @@ import order from "../../../../api/order";
 import "./index.css";
 import Model from "react-modal";
 import Axios from "axios";
+
+import { Formik } from "formik";
+import * as yup from "yup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 export default function () {
   // const orderID = localStorage.getItem("orderID");
   // console.log("FFFFFFFF" + orderID);
@@ -19,10 +31,9 @@ export default function () {
 
   const [singleOrder, setSingleOrder] = useState("");
   const [productList, setProductList] = useState(null);
-  const [orderId, setOrderID] = useState();
-  const [trackingNo, setTrackingNo] = useState();
+
   const [file, setfileName] = useState("");
-  const [status, setStatus] = useState("shipped");
+
   const [visible, setVisible] = useState(false);
   const [fileData, setFileData] = useState(null);
   const [fileExtension, setfileExtension] = useState("");
@@ -51,49 +62,10 @@ export default function () {
 
   useEffect(() => {}, [productList]);
 
-  const handleButtonClick = (id) => {
-    localStorage.setItem("orderID", id);
-    window.location.href = "/shippingDetails";
-    // perform action with the id
-  };
-
   console.log("AAAAAAAAAAAAAAAAAAA");
   console.log(singleOrder.CustomerID);
   // console.log(singleOrder[0].CustomerID);
-  const sendDataToAPI = async (e) => {
-    console.log("AAAAAAAA");
-    e.preventDefault();
-    if (true) {
-      const data = new FormData();
-
-      data.append("image", fileData);
-      console.log("BBBBBBBBBBBB");
-      console.log(fileData);
-      fetch("http://localhost:8002/trackingBill", {
-        method: "POST",
-        body: data,
-      })
-        .then((result) => {
-          console.log(result);
-          console.log("File sent successful");
-          console.log(fileData);
-          // setfileName("");
-          // setFileData(null);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-
-      await Axios.post("http://localhost:8000/delivery/", {
-        orderId,
-        trackingNo,
-        status,
-        file,
-      });
-      console.log("CCCCCCCCCC");
-    }
-  };
-
+  // const sendDataToAPI =
   const columns = [
     {
       field: "ProductID",
@@ -118,6 +90,74 @@ export default function () {
     setfileName(e.target.files[0].name);
   };
 
+  const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const handleFormSubmit = async (values) => {
+    console.log(values);
+    console.log("ssssssssssssssssss");
+    console.log(values.trackingNumber);
+    console.log("mmmmmmmmmmmmmmmmmmmmmm");
+    // setOrderID(localStorage.getItem("orderID"));
+
+    // setTrackingNo(values.trackingNumber);
+    // setServiceName(values.serviceName);
+    // setExpectedDate(values.deliveryDate);
+    console.log("bbbbbbbbb");
+    console.log(orderId);
+    console.log(trackingNo);
+    console.log(serviceName);
+    console.log(expectedDate);
+
+    const orderId = localStorage.getItem("orderID");
+    const trackingNo = values.trackingNumber;
+    const serviceName = values.serviceName;
+
+    const expectedDate = values.deliveryDate;
+    const status = "shipped";
+
+    // setFileData(values.reciptUpload.target.files[0]);
+    // setfileName(values.reciptUpload.target.files[0].name);
+    console.log("CCCCCCCCCCCCCCC");
+
+    console.log("AAAAAAAA");
+    // e.preventDefault();
+    if (true) {
+      const data = new FormData();
+
+      data.append("image", fileData);
+      console.log("BBBBBBBBBBBB");
+      console.log(fileData);
+      fetch("http://localhost:8002/trackingBill", {
+        method: "POST",
+        body: data,
+      })
+        .then((result) => {
+          console.log(result);
+          console.log("File sent successful");
+          console.log(fileData);
+          // setfileName("");
+          // setFileData(null);
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+
+      await Axios.post("http://localhost:8000/delivery/", {
+        orderId,
+        trackingNo,
+        serviceName,
+        expectedDate,
+        status,
+        file,
+      });
+      await Axios.patch(`http://localhost:8000/orders/update/${orderId}`, {
+        status,
+      });
+      console.log("CCCCCCCCCC");
+      window.location.href = "/toBeDelivery";
+    }
+  };
+
   return (
     <Box>
       <Model
@@ -138,6 +178,98 @@ export default function () {
           },
         }}
       >
+        <Box m="20px">
+          <Formik
+            onSubmit={handleFormSubmit}
+            initialValues={initialValues}
+            validationSchema={checkoutSchema}
+          >
+            {({
+              defaultValue,
+              values,
+              errors,
+              touched,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <Box
+                  display="grid"
+                  gap="30px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": {
+                      gridColumn: isNonMobile ? undefined : "span 4",
+                    },
+                  }}
+                >
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Tracking number"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.trackingNumber}
+                    name="trackingNumber"
+                    error={!!touched.trackingNumber && !!errors.trackingNumber}
+                    helperText={touched.trackingNumber && errors.trackingNumber}
+                    sx={{ gridColumn: "span 3" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Delivery Service Name"
+                    onBlur={handleBlur}
+                    backgroundColor="white"
+                    value={values.serviceName}
+                    onChange={handleChange}
+                    name="serviceName"
+                    error={!!touched.serviceName && !!errors.serviceName}
+                    helperText={touched.serviceName && errors.serviceName}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type="date"
+                    label="Expected delivery date"
+                    onBlur={handleBlur}
+                    backgroundColor="white"
+                    value={values.deliveryDate}
+                    onChange={handleChange}
+                    name="deliveryDate"
+                    InputLabelProps={{ shrink: true }}
+                    error={!!touched.deliveryDate && !!errors.deliveryDate}
+                    helperText={touched.deliveryDate && errors.deliveryDate}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+
+                  <TextField
+                    type="file"
+                    label="Upload tracking recipt"
+                    onBlur={handleBlur}
+                    id="imageFile"
+                    name="reciptUpload"
+                    sx={{ gridColumn: "span 4" }}
+                    defaultValue={values.reciptUpload}
+                    InputLabelProps={{ shrink: true }}
+                    onChange={fileChangeHandler}
+                    required
+                  />
+                </Box>
+                <Box display="flex" justifyContent="end" mt="20px">
+                  <Button type="submit" color="secondary" variant="contained">
+                    Submit
+                  </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
+        </Box>
+        {/* 
         <form>
           <input
             type="text"
@@ -155,7 +287,7 @@ export default function () {
           <Button onClick={sendDataToAPI} color="secondary" variant="contained">
             Submit
           </Button>
-        </form>
+        </form> */}
       </Model>
       {/* GRID & CHARTS */}
       <Box
@@ -370,3 +502,20 @@ export default function () {
     </Box>
   );
 }
+const phoneRegExp =
+  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+
+const checkoutSchema = yup.object().shape({
+  trackingNumber: yup.string().required("required"),
+  serviceName: yup.string().required("required"),
+  deliveryDate: yup
+    .date()
+    .required("required")
+    .min(new Date(), "Date cannot be in the past"),
+});
+const initialValues = {
+  trackingNumber: "",
+  serviceName: "",
+  deliveryDate: "",
+  reciptUpload: "",
+};

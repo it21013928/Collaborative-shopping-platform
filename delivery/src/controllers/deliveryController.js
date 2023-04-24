@@ -6,7 +6,9 @@ const createDelivery = async (req, res) => {
   const delivery = new Delivery({
     OrderID: req.body.orderId,
     TrackingNo: req.body.trackingNo,
-    Status: req.body.status,
+    serviceName: req.body.serviceName,
+    expectedDate: req.body.expectedDate,
+    status: req.body.status,
     fileName: req.body.file,
   });
 

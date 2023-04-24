@@ -16,3 +16,11 @@
 .react-modal-content {
   background-color: red; /* replace with your desired background color */
 }
+
+input[type="file"] {
+  color: rgb(35, 138, 35);
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: rgb(56, 136, 45);
+}

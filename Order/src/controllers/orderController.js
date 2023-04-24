@@ -71,11 +71,27 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const updateShippedOrder = async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.Status = req.body.status;
+
+    const updateShippedOrder = await order.save();
+
+    res.json(updateShippedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrders,
   getOrderByOrderId,
   deleteOrder,
   updateOrder,
+  updateShippedOrder,
   getPaidOrders,
 };

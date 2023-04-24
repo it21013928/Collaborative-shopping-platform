@@ -6,6 +6,7 @@ const {
   deleteOrder,
   updateOrder,
   getPaidOrders,
+  updateShippedOrder,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -27,5 +28,8 @@ router.delete("/:id", deleteOrder);
 
 //Update a new order
 router.patch("/:id", updateOrder);
+router.patch("/update/:id", updateShippedOrder);
+
+updateShippedOrder;
 
 module.exports = router;
