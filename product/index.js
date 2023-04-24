@@ -21,8 +21,8 @@ app.use(cors());
 const productRoutes = require("./src/routes/productRoutes");
 app.use("/", productRoutes);
 
-// const userRoutes = require("./src/routes/userRoutes");
-// app.use("/", userRoutes);
+const reviewRoutes = require("./src/routes/reviewRoutes");
+app.use("/", reviewRoutes);
 
 mongoose.set("strictQuery", false);
 // Connect to the database
@@ -32,7 +32,6 @@ mongoose
     // listen for request
     app.listen(port, () => {
       console.log(`Product is listening at http://localhost:${port}`);
-      // console.log(`User is listening at http://localhost:${port}`);
     });
   })
   .catch((error) => {

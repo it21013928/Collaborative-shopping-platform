@@ -44,20 +44,6 @@ const ProductInputForm = () => {
     setImage(base64)
   }
 
-  // const handleFileUpload = async (e) => {
-    
-  //   const file = e.target;
-  //   console.log(file);
-  //   // const base64 = await convertToBase64(file);
-  //   // console.log(base64)
-  //   // setPostImage({ ...postImage, myFile : base64 })
-  // }
-
-  // const handleChange = (e) => {
-  //   // setFileData(e.target.files[0]);
-  //   // setfileName(e.target.files[0].name);
-  // };
-
   return (
         <Box m="20px">
       <Header title="INSERT A PRODUCT" subtitle="Insert a New Product" />
@@ -174,8 +160,6 @@ const ProductInputForm = () => {
           style={{ display: "none" }}
           sx={{ gridColumn: "span 1" }}
          />
-
-{/* <button htmlFor="img-upload" >Upload image</button> */}
 
             </Box>
 

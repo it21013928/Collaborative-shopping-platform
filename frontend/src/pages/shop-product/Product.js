@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import SEO from "../../components/seo";
 import LayoutOne from "../../layouts/LayoutOne";

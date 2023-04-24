@@ -15,6 +15,8 @@ const ProductDescriptionInfo = ({
   finalDiscountedPrice,
   finalProductPrice,
   cartItems,
+  wishlistItem,
+  compareItem,
 }) => {
   const dispatch = useDispatch();
   const [selectedProductColor, setSelectedProductColor] = useState(
@@ -34,47 +36,6 @@ const ProductDescriptionInfo = ({
     selectedProductColor,
     selectedProductSize
   );
-
-  const [qty, setQty] = useState(0);
-
-  const [productId, setProductId] = useState(product.id);
-  const [userId, setUserId] = useState(product.userId);
-  const [price, setPrice] = useState(product.price);
-  const [quantity, setQuantity] = useState(product.quantity);
-
-  console.log(product.quantity);
-
-  function increaseQty(e) {
-    e.preventDefault();
-    setQty(qty + 1);
-  }
-
-  function decreaseQty(e) {
-    e.preventDefault();
-    if (qty > 0) {
-      setQty(qty - 1);
-    }
-  }
-
-  function handleAddToCart(e) {
-    e.preventDefault();
-
-    const productCart = {
-      productId,
-      price,
-      quantity,
-      userId,
-    };
-    console.log(productCart);
-
-    fetch("", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(productCart),
-    }).then(() => {
-      console.log("product added to cart");
-    });
-  }
 
   return (
     <div className="product-details-content ml-70">
@@ -188,26 +149,36 @@ const ProductDescriptionInfo = ({
       ) : (
         <div className="pro-details-quality">
           <div className="cart-plus-minus">
-            <button onClick={decreaseQty} className="dec qtybutton">
+            <button
+              onClick={() =>
+                setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
+              }
+              className="dec qtybutton"
+            >
               -
             </button>
             <input
               className="cart-plus-minus-box"
               type="text"
-              value={qty}
+              value={quantityCount}
               readOnly
             />
-            {/* <p className="cart-plus-minus-box">{quantity}</p> */}
-            <button onClick={increaseQty} className="inc qtybutton">
+            <button
+              onClick={() =>
+                setQuantityCount(
+                  quantityCount < productStock - productCartQty
+                    ? quantityCount + 1
+                    : quantityCount
+                )
+              }
+              className="inc qtybutton"
+            >
               +
             </button>
           </div>
           <div className="pro-details-cart btn-hover">
-            {product.quantity >= qty ? (
-              <button
-                onClick={handleAddToCart}
-                disabled={product.quantity <= 0}
-              >
+            {product.quantity > 0 ? (
+              <button onClick={{}} disabled={product.quantity <= 0}>
                 {" "}
                 Add To Cart{" "}
               </button>
@@ -233,8 +204,13 @@ const ProductDescriptionInfo = ({
 
 ProductDescriptionInfo.propTypes = {
   cartItems: PropTypes.array,
+  compareItem: PropTypes.shape({}),
   currency: PropTypes.shape({}),
+  discountedPrice: PropTypes.number,
+  finalDiscountedPrice: PropTypes.number,
+  finalProductPrice: PropTypes.number,
   product: PropTypes.shape({}),
+  wishlistItem: PropTypes.shape({}),
 };
 
 export default ProductDescriptionInfo;

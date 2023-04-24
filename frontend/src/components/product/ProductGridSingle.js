@@ -35,15 +35,6 @@ const ProductGridSingle = ({
         <div className="product-img">
           <Link to={process.env.PUBLIC_URL + "/product/" + product._id}>
             <img className="default-img" src={product.image} alt="" />
-            {/* {product.image.length > 1 ? (
-              <img
-                className="hover-img"
-                src={process.env.PUBLIC_URL + product.image[1]}
-                alt=""
-              />
-            ) : (
-              ""
-            )} */}
           </Link>
           {product.discount || product.new ? (
             <div className="product-img-badges">
@@ -59,20 +50,7 @@ const ProductGridSingle = ({
           )}
 
           <div className="product-action">
-            <div className="pro-same-action pro-wishlist">
-              {/* <button
-                className={wishlistItem !== undefined ? "active" : ""}
-                disabled={wishlistItem !== undefined}
-                title={
-                  wishlistItem !== undefined
-                    ? "Added to wishlist"
-                    : "Add to wishlist"
-                }
-                onClick={() => dispatch(addToWishlist(product))}
-              >
-                <i className="pe-7s-like" />
-              </button> */}
-            </div>
+            <div className="pro-same-action pro-wishlist"></div>
             <div className="pro-same-action pro-cart">
               {product.affiliateLink ? (
                 <a
