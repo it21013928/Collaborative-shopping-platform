@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
@@ -6,12 +6,14 @@ import { getSellers } from "../../../api/user";
 import Header from "../../Layout/Header";
 import { useTheme } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
+import Model from "react-modal";
 
 const Sellers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const [sellers, setSellers] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const fetchSellers = async () => {
@@ -30,8 +32,16 @@ const Sellers = () => {
     // console.log(customers);
   }, [sellers]);
 
+  const handleButtonClick = (id) => {
+    setVisible(true);
+  };
+
   const columns = [
-    { field: "id", headerName: "ID", flex: 2 },
+    {
+      field: "id",
+      headerName: "ID",
+      flex: 2,
+    },
     {
       field: "name",
       headerName: "Name",
@@ -68,10 +78,56 @@ const Sellers = () => {
       headerName: "Role",
       flex: 1,
     },
+    {
+      field: "button",
+
+      headerName: "",
+
+      width: 100,
+
+      renderCell: (params) => {
+        return (
+          <Button
+            color="secondary"
+            onClick={() => handleButtonClick(params.row.id)}
+          >
+            View{" "}
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
     <Box m="0">
+      <Model
+        isOpen={visible}
+        onRequestClose={() => setVisible(false)}
+        style={{
+          overlay: {
+            backdropFilter: "blur(5px)",
+          },
+
+          content: {
+            top: "50%",
+
+            left: "50%",
+
+            right: "auto",
+
+            bottom: "auto",
+
+            marginRight: "-50%",
+
+            background: colors.primary[400],
+
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+      >
+        {" "}
+        <p>Hello</p>
+      </Model>
       <Box
         m="0 0 0 0"
         height="100vh"
@@ -104,13 +160,13 @@ const Sellers = () => {
           },
         }}
       >
-        {sellers ?
-        <DataGrid
-          rows={sellers}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }}
-        />
-        : (
+        {sellers ? (
+          <DataGrid
+            rows={sellers}
+            columns={columns}
+            components={{ Toolbar: GridToolbar }}
+          />
+        ) : (
           <p>Loading...</p>
         )}
       </Box>
