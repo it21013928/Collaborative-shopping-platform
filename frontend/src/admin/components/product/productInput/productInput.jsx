@@ -3,13 +3,17 @@ import { tokens } from "../../../theme";
 import { useState } from "react";
 import Header from "../../../Layout/Header";
 import './prodcutInputcss.css';
-//import avatar from '../../../assets/product/profile.png';
 import avatar from '../../../assets/product/icon-image.png';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserId } from "../../../../api/user";
 
 const ProductInputForm = () => {
+
+  const token = localStorage.getItem("token");
+  const userId = getUserId(token);
+  console.log(userId);
 
   const navigate = useNavigate();
   const theme = useTheme();
@@ -27,7 +31,7 @@ const ProductInputForm = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image};
+    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId};
     console.log(product);
 
     fetch('http://localhost:8002/product/create', {
@@ -148,8 +152,12 @@ const ProductInputForm = () => {
                 sx={{ gridColumn: "span 1" }}
               >
                 <option value={null}>Select an Option</option>
-                <option value={1}>Category 1</option>
-                <option value={2}>Category 2</option>
+                <option value={"Suppliments"}>Suppliments</option>
+                <option value={"Sports"}>Sports</option>
+                <option value={"Bath"}>Bath</option>
+                <option value={"Beauty"}>Beauty</option>
+                <option value={"Grocery"}>Grocery</option>
+                <option value={"Baby"}>Baby</option>
               </select>
           
               <label>Image</label>

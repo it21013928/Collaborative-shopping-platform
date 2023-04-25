@@ -267,8 +267,12 @@ const ProductDetailsPage = () => {
                 sx={{ gridColumn: "span 1" }}
               >
                 <option value={null}>Select an Option</option>
-                <option value={1}>Category 1</option>
-                <option value={2}>Category 2</option>
+                <option value={"Suppliments"}>Suppliments</option>
+                <option value={"Sports"}>Sports</option>
+                <option value={"Bath"}>Bath</option>
+                <option value={"Beauty"}>Beauty</option>
+                <option value={"Grocery"}>Grocery</option>
+                <option value={"Baby"}>Baby</option>
               </select>
           
               <label>Image</label>

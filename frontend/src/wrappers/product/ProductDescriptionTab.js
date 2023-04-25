@@ -85,20 +85,20 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
         <div className="description-review-wrapper">
           <Tab.Container defaultActiveKey="productDescription">
             <Nav variant="pills" className="description-review-topbar">
-              <Nav.Item>
+              {/* <Nav.Item>
                 <Nav.Link eventKey="additionalInfo">
                   Additional Information
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item> */}
               <Nav.Item>
                 <Nav.Link eventKey="productDescription">Description</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="productReviews">Reviews(2)</Nav.Link>
+                <Nav.Link eventKey="productReviews">Reviews</Nav.Link>
               </Nav.Item>
             </Nav>
             <Tab.Content className="description-review-bottom">
-              <Tab.Pane eventKey="additionalInfo">
+              {/* <Tab.Pane eventKey="additionalInfo">
                 <div className="product-anotherinfo-wrapper">
                   <ul>
                     <li>
@@ -116,7 +116,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                     </li>
                   </ul>
                 </div>
-              </Tab.Pane>
+              </Tab.Pane> */}
               <Tab.Pane eventKey="productDescription">
                 {productFullDesc}
               </Tab.Pane>

@@ -78,6 +78,24 @@ const getProduct = async (req, res) => {
   }
 };
 
+//GET Product by seller ID
+const getProductBySeller = async (req, res) => {
+  try {
+    // Find product
+    const product = await Product.find({ userId: req.params.userId });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    //Get product
+    console.error("***Product got successfully***");
+    return res.status(200).send(product);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 //GET Product by Name
 const getProductByName = async (req, res) => {
   const productName = req.params.name;
@@ -184,4 +202,5 @@ module.exports = {
   getAllproducts,
   updateProduct,
   deleteProduct,
+  getProductBySeller,
 };
