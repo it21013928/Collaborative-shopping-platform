@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TextField from "@mui/material/TextField";
 import clsx from "clsx";
 import MenuCart from "./sub-components/MenuCart";
 
@@ -26,12 +27,19 @@ const IconGroup = ({ iconWhiteClass }) => {
           <i className="pe-7s-search" />
         </button>
         <div className="search-content">
-          <form action="#">
+          {/* <form action="#">
             <input type="text" placeholder="Search" />
             <button className="button-search">
               <i className="pe-7s-search" />
             </button>
-          </form>
+          </form> */}
+          <TextField
+            id="outlined-basic"
+            placeholder="Search"
+            variant="outlined"
+            fullWidth
+            label="Search"
+          />
         </div>
       </div>
       <div className="same-style account-setting d-none d-lg-block">
