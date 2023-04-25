@@ -65,7 +65,7 @@ const ProductGridSingle = ({
                 <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
                   Select Option
                 </Link>
-              ) : product.stock && product.stock > 0 ? (
+              ) : product.quantity > 0 ? (
                 <button
                   onClick={() => dispatch(addToCart(product))}
                   className={
@@ -91,7 +91,7 @@ const ProductGridSingle = ({
               )}
             </div>
             <div className="pro-same-action pro-quickview">
-              <button title="Quick View" onClick={() => setModalShow(true)}>
+              <button title="Quick View">
                 <i className="pe-7s-look" />
               </button>
             </div>

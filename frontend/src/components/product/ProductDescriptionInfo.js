@@ -4,9 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
-import { addToCart } from "../../store/slices/cart-slice";
-import { addToWishlist } from "../../store/slices/wishlist-slice";
-import { addToCompare } from "../../store/slices/compare-slice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDescriptionInfo = ({
   product,
@@ -44,7 +43,8 @@ const ProductDescriptionInfo = ({
   const [price, setPrice] = useState(product.price);
   const [quantity, setQuantity] = useState(product.quantity);
 
-  console.log(product.userId);
+  console.log(product);
+  console.log(price);
 
   function increaseQty(e) {
     e.preventDefault();
@@ -75,6 +75,10 @@ const ProductDescriptionInfo = ({
       body: JSON.stringify(productCart),
     }).then(() => {
       console.log("product added to cart");
+      toast.success(`Product was added to Cart `, {
+        position: "bottom-left",
+      });
+      setTimeout(() => {}, 2000);
     });
   }
 
@@ -225,6 +229,15 @@ const ProductDescriptionInfo = ({
         <div className="pro-details-meta">
           <span>Category :</span>
           <ul>{product.category}</ul>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {product.quantity ? (
+        <div className="pro-details-meta">
+          <span>Available Quantity :</span>
+          <ul>{product.quantity}</ul>
         </div>
       ) : (
         ""
