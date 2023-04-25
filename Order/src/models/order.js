@@ -7,6 +7,7 @@ const orderSchema = mongoose.Schema({
     type: String,
     default: () => new Date().toISOString().slice(0, 10),
   },
+  ProductCount: { type: Number },
   CustomerName: { type: String },
   ShipingAddress: { type: String },
   Phone: { type: String },

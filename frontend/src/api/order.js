@@ -11,8 +11,8 @@ class ToDoService {
     const url = `http://localhost:8000/orders/`;
     return this.request(url);
   }
-  getPaidOrders() {
-    const url = `http://localhost:8000/orders/paidOrders`;
+  getOrdersByStatus(status) {
+    const url = `http://localhost:8000/orders/getOrdersByStatus/${status}`;
     return this.request(url);
   }
   getSingleOrder(orderID) {

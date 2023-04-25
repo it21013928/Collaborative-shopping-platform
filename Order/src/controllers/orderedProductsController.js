@@ -10,6 +10,8 @@ const create = async (req, res) => {
     ProductID: req.body.productId,
     Quantity: req.body.quantity,
     ProductName: req.body.productName,
+    Confirmation: req.body.confirmation,
+    sellerID: req.body.sellerId,
   });
 
   await orderedProduct.save();
@@ -23,7 +25,23 @@ const viewByID = async (req, res) => {
   res.status(200).json(productList);
 };
 
+const updateOrderProduct = async (req, res) => {
+  const orderedProductsCo = await orderedProducts.findById(req.params.id);
+
+  if (orderedProductsCo) {
+    orderedProductsCo.Confirmation = req.body.status;
+
+    const updateOrderProduct = await orderedProductsCo.save();
+
+    res.json(updateOrderProduct);
+  } else {
+    res.status(404);
+    throw new Error("OrderProduct not found");
+  }
+};
+
 module.exports = {
   create,
   viewByID,
+  updateOrderProduct,
 };

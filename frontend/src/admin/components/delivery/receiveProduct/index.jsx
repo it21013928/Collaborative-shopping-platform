@@ -19,7 +19,7 @@ export default function () {
   const [orders, setOrders] = useState(null);
 
   useEffect(async () => {
-    await service.getOrdersByStatus("Paid").then((Orderdetails) => {
+    await service.getOrdersByStatus("Confirmed").then((Orderdetails) => {
       setOrders(Orderdetails.data);
       console.log(Orderdetails.data);
     });
@@ -29,7 +29,7 @@ export default function () {
 
   const handleButtonClick = (id) => {
     localStorage.setItem("orderID", id);
-    window.location.href = "/shippingDetails";
+    window.location.href = "/checkProduct";
     // perform action with the id
   };
 
@@ -69,7 +69,7 @@ export default function () {
             color="secondary"
             onClick={() => handleButtonClick(params.row._id)}
           >
-            Ship now
+            Check Products
           </Button>
         );
       },
