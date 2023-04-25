@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const ProductGridSingle = ({
   cartItem,
   wishlistItem,
   compareItem,
-  spaceBottomClass
+  spaceBottomClass,
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const discountedPrice = getDiscountPrice(product.price, product.discount);
@@ -25,25 +25,16 @@ const ProductGridSingle = ({
   ).toFixed(2);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    // console.log("product", product);
+  }, []);
+
   return (
     <Fragment>
       <div className={clsx("product-wrap", spaceBottomClass)}>
         <div className="product-img">
-          <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
-            <img
-              className="default-img"
-              src={process.env.PUBLIC_URL + product.image[0]}
-              alt=""
-            />
-            {product.image.length > 1 ? (
-              <img
-                className="hover-img"
-                src={process.env.PUBLIC_URL + product.image[1]}
-                alt=""
-              />
-            ) : (
-              ""
-            )}
+          <Link to={process.env.PUBLIC_URL + "/product/" + product._id}>
+            <img className="default-img" src={product.image} alt="" />
           </Link>
           {product.discount || product.new ? (
             <div className="product-img-badges">
@@ -59,20 +50,7 @@ const ProductGridSingle = ({
           )}
 
           <div className="product-action">
-            <div className="pro-same-action pro-wishlist">
-              <button
-                className={wishlistItem !== undefined ? "active" : ""}
-                disabled={wishlistItem !== undefined}
-                title={
-                  wishlistItem !== undefined
-                    ? "Added to wishlist"
-                    : "Add to wishlist"
-                }
-                onClick={() => dispatch(addToWishlist(product))}
-              >
-                <i className="pe-7s-like" />
-              </button>
-            </div>
+            <div className="pro-same-action pro-wishlist"></div>
             <div className="pro-same-action pro-cart">
               {product.affiliateLink ? (
                 <a
@@ -87,7 +65,7 @@ const ProductGridSingle = ({
                 <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
                   Select Option
                 </Link>
-              ) : product.stock && product.stock > 0 ? (
+              ) : product.quantity > 0 ? (
                 <button
                   onClick={() => dispatch(addToCart(product))}
                   className={
@@ -113,7 +91,7 @@ const ProductGridSingle = ({
               )}
             </div>
             <div className="pro-same-action pro-quickview">
-              <button title="Quick View" onClick={() => setModalShow(true)}>
+              <button title="Quick View">
                 <i className="pe-7s-look" />
               </button>
             </div>

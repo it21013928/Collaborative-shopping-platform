@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
-import { addToCart } from "../../store/slices/cart-slice";
-import { addToWishlist } from "../../store/slices/wishlist-slice";
-import { addToCompare } from "../../store/slices/compare-slice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDescriptionInfo = ({
   product,
@@ -15,8 +14,6 @@ const ProductDescriptionInfo = ({
   finalDiscountedPrice,
   finalProductPrice,
   cartItems,
-  wishlistItem,
-  compareItem,
 }) => {
   const dispatch = useDispatch();
   const [selectedProductColor, setSelectedProductColor] = useState(
@@ -36,6 +33,54 @@ const ProductDescriptionInfo = ({
     selectedProductColor,
     selectedProductSize
   );
+
+  const { id } = useParams();
+
+  const [qty, setQty] = useState(0);
+
+  const [productId, setProductId] = useState(id);
+  const [customerId, setUserId] = useState("User123");
+  const [price, setPrice] = useState(product.price);
+  const [quantity, setQuantity] = useState(product.quantity);
+
+  console.log(product);
+  console.log(price);
+
+  function increaseQty(e) {
+    e.preventDefault();
+    setQty(qty + 1);
+  }
+
+  function decreaseQty(e) {
+    e.preventDefault();
+    if (qty > 0) {
+      setQty(qty - 1);
+    }
+  }
+
+  function handleAddToCart(e) {
+    e.preventDefault();
+
+    const productCart = {
+      Item_number: productId,
+      unitPrice: price,
+      quantity: qty,
+      customer_id: customerId,
+    };
+    console.log(productCart);
+
+    fetch("http://localhost:8006/insert/", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(productCart),
+    }).then(() => {
+      console.log("product added to cart");
+      toast.success(`Product was added to Cart `, {
+        position: "bottom-left",
+      });
+      setTimeout(() => {}, 2000);
+    });
+  }
 
   return (
     <div className="product-details-content ml-70">
@@ -100,7 +145,7 @@ const ProductDescriptionInfo = ({
             <span>Size</span>
             <div className="pro-details-size-content">
               {product.variation &&
-                product.variation.map(single => {
+                product.variation.map((single) => {
                   return single.color === selectedProductColor
                     ? single.size.map((singleSize, key) => {
                         return (
@@ -149,45 +194,25 @@ const ProductDescriptionInfo = ({
       ) : (
         <div className="pro-details-quality">
           <div className="cart-plus-minus">
-            <button
-              onClick={() =>
-                setQuantityCount(quantityCount > 1 ? quantityCount - 1 : 1)
-              }
-              className="dec qtybutton"
-            >
+            <button onClick={decreaseQty} className="dec qtybutton">
               -
             </button>
             <input
               className="cart-plus-minus-box"
               type="text"
-              value={quantityCount}
+              value={qty}
               readOnly
             />
-            <button
-              onClick={() =>
-                setQuantityCount(
-                  quantityCount < productStock - productCartQty
-                    ? quantityCount + 1
-                    : quantityCount
-                )
-              }
-              className="inc qtybutton"
-            >
+            {/* <p className="cart-plus-minus-box">{quantity}</p> */}
+            <button onClick={increaseQty} className="inc qtybutton">
               +
             </button>
           </div>
           <div className="pro-details-cart btn-hover">
-            {productStock && productStock > 0 ? (
+            {product.quantity >= qty ? (
               <button
-                onClick={() =>
-                  dispatch(addToCart({
-                    ...product,
-                    quantity: quantityCount,
-                    selectedProductColor: selectedProductColor ? selectedProductColor : product.selectedProductColor ? product.selectedProductColor : null,
-                    selectedProductSize: selectedProductSize ? selectedProductSize : product.selectedProductSize ? product.selectedProductSize : null
-                  }))
-                }
-                disabled={productCartQty >= productStock}
+                onClick={handleAddToCart}
+                disabled={product.quantity <= 0}
               >
                 {" "}
                 Add To Cart{" "}
@@ -196,115 +221,35 @@ const ProductDescriptionInfo = ({
               <button disabled>Out of Stock</button>
             )}
           </div>
-          <div className="pro-details-wishlist">
-            <button
-              className={wishlistItem !== undefined ? "active" : ""}
-              disabled={wishlistItem !== undefined}
-              title={
-                wishlistItem !== undefined
-                  ? "Added to wishlist"
-                  : "Add to wishlist"
-              }
-              onClick={() => dispatch(addToWishlist(product))}
-            >
-              <i className="pe-7s-like" />
-            </button>
-          </div>
-          <div className="pro-details-compare">
-            <button
-              className={compareItem !== undefined ? "active" : ""}
-              disabled={compareItem !== undefined}
-              title={
-                compareItem !== undefined
-                  ? "Added to compare"
-                  : "Add to compare"
-              }
-              onClick={() => dispatch(addToCompare(product))}
-            >
-              <i className="pe-7s-shuffle" />
-            </button>
-          </div>
+          <div className="pro-details-wishlist"></div>
+          <div className="pro-details-compare"></div>
         </div>
       )}
       {product.category ? (
         <div className="pro-details-meta">
-          <span>Categories :</span>
-          <ul>
-            {product.category.map((single, key) => {
-              return (
-                <li key={key}>
-                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                    {single}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ) : (
-        ""
-      )}
-      {product.tag ? (
-        <div className="pro-details-meta">
-          <span>Tags :</span>
-          <ul>
-            {product.tag.map((single, key) => {
-              return (
-                <li key={key}>
-                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                    {single}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          <span>Category :</span>
+          <ul>{product.category}</ul>
         </div>
       ) : (
         ""
       )}
 
-      <div className="pro-details-social">
-        <ul>
-          <li>
-            <a href="//facebook.com">
-              <i className="fa fa-facebook" />
-            </a>
-          </li>
-          <li>
-            <a href="//dribbble.com">
-              <i className="fa fa-dribbble" />
-            </a>
-          </li>
-          <li>
-            <a href="//pinterest.com">
-              <i className="fa fa-pinterest-p" />
-            </a>
-          </li>
-          <li>
-            <a href="//twitter.com">
-              <i className="fa fa-twitter" />
-            </a>
-          </li>
-          <li>
-            <a href="//linkedin.com">
-              <i className="fa fa-linkedin" />
-            </a>
-          </li>
-        </ul>
-      </div>
+      {product.quantity ? (
+        <div className="pro-details-meta">
+          <span>Available Quantity :</span>
+          <ul>{product.quantity}</ul>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
 
 ProductDescriptionInfo.propTypes = {
   cartItems: PropTypes.array,
-  compareItem: PropTypes.shape({}),
   currency: PropTypes.shape({}),
-  discountedPrice: PropTypes.number,
-  finalDiscountedPrice: PropTypes.number,
-  finalProductPrice: PropTypes.number,
   product: PropTypes.shape({}),
-  wishlistItem: PropTypes.shape({})
 };
 
 export default ProductDescriptionInfo;
