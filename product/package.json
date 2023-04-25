@@ -1,0 +1,23 @@
+{
+  "name": "product",
+  "version": "1.0.0",
+  "description": "Backend for user management as a microservice of collaborative shopping platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Kithmina",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb-memory-server": "^8.12.2",
+    "mongoose": "^6.10.0",
+    "nodemon": "^2.0.20",
+    "validator": "^13.9.0"
+  }
+}
