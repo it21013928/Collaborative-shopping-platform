@@ -6,6 +6,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../../Layout/Header";
 import avatar from '../../../assets/product/profile.png';
 import './productDetails.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetailsPage = () => {
 
@@ -116,7 +118,13 @@ const ProductDetailsPage = () => {
 
     if (response.ok) {
       console.log('Product updated successfully.', json)
-      navigate("/productList");
+
+      toast.success(`Product updated successfully `, {
+        position: "bottom-left",
+      });
+      setTimeout(() => {
+        navigate("/productList");
+      }, 3000); 
     }
   }
 
@@ -134,7 +142,13 @@ const ProductDetailsPage = () => {
 
     if (response.ok) {
         console.log('Product deleted successfully.', json)
-        navigate("/productList");
+        
+        toast.success(`Product deleted successfully `, {
+          position: "bottom-left",
+        });
+        setTimeout(() => {
+          navigate("/productList");
+        }, 3000);        
     }
   }
 

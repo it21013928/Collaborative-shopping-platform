@@ -3,8 +3,11 @@ import { tokens } from "../../../theme";
 import { useState } from "react";
 import Header from "../../../Layout/Header";
 import './prodcutInputcss.css';
-import avatar from '../../../assets/product/profile.png';
+//import avatar from '../../../assets/product/profile.png';
+import avatar from '../../../assets/product/icon-image.png';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductInputForm = () => {
 
@@ -32,9 +35,14 @@ const ProductInputForm = () => {
       headers: {'content-type': 'application/json'},
       body: JSON.stringify(product)
     }).then(() => {
-      console.log('new product added');
-      navigate("/productList");
-    })
+      console.log('new product added'); 
+      toast.success(`New product added successfully `, {
+        position: "bottom-left",
+      });
+      setTimeout(() => {
+        navigate("/productList");
+      }, 3000);
+    });
   };
 
   const handleFileUpload = async (e) => {
@@ -147,7 +155,8 @@ const ProductInputForm = () => {
               <label>Image</label>
 
           <label htmlFor="img-upload" className='custom-file-upload'>
-            <img src={avatar} alt="" />
+            <img className="default-img" src={avatar} alt={avatar} />
+            {/* <img src={avatar} alt="" /> */}
           </label>
 
           <input

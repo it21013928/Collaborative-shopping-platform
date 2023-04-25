@@ -13,7 +13,23 @@ const Products = () => {
   const service = new product();
   const [products, setProducts] = useState(null);
 
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await getProducts();
+  //       await setProducts(response);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
+  //   fetchProducts();
+  // }, []);
+
+  // useEffect(() => {
+  // }, [products]);
+
+  
   useEffect( async () => {
     await service.getAllProducts().then((Productdetails) => {
     setProducts(Productdetails.data);
@@ -50,8 +66,13 @@ const Products = () => {
       flex: 1,
     },
     {
+      field: "category",
+      headerName: "Category",
+      flex: 1,
+    },
+    {
       field: "userId",
-      headerName: "Seller ID",
+      headerName: "User ID",
       flex: 1,
     },
     {
