@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
@@ -35,14 +35,16 @@ const ProductDescriptionInfo = ({
     selectedProductSize
   );
 
+  const { id } = useParams();
+
   const [qty, setQty] = useState(0);
 
-  const [productId, setProductId] = useState(product.id);
-  const [userId, setUserId] = useState(product.userId);
+  const [productId, setProductId] = useState(id);
+  const [customerId, setUserId] = useState("User123");
   const [price, setPrice] = useState(product.price);
   const [quantity, setQuantity] = useState(product.quantity);
 
-  console.log(product.quantity);
+  console.log(product.userId);
 
   function increaseQty(e) {
     e.preventDefault();
@@ -60,14 +62,14 @@ const ProductDescriptionInfo = ({
     e.preventDefault();
 
     const productCart = {
-      productId,
-      price,
-      quantity,
-      userId,
+      Item_number: productId,
+      unitPrice: price,
+      quantity: qty,
+      customer_id: customerId,
     };
     console.log(productCart);
 
-    fetch("", {
+    fetch("http://localhost:8006/insert/", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(productCart),
