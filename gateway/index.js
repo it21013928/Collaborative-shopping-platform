@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 // Set up routes
+// app.use("/users", proxy(`http://172.28.26.151:${user_port}`));
 app.use("/users", proxy(`http://localhost:${user_port}`));
 
 app.listen(port, () => {

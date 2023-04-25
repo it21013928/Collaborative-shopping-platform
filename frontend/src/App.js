@@ -33,6 +33,7 @@ const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
 const Faq = lazy(() => import("./admin/pages/faqPage"));
 const Team = lazy(() => import("./admin/pages/teamPage"));
 
+const CreateUser = lazy(() => import("./admin/pages/createUserPage"));
 const Customers = lazy(() => import("./admin/pages/customersPage"));
 const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
@@ -116,7 +117,7 @@ const App = () => {
             />
 
             <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
-
+            <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
             <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
             <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
             <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />

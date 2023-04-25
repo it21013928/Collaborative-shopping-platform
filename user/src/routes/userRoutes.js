@@ -11,12 +11,16 @@ const {
   getCustomers,
   getSellers,
   getModerators,
+  getUserId,
 } = require("../controllers/userController");
 
 const router = express.Router();
 
 // GET user
 router.get("/me", authMiddleware, getUser);
+
+// GET user Id
+router.get("/id", authMiddleware, getUserId);
 
 // GET users
 router.get("/", getUsers);
@@ -34,10 +38,10 @@ router.get("/moderators", getModerators);
 router.post("/register", registerUser);
 
 // DELETE a user
-router.delete("/:id", deleteUser);
+router.delete("/:token", deleteUser);
 
 // UPDATE a user
-router.patch("/:id", updateUser);
+router.patch("/me", authMiddleware, updateUser);
 
 // login route
 router.post("/login", loginUser);
