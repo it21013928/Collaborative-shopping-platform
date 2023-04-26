@@ -92,7 +92,7 @@ const ProductDescriptionInfo = ({
     e.preventDefault();
 
     const productCart = {
-      Item_number: productId,
+      Item_number: product.name,
       unitPrice: product.price,
       quantity: qty,
       customer_id: userId,
