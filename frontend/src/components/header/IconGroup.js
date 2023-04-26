@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import clsx from "clsx";
 import MenuCart from "./sub-components/MenuCart";
+import filterBySearch from "../../wrappers/product/ProductGrid";
 
 const IconGroup = ({ iconWhiteClass }) => {
   const handleClick = (e) => {
@@ -27,19 +28,19 @@ const IconGroup = ({ iconWhiteClass }) => {
           <i className="pe-7s-search" />
         </button>
         <div className="search-content">
-          {/* <form action="#">
-            <input type="text" placeholder="Search" />
-            <button className="button-search">
+          {/* <form action="#"> */}
+          <input type="text" placeholder="Search" onChange={filterBySearch} />
+          {/* <button className="button-search">
               <i className="pe-7s-search" />
-            </button>
-          </form> */}
-          <TextField
+            </button> */}
+          {/* </form> */}
+          {/* <TextField
             id="outlined-basic"
             placeholder="Search"
             variant="outlined"
             fullWidth
             label="Search"
-          />
+          /> */}
         </div>
       </div>
       <div className="same-style account-setting d-none d-lg-block">

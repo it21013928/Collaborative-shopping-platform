@@ -39,13 +39,40 @@ const ProductDescriptionInfo = ({
 
   const [qty, setQty] = useState(0);
 
+  const navigate = useNavigate();
+  const [user, setUser] = useState("");
+  console.log(user.id);
+  const userId = user.id;
+
   const [productId, setProductId] = useState(id);
-  const [customerId, setUserId] = useState("User123");
-  const [price, setPrice] = useState(product.price);
+  //const [customerId, setUserId] = useState(userId);
+  //const [price, setPrice] = useState(product.price);
   const [quantity, setQuantity] = useState(product.quantity);
 
   console.log(product);
-  console.log(price);
+
+  //fetch user ID
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchUser = async (token) => {
+      try {
+        if (token) {
+          const userData = await getUserId(token);
+          if (!userData) {
+            navigate("/login-register");
+          } else {
+            await setUser(userData);
+          }
+        } else {
+          navigate("/login-register");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser(token);
+  }, []);
 
   function increaseQty(e) {
     e.preventDefault();
@@ -59,14 +86,16 @@ const ProductDescriptionInfo = ({
     }
   }
 
+  console.log(qty);
+
   function handleAddToCart(e) {
     e.preventDefault();
 
     const productCart = {
       Item_number: productId,
-      unitPrice: price,
+      unitPrice: product.price,
       quantity: qty,
-      customer_id: customerId,
+      customer_id: userId,
     };
     console.log(productCart);
 
