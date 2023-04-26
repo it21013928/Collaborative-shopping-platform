@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
@@ -21,7 +21,7 @@ const Orders = () => {
     // Function to fetch orders
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/orders/`); // Replace '/api/orders' with your backend API endpoint for fetching orders
+        const response = await axios.get(`http://localhost:8000/orders/getOrdersByStatus/Pending`); // Replace '/api/orders' with your backend API endpoint for fetching orders
         setOrders(response.data); // Set the orders data to state
       } catch (error) {
         console.error(error); // Log any errors to the console
@@ -29,24 +29,29 @@ const Orders = () => {
     };
 
     fetchOrders(); // Call the fetchOrders function
-  }, []); // Empty dependency array to run the effect only once, equivalent to componentDidMount
+  }, ); // Empty dependency array to run the effect only once, equivalent to componentDidMount
 
   useEffect(() => {
     // Code to run when orders state changes
     // console.log(orders);
   }, [orders]);
 
+  const handleButtonClick = (id) => {
+     axios.patch(`http://localhost:8000/orders/confirm/${id}`)
+    // perform action with the id
+  };
+
   
 
   
 
   const columns = [
-    { field: "_id", headerName: "ID", flex: 2 },
+    { field: "_id", headerName: "ID", flex: 1 },
     {
       field: "Status",
       headerName: "Status",
       flex: 1,
-      cellClassName: "name-column--cell",
+      
     },
     {
       field: "Date",
@@ -58,6 +63,23 @@ const Orders = () => {
       headerName: "Shipping Address",
       flex: 1,
     },
+
+    {
+      field: "button",
+      headerName: "Action",
+      width:100,
+      renderCell:(params)=>{
+        return(
+          <Button
+          color="secondary"
+          onClick={() => handleButtonClick(params.row._id)}
+          >Confirm</Button>
+        )
+      }
+      
+    },
+
+    
     
      
     

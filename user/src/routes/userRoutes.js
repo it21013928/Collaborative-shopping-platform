@@ -11,6 +11,7 @@ const {
   getCustomers,
   getSellers,
   getModerators,
+  getUserId
 } = require("../controllers/userController");
 
 const router = express.Router();
@@ -41,5 +42,8 @@ router.patch("/:id", updateUser);
 
 // login route
 router.post("/login", loginUser);
+
+// GET user Id
+router.get("/id", authMiddleware, getUserId);
 
 module.exports = router;

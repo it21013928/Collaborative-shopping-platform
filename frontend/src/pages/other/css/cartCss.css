@@ -1,0 +1,17 @@
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(233, 92, 5); /* Set the button color to red */
+    color: #fff; /* Set the text color to white */
+    border: none; /* Remove the button border */
+    border-radius: 25px; /* Set the border radius to create a rounded shape */
+    cursor: pointer; /* Add cursor pointer on hover */
+    transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect for color change */
+  }
+
+  .button:hover {
+    background-color: #f60303; /* Change the background color to a different shade of red on hover */
+  }
+  
+  /* Define button styles on active (button pressed) */
+  
