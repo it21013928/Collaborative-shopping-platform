@@ -8,6 +8,7 @@ import "./css/index.css";
 import './form.css';
 import {  getUserId } from "../../api/user";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { navigate } from "react-router-dom";
 const totalCartPrice = require('./Cart')
 
 export default function AddCustomerPayment() {
@@ -49,8 +50,14 @@ export default function AddCustomerPayment() {
 
       //////////////////////////////////////////
       
-      
+      const [apiData, setApiData] = useState([]);
 
+     useEffect(() => {
+       
+     }, [])
+
+
+     
 
   
   
@@ -185,6 +192,8 @@ export default function AddCustomerPayment() {
  
   async function sendDataToAPI(e, _id) {
     e.preventDefault();
+
+    
     //
     //setPaying(true);
     //const { client_secret } = await fetch("http://localhost:8083/create-payment", {
@@ -199,16 +208,15 @@ export default function AddCustomerPayment() {
     var cartTotalPricee = 150
     console.log("dddddddddddddddddddddddddddddddddddddddddddddddddd")
     console.log(cartTotalPrice)
-    await axios.post('http://localhost:8083/create-payment', {amount: cartTotalPricee}).then (async () => {
+    await axios.post('http://localhost:8083/create-payment', {amount: cartTotalPricee*10}).then (async () => {
 
     console.log(_id)
     console.log(namee)
     console.log(adresssssss)
     console.log(phoneNo)
+    console.log(productCount)
 
-    
-
-    await axios.post('http://localhost:8000/orders/', {
+       await axios.post('http://localhost:8000/orders/', {
       cus_id: userID.id,
       status: "Confirmed",
       recieverName: namee,
@@ -216,21 +224,51 @@ export default function AddCustomerPayment() {
       address: adresssssss,
       phoneNumber: phoneNo
 
-  }).then (async () => {
-    deleteCart()
+  }).then (async(getOrderID) => {
+    var orderID = getOrderID.data._id;
+    console.log("This is order data"+ getOrderID.data)
+    console.log(orderID)
+    console.log(apiData)
+
+    axios.get(`http://localhost:8000/cart/get/${userID.id}`).then((cartData)=>{
+        
+    console.log(cartData.data)
+        cartData.data.map(async(data) => {
+          var product = data.Item_number;
+          var quantity = parseInt(data.quantity);
+          var productid = data.ProductID;
+          var seller = data.sellerID;
+  
+          console.log(product)
+      console.log(quantity)
+      console.log(productid)
+      console.log(orderID)
+      console.log(seller)
+
+      await axios.post(`http://localhost:8000/orders/orderProduct/create`,
+        {
+          orderId:orderID, productId:productid, quantity, productName:product, sellerId:seller
+        }
+        ).then(async () => {
+          axios.delete(`http://localhost:8000/cart/deleteFullCart/${product}/${userID.id}`)
+
+          
+        })
+
+      })
+
+      
+        
+        
+        
+      })
   }) 
 
     })
      
 }
 
-async function deleteCart(){
 
-  await axios.delete(`http://localhost:8000/cart/deleteFullCart/${userID.id}`)
-  .then(() => {
-    console.log("Deleted")
-  })
-}
 
 
 
@@ -343,7 +381,7 @@ async function deleteCart(){
           <div style={{ marginLeft: "34%" }}>
           
 
-            <button className="submit" type="submit" onClick={(e) => sendDataToAPI(e)}>
+            <button className="button" type="submit" onClick={(e) => sendDataToAPI(e)}>
                             SEND!
                             </button>
           </div>

@@ -29,7 +29,7 @@ const Orders = () => {
     };
 
     fetchOrders(); // Call the fetchOrders function
-  }, ); // Empty dependency array to run the effect only once, equivalent to componentDidMount
+  }, []); // Empty dependency array to run the effect only once, equivalent to componentDidMount
 
   useEffect(() => {
     // Code to run when orders state changes

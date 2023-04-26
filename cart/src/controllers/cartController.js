@@ -15,9 +15,12 @@ const InventoryProducts = require('../../../product/src/models/productModel')
 const createCart = async (req, res) => {
     const cart = new CART({
         customer_id: req.body.customer_id,
+        ProductID:req.body.ProductID,
         Item_number : req.body.Item_number,
         quantity: req.body.quantity,
-        unitPrice:req.body.unitPrice
+        unitPrice:req.body.unitPrice,
+        sellerID:req.body.sellerID
+
     });
 
     await cart.save();
@@ -70,12 +73,8 @@ const deleteCart =async (req, res) => {
 
 //Delete all cart from user
 const deleteAllCartFromUser = async (req, res) => {
-    try {
-        await CART.deleteMany({ customer_id: req.params.customer_id });
-        res.status(200).json({ message: "All items deleted from cart successfully." });
-    } catch (error) {
-        res.status(500).json({ error: "Failed to delete items from cart." });
-    }
+    const cart = await CART.findOneAndDelete({customer_id:req.params.customer_id, Item_number : req.params.Item_number})
+    res.send(cart)
 
 }
 

@@ -10,6 +10,7 @@ const createOrder = async (req, res) => {
     ProductCount: req.body.productCount,
     ShipingAddress: req.body.address,
     Phone: req.body.phoneNumber,
+    Tracking: "untracked",
   });
 
   await order.save();

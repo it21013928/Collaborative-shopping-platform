@@ -7,9 +7,11 @@ const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51MyIpIFhTFEnkTy8M6XsRARLa2TrpDNlQ0J7obv3NOavVWAbboqCd4WzMefYGusWrQTDDQrV7NUarwl2zIehBfGX00WkMx1zfD');
 
 
+
 const server = http.createServer(app);
 
 const {Server} = require('socket.io');
+//const { sendEmail } = require('./services/paymentServices');
 
 const io = new Server(server, {
 
@@ -44,6 +46,10 @@ app.post('/create-payment', async(req, res)=> {
     console.log(amount);
 
     res.status(200).json(paymentIntent)
+
+   
+
+
 
  } catch (e) {
 

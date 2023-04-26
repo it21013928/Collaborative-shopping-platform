@@ -21,6 +21,6 @@ router.get('/getAll/:cID', getAllCart)
 
 router.delete('/delete/:Item_number/:customer_id', deleteCart)
 
-router.delete('/deleteFullCart/:customerID', deleteAllCartFromUser)
+router.delete('/deleteFullCart/:Item_number/:customer_id', deleteAllCartFromUser)
 
 module.exports = router

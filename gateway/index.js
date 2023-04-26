@@ -23,6 +23,7 @@ app.use("/orders", proxy(`http://localhost:${order_port}`));
 app.use("/products", proxy(`http://localhost:${product_port}`));
 app.use("/cart", proxy(`http://localhost:${cart_port}`));
 
+
 app.listen(port, () => {
   console.log(`Gateway is listening at http://localhost:${port}`);
 });
