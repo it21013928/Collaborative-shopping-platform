@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Card, Typography, Grid } from "@mui/material";
+import { getUserId } from "../../api/user";
 
 const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
   const { id } = useParams();
@@ -17,8 +18,38 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
   const [reviewId, setReviewId] = useState("");
   const [userName, setUserName] = useState("");
   const [message, setMessage] = useState("");
-  const [userId] = useState();
+  //const [userId] = useState();
   const [productId] = useState(id);
+
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState("");
+  const userId = user.id;
+
+  //const rId = review.userId;
+
+  //fetch user ID
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchUser = async (token) => {
+      try {
+        if (token) {
+          const userData = await getUserId(token);
+          if (!userData) {
+            navigate("/login-register");
+          } else {
+            await setUser(userData);
+          }
+        } else {
+          navigate("/login-register");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser(token);
+  }, []);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -146,6 +177,7 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                                         onClick={(e) =>
                                           handleDeleteSubmit(e, review._id)
                                         }
+                                        disabled={userId !== review.userId}
                                       >
                                         Delete
                                       </button>

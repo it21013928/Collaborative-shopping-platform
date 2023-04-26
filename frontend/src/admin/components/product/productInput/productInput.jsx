@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, TextField, InputLabel, Select, Typography, useTheme, Input } from "@mui/material";
 import { tokens } from "../../../theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../../Layout/Header";
 import './prodcutInputcss.css';
 import avatar from '../../../assets/product/icon-image.png';
@@ -12,8 +12,6 @@ import { getUserId } from "../../../../api/user";
 const ProductInputForm = () => {
 
   const token = localStorage.getItem("token");
-  const userId = getUserId(token);
-  console.log(userId);
 
   const navigate = useNavigate();
   const theme = useTheme();
@@ -27,7 +25,35 @@ const ProductInputForm = () => {
   const [fullDescription , setFullDescription] = useState('');
   const [category , setCategory] = useState(null);
   const [image, setImage] = useState("");
+
+  const [user, setUser] = useState(''); 
+  console.log(user.id);
+  const userId = user.id;
   
+  //fetch user ID
+useEffect(() => {
+    const token = localStorage.getItem("token");
+    const fetchUser = async (token) => {
+      try {
+        if (token) {
+          const userData = await getUserId(token);
+          if (!userData) {
+            navigate("/login-register");
+          } else {
+            await setUser(userData);
+          }
+        } else {
+          navigate("/login-register");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser(token);
+  }, []);
+
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
 

@@ -15,5 +15,10 @@ class ToDoService {
     const url = `http://localhost:8002/product/:id`;
     return this.request(url);
   }
+
+  getProductBySeller(id) {
+    const url = `http://localhost:8002/productBySeller/${id}`;
+    return this.request(url);
+  }
 }
 export default ToDoService;
