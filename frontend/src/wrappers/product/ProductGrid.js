@@ -24,7 +24,7 @@ const ProductGrid = ({ spaceBottomClass, category, type, limit }) => {
   }, []);
 
   async function getAllProductsFromDatabase() {
-    await fetch("http://localhost:8002/product/")
+    await fetch("http://localhost:8000/product/")
       .then((response) => response.json())
       .then((data) => {
         setProducts(data);

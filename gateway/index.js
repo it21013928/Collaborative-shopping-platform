@@ -19,9 +19,11 @@ app.use(cors());
 // app.use("/users", proxy(`http://172.23.16.1:${user_port}`));
 app.use("/users", proxy(`http://localhost:${user_port}`));
 
+app.use("/product", proxy(`http://localhost:${product_port}`));
+
+
 // app.use("/users", proxy(`http://user-service:${user_port}`));
 
-app.use("/products", proxy(`http://localhost:${product_port}`));
 
 
 app.listen(port, () => {

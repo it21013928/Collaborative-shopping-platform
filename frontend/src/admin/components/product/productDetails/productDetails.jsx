@@ -51,7 +51,7 @@ const ProductDetailsPage = () => {
 
     useEffect(() => {
       const fetchProduct = async () => {
-        const response = await fetch(`http://localhost:8002/product/${id}`)
+        const response = await fetch(`http://localhost:8000/product/${id}`)
         const json = await response.json()
   
         if (response.ok) {
@@ -91,7 +91,7 @@ const ProductDetailsPage = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:8002/product/' + id, {
+    const response = await fetch('http://localhost:8000/product/' + id, {
       method: 'PATCH',
       body: JSON.stringify({
         productId: productId,
@@ -131,7 +131,7 @@ const ProductDetailsPage = () => {
   const handleDeleteSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch('http://localhost:8002/product/' + id, {
+    const response = await fetch('http://localhost:8000/product/' + id, {
         method: 'DELETE'
     })
     const json = await response.json()
@@ -173,6 +173,7 @@ const ProductDetailsPage = () => {
 
   return (
         <Box m="20px">
+          <ToastContainer />
       <Header title="PRODUCT DETAILS" subtitle="Details of the selected Product"/>
 
       <form>

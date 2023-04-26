@@ -25,6 +25,16 @@ const createProduct = async (req, res) => {
       });
     }
 
+    //check if quantity is a positive integer
+    if (quantity < 0) {
+      return res.status(401).json({ message: "Product quantity less than 0." });
+    }
+
+    //check if price is graeter than 0.
+    if (price < 0) {
+      return res.status(401).json({ message: "Product price is less than 0." });
+    }
+
     // Check product already exists
     const id = await Product.findOne({ productId });
     if (id) {
@@ -115,7 +125,6 @@ const getProductByName = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-////////////////////////////////////////////////////////////////DOES NOT WORK!////////////////////////////////
 
 //GET all products
 const getAllproducts = async (req, res) => {
@@ -157,6 +166,23 @@ const updateProduct = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
+    // Check name price quantity is empty
+    if (!productId || !name || !price || !quantity) {
+      return res.status(400).json({
+        message: "Product id, name, price, quantity fields must be filled",
+      });
+    }
+
+    //check if quantity is a positive integer
+    if (quantity < 0) {
+      return res.status(401).json({ message: "Product quantity less than 0." });
+    }
+
+    //check if price is graeter than 0.
+    if (price < 0) {
+      return res.status(401).json({ message: "Product price is less than 0." });
+    }
+
     // Update product
     product.productId = productId || product.productId;
     product.name = name || product.name;
@@ -167,6 +193,28 @@ const updateProduct = async (req, res) => {
     product.fullDescription = fullDescription || product.fullDescription;
     product.rating = rating || product.rating;
     product.category = category || product.category;
+
+    await product.save();
+    res.json({ message: "Product updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+//Update a product quantity
+const updateProductQty = async (req, res) => {
+  try {
+    const { quantity, soldQty } = req.body;
+
+    // Find product by ID
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Update product
+    product.quantity = quantity || product.quantity;
 
     await product.save();
     res.json({ message: "Product updated successfully" });

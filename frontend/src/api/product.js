@@ -7,18 +7,19 @@ class ToDoService {
   };
 
   getAllProducts() {
-    const url = `http://localhost:8002/product/`;
+    const url = `http://localhost:8000/product/`;
     return this.request(url);
   }
 
   getProduct() {
-    const url = `http://localhost:8002/product/:id`;
+    const url = `http://localhost:8000/product/:id`;
     return this.request(url);
   }
 
   getProductBySeller(id) {
-    const url = `http://localhost:8002/productBySeller/${id}`;
+    const url = `http://localhost:8000/product/productBySeller/${id}`;
     return this.request(url);
   }
 }
+
 export default ToDoService;

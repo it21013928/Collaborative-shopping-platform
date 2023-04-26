@@ -169,18 +169,22 @@ const ProductDescriptionTab = ({ spaceBottomClass, productFullDesc }) => {
                                       </div>
                                     </div>
                                     <div className="review-left">
-                                      <button
-                                        style={{
-                                          align: "right",
-                                          float: "right",
-                                        }}
-                                        onClick={(e) =>
-                                          handleDeleteSubmit(e, review._id)
-                                        }
-                                        disabled={userId !== review.userId}
-                                      >
-                                        Delete
-                                      </button>
+                                      {userId === review.userId ? (
+                                        <button
+                                          style={{
+                                            align: "right",
+                                            float: "right",
+                                          }}
+                                          onClick={(e) =>
+                                            handleDeleteSubmit(e, review._id)
+                                          }
+                                          // disabled={userId !== review.userId}
+                                        >
+                                          Delete
+                                        </button>
+                                      ) : (
+                                        <></>
+                                      )}
                                     </div>
                                   </div>
                                   <div className="review-bottom">
