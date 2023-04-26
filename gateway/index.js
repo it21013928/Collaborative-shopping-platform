@@ -17,7 +17,7 @@ app.use(cors());
 
 // Set up routes
 app.use("/users", proxy(`http://localhost:${user_port}`));
-app.use("/products", proxy(`http://localhost:${product_port}`));
+app.use("/product", proxy(`http://localhost:${product_port}`));
 
 app.listen(port, () => {
   console.log(`Gateway is listening at http://localhost:${port}`);

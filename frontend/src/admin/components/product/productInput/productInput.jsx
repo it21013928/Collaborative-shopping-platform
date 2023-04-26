@@ -60,7 +60,7 @@ useEffect(() => {
     const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId};
     console.log(product);
 
-    fetch('http://localhost:8002/product/create', {
+    fetch('http://localhost:8000/product/create', {
       method: 'POST',
       headers: {'content-type': 'application/json'},
       body: JSON.stringify(product)
@@ -84,6 +84,7 @@ useEffect(() => {
 
   return (
         <Box m="20px">
+        <ToastContainer />
       <Header title="INSERT A PRODUCT" subtitle="Insert a New Product" />
 
           <form onSubmit={handleFormSubmit}>
@@ -205,7 +206,6 @@ useEffect(() => {
          />
 
             </Box>
-
                 <Box display="flex" justifyContent="end" mt="20px">
                   <Button type="submit" color="secondary" variant="contained">
                     Insert a Product

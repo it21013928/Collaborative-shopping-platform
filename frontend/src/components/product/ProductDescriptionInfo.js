@@ -7,6 +7,7 @@ import Rating from "./sub-components/ProductRating";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getUserId } from "../../api/user";
+import axios from "axios";
 
 const ProductDescriptionInfo = ({
   product,
@@ -42,12 +43,17 @@ const ProductDescriptionInfo = ({
   const navigate = useNavigate();
   const [user, setUser] = useState("");
   console.log(user.id);
-  const userId = user.id;
+  //const userId = user.id;
 
   const [productId, setProductId] = useState(id);
   //const [customerId, setUserId] = useState(userId);
   //const [price, setPrice] = useState(product.price);
-  const [quantity, setQuantity] = useState(product.quantity);
+  //const [quantity, setQuantity] = useState(product.quantity);
+  const [sellerId, setSellerId] = useState(product.userId);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8000/product/${id}`).then(() => {});
+  }, []);
 
   console.log(product);
 
@@ -91,24 +97,29 @@ const ProductDescriptionInfo = ({
   function handleAddToCart(e) {
     e.preventDefault();
 
-    const productCart = {
-      Item_number: product.name,
-      unitPrice: product.price,
-      quantity: qty,
-      customer_id: userId,
-    };
-    console.log(productCart);
+    axios.get(`http://localhost:8000/product/${id}`).then((res) => {
+      const productCart = {
+        ProductID: id,
+        sellerID: res.data.userId,
+        Item_number: product.name,
+        unitPrice: product.price,
+        quantity: qty,
+        customer_id: user.id,
+      };
 
-    fetch("http://localhost:8006/insert/", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(productCart),
-    }).then(() => {
-      console.log("product added to cart");
-      toast.success(`Product was added to Cart `, {
-        position: "bottom-left",
+      console.log(productCart);
+
+      fetch("http://localhost:8006/insert/", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(productCart),
+      }).then(() => {
+        console.log("product added to cart");
+        toast.success(`Product was added to Cart `, {
+          position: "bottom-left",
+        });
+        setTimeout(() => {}, 2000);
       });
-      setTimeout(() => {}, 2000);
     });
   }
 
