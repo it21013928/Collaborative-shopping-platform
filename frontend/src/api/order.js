@@ -31,5 +31,17 @@ class ToDoService {
     const url = `http://localhost:8000/delivery/getDelivery/${orderID}`;
     return this.request(url);
   }
+  getNRSellerProduct(sellerID) {
+    const url = `http://localhost:8000/orders/orderProduct/getNRSellerProduct/${sellerID}`;
+    return this.request(url);
+  }
+  getRSellerProduct(sellerID) {
+    const url = `http://localhost:8000/orders/orderProduct/getRSellerProduct/${sellerID}`;
+    return this.request(url);
+  }
+  getSellerOrderProduct(sellerID, orderID) {
+    const url = `http://localhost:8000/orders/orderProduct/getSellerOrderProduct/${sellerID}/${orderID}`;
+    return this.request(url);
+  }
 }
 export default ToDoService;

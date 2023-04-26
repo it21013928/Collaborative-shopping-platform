@@ -40,8 +40,34 @@ const updateOrderProduct = async (req, res) => {
   }
 };
 
+const getSellerOrderProduct = async (req, res) => {
+  const productList = await orderedProducts.find({
+    sellerID: req.params.sellerid,
+    OrderID: req.params.orderid,
+  });
+  res.status(200).json(productList);
+};
+
+const getNRSellerProduct = async (req, res) => {
+  const productList = await orderedProducts.find({
+    sellerID: req.params.sellerid,
+    Confirmation: "Not Recieved",
+  });
+  res.status(200).json(productList);
+};
+const getRSellerProduct = async (req, res) => {
+  const productList = await orderedProducts.find({
+    sellerID: req.params.sellerid,
+    Confirmation: "received",
+  });
+  res.status(200).json(productList);
+};
+
 module.exports = {
   create,
   viewByID,
   updateOrderProduct,
+  getNRSellerProduct,
+  getSellerOrderProduct,
+  getRSellerProduct,
 };

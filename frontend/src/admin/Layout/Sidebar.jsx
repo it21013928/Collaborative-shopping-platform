@@ -130,7 +130,6 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -159,7 +158,6 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -188,7 +186,6 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -224,7 +221,6 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Typography
               variant="h6"
               color={colors.grey[300]}
@@ -235,6 +231,27 @@ const Sidebar = (props) => {
             <Item
               title="Seller Requests"
               to="/seller-requests"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />{" "}
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Seller Order Management
+            </Typography>
+            <Item
+              title="New Orders"
+              to="/requestedProduct"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Sales History"
+              to="/salesHistory"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
@@ -267,7 +284,6 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
-
             <Item
               title="Sellers"
               to="/sellers"

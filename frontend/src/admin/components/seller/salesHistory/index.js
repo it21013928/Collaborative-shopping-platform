@@ -21,7 +21,7 @@ export default function () {
   const [sellerID, setSellerID] = useState("S02");
 
   useEffect(async () => {
-    await service.getNRSellerProduct(sellerID).then(async (productList) => {
+    await service.getRSellerProduct(sellerID).then(async (productList) => {
       setProductList(productList.data);
       const arr = productList.data;
       const size = arr.length;
@@ -83,7 +83,7 @@ export default function () {
             color="secondary"
             onClick={() => handleButtonClick(params.row._id)}
           >
-            View Product
+            View Products
           </Button>
         );
       },

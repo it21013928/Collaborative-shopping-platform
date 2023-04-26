@@ -50,6 +50,10 @@ const TrackOrder = lazy(() => import("./admin/pages/trackOrderPage"));
 const RequestedProduct = lazy(() =>
   import("./admin/pages/requestedProductPage")
 );
+const RequestedProductList = lazy(() =>
+  import("./admin/pages/requestedProductListPage")
+);
+const SalesHistory = lazy(() => import("./admin/pages/salesHistoryPage"));
 
 const App = () => {
   return (
@@ -193,6 +197,14 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/requestedProduct"}
               element={<RequestedProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProductList"}
+              element={<RequestedProductList />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/salesHistory"}
+              element={<SalesHistory />}
             />
 
             <Route path="*" element={<NotFound />} />
