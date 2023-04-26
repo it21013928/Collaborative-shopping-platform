@@ -15,8 +15,9 @@ app.use(express.json());
 app.use(cors());
 
 // Set up routes
-// app.use("/users", proxy(`http://172.28.26.151:${user_port}`));
+// app.use("/users", proxy(`http://172.23.16.1:${user_port}`));
 app.use("/users", proxy(`http://localhost:${user_port}`));
+// app.use("/users", proxy(`http://user-service:${user_port}`));
 
 app.listen(port, () => {
   console.log(`Gateway is listening at http://localhost:${port}`);
