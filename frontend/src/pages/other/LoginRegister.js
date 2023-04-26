@@ -111,13 +111,6 @@ const LoginRegister = () => {
                                 onChange={handlePasswordChange}
                               />
                               <div className="button-box">
-                                <div className="login-toggle-btn">
-                                  <input type="checkbox" />
-                                  <label className="ml-10">Remember me</label>
-                                  <Link to={process.env.PUBLIC_URL + "/"}>
-                                    Forgot Password?
-                                  </Link>
-                                </div>
                                 <button type="submit">
                                   <span>Login</span>
                                 </button>

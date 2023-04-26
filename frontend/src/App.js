@@ -33,6 +33,7 @@ const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
 const Faq = lazy(() => import("./admin/pages/faqPage"));
 const Team = lazy(() => import("./admin/pages/teamPage"));
 
+const CreateUser = lazy(() => import("./admin/pages/createUserPage"));
 const Customers = lazy(() => import("./admin/pages/customersPage"));
 const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
@@ -108,6 +109,12 @@ const App = () => {
               element={<Calendar />}
             />
             <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
+<<<<<<< HEAD
+            <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
+            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
+            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
+            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
+=======
             <Route
               path={process.env.PUBLIC_URL + "/moderators"}
               element={<Moderators />}
@@ -120,6 +127,7 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/customers"}
               element={<Customers />}
             />
+>>>>>>> ffb63a38d79e6c9fe5717509ce308d15140194cc
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}
