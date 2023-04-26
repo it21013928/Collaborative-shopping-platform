@@ -17,7 +17,7 @@ const Products = () => {
   const [products, setProducts] = useState(null);
 
   const [user, setUser] = useState(''); 
-  console.log(user.id);
+  
   // const userId = user.id;
   // console.log(userId);
 
@@ -32,6 +32,11 @@ useEffect( () => {
             navigate("/login-register");
           } else {
             await setUser(userData);
+            const Productdetails = await service.getProductBySeller(user.id)
+            await setProducts(Productdetails.data);
+            console.log(user.id);
+            console.log(Productdetails.data);
+            
           }
         } else {
           navigate("/login-register");
@@ -41,11 +46,6 @@ useEffect( () => {
       }
     };
 
-      service.getProductBySeller(user.id).then((Productdetails) => {
-      setProducts(Productdetails.data);
-      console.log(Productdetails.data);
-      });
-    
     fetchUser(token);
   }, [products]);
 
