@@ -1,8 +1,13 @@
+require("dotenv").config();
+const secret = process.env.JWT_SECRET;
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
+const { sendEmail } = require('../services/userServices');
+const { sendSMS } = require('../services/userServices');
 
 // get all users
 const getUsers = async (req, res) => {
@@ -12,7 +17,9 @@ const getUsers = async (req, res) => {
 
 // get all customers
 const getCustomers = async (req, res) => {
-  const users = await User.find({ role: "client" });
+  const users = await User.find({
+    $or: [{ role: "client" }, { role: "seller-pending" }],
+  });
   res.status(200).json(users);
 };
 
@@ -48,10 +55,39 @@ const getUser = async (req, res) => {
   }
 };
 
+// get user Id
+const getUserId = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, secret);
+    req.userId = decoded.userId;
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const userId = req.userId;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).json({ error: "User does not exsist" });
+  }
+
+  try {
+    const user = await User.findById(userId).select("id");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // register new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, role } = req.body;
+    const { name, email, phone, address, city, zipCode, password, confirmPassword, role } = req.body;
 
     // Check name or email or password is empty
     if (!name || !email || !password || !confirmPassword) {
@@ -89,7 +125,7 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const user = new User({ name, email, password: hashedPassword, role });
+    const user = new User({ name, email, phone, address, city, zipCode, password: hashedPassword, role });
     await user.save();
 
     // Create JWT token
@@ -99,7 +135,7 @@ const registerUser = async (req, res) => {
     //   { expiresIn: "1h" }
     // );
 
-    res.status(200).json({ userId: user._id, role: user.role });
+    res.status(200).json({ userId: user.id, role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -125,12 +161,14 @@ const loginUser = async (req, res) => {
 
     // Create JWT token
     const token = jwt.sign(
-      { userId: user._id, role: user.role },
+      { userId: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-
-    res.json({ token, userId: user._id, role: user.role });
+    
+    // await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
+    // await sendSMS("94764103928", "testing API");
+    res.json({ token, userId: user.id, role: user.role });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -140,10 +178,16 @@ const loginUser = async (req, res) => {
 // update user
 const updateUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, phone, address, city, zipCode, role, password } =
+      req.body;
+    console.log(name, email, phone, address, city, zipCode, role, password);
+    const secretKey = process.env.JWT_SECRET;
+    const token = req.headers.authorization?.split(" ")[1];
+    const decoded = jwt.verify(token, secretKey);
+    const userId = decoded.userId;
 
     // Find user by ID
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -151,17 +195,25 @@ const updateUser = async (req, res) => {
     // Update user
     user.name = name || user.name;
     user.email = email || user.email;
+    user.address = address || user.name;
+    user.phone = phone || user.phone;
+    user.city = city || user.city;
+    user.zipCode = zipCode || user.zipCode;
+    user.role = role || user.role;
+
     if (password) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
+      await user.save();
+      return res.json({ message: "Password updated successfully" });
     }
 
     await user.save();
 
-    res.json({ message: "User updated successfully" });
+    return res.json({ message: "User updated successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -169,7 +221,7 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     // Find user by ID
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.token);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -194,4 +246,5 @@ module.exports = {
   getCustomers,
   getSellers,
   getModerators,
+  getUserId,
 };
