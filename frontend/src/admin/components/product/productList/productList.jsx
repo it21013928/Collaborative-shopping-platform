@@ -18,10 +18,11 @@ const Products = () => {
 
   const [user, setUser] = useState(''); 
   console.log(user.id);
-  const userId = user.id;
-  
+  // const userId = user.id;
+  // console.log(userId);
+
   //fetch user ID
-useEffect(() => {
+useEffect( () => {
     const token = localStorage.getItem("token");
     const fetchUser = async (token) => {
       try {
@@ -40,17 +41,22 @@ useEffect(() => {
       }
     };
 
+      service.getProductBySeller(user.id).then((Productdetails) => {
+      setProducts(Productdetails.data);
+      console.log(Productdetails.data);
+      });
+    
     fetchUser(token);
-  }, []);
+  }, [products]);
 
-  useEffect( async () => {
-    await service.getProductBySeller(userId).then((Productdetails) => {
-    setProducts(Productdetails.data);
-    console.log(Productdetails.data);
-    });
-  }, []);
+  // useEffect( async () => {
+  //   await service.getProductBySeller(user.id).then((Productdetails) => {
+  //   setProducts(Productdetails.data);
+  //   console.log(Productdetails.data);
+  //   });
+  // }, []);
 
-  useEffect(() => {}, [products]);
+  // useEffect(() => {}, [products]);
 
 
   const columns = [
