@@ -7,7 +7,6 @@ import ScrollToTop from "../components/scroll-to-top"
 const LayoutOne = ({
   children,
   headerContainerClass,
-  headerTop,
   headerPaddingClass,
   headerPositionClass
 }) => {
@@ -15,7 +14,6 @@ const LayoutOne = ({
     <Fragment>
       <HeaderOne
         layout={headerContainerClass}
-        top={headerTop}
         headerPaddingClass={headerPaddingClass}
         headerPositionClass={headerPositionClass}
       />

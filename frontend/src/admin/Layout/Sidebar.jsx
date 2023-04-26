@@ -224,6 +224,13 @@ const Sidebar = (props) => {
               Users
             </Typography>
             <Item
+              title="Create"
+              to="/create-user"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Moderators"
               to="/moderators"
               icon={<PeopleOutlinedIcon />}
@@ -241,6 +248,21 @@ const Sidebar = (props) => {
               title="Customers"
               to="/customers"
               icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Requests
+            </Typography>
+            <Item
+              title="Seller Requests"
+              to="/seller-requests"
+              icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
