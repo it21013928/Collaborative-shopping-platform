@@ -40,6 +40,11 @@ const Sellers = lazy(() => import("./admin/pages/sellersPage"));
 
 const Tracking = lazy(() => import("./admin/pages/tracking"));
 
+//Product
+const ProductInput = lazy(() => import("./admin/pages/productInput"));
+const ProductList = lazy(() => import("./admin/pages/productList"));
+const ProductDetails = lazy(() => import("./admin/pages/productDetails"));
+
 const App = () => {
   return (
     <Router>
@@ -56,19 +61,14 @@ const App = () => {
         >
           <Routes>
             {/* Homepages */}
-
             <Route path={process.env.PUBLIC_URL + "/"} element={<Home />} />
-
             {/* Shop pages */}
-
             <Route path={process.env.PUBLIC_URL + "/shop"} element={<Shop />} />
-
             {/* Shop product pages */}
             <Route
               path={process.env.PUBLIC_URL + "/product/:id"}
               element={<Product />}
             />
-
             {/* Other pages */}
             <Route
               path={process.env.PUBLIC_URL + "/about"}
@@ -78,19 +78,15 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/contact"}
               element={<Contact />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/my-account"}
               element={<MyAccount />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/login-register"}
               element={<LoginRegister />}
             />
-
             <Route path={process.env.PUBLIC_URL + "/cart"} element={<Cart />} />
-
             <Route
               path={process.env.PUBLIC_URL + "/wishlist"}
               element={<Wishlist />}
@@ -103,43 +99,63 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/checkout"}
               element={<Checkout />}
             />
-
             {/* ---------admin-------------- */}
-
             <Route
               path={process.env.PUBLIC_URL + "/dashboard"}
               element={<Dashboard />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/calendar"}
               element={<Calendar />}
             />
-
             <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
+<<<<<<< HEAD
             <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
             <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
             <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
             <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
+=======
+            <Route
+              path={process.env.PUBLIC_URL + "/moderators"}
+              element={<Moderators />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/sellers"}
+              element={<Sellers />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/customers"}
+              element={<Customers />}
+            />
+>>>>>>> ffb63a38d79e6c9fe5717509ce308d15140194cc
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/invoices"}
               element={<Invoices />}
             />
-
             <Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
-
             <Route path={process.env.PUBLIC_URL + "/faq"} element={<Faq />} />
-
             <Route
               path={process.env.PUBLIC_URL + "/tracking"}
               element={<Tracking />}
             />
-
+            {/* Product Start*/}ProductView
+            <Route
+              path={process.env.PUBLIC_URL + "/productInput"}
+              element={<ProductInput />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/productList"}
+              element={<ProductList />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/productDetails/:id"}
+              element={<ProductDetails />}
+            />
+            {/* Product End*/}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
