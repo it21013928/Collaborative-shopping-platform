@@ -17,9 +17,9 @@ app.use((req, res, next) => {
 app.use(cors());
 
 // Set up routes
-const userRoutes = require("./src/routes/emailRoutes");
+const emailRoutes = require("./src/routes/emailRoutes");
 app.use("/", emailRoutes);
 
 app.listen(port, () => {
-  console.log(`User is listening at http://localhost:${port}`);
+  console.log(`Email is listening at http://localhost:${port}`);
 });

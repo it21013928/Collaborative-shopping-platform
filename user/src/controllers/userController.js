@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
+const { sendEmail } = require('../services/userServices');
 
 // get all users
 const getUsers = async (req, res) => {
@@ -163,7 +164,8 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-
+    
+    await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
     res.json({ token, userId: user.id, role: user.role });
   } catch (err) {
     console.error(err);
