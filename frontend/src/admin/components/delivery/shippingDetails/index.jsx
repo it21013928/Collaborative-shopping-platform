@@ -150,9 +150,12 @@ export default function () {
         status,
         file,
       });
-      await Axios.patch(`http://localhost:8000/orders/update/${orderId}`, {
-        status,
-      });
+      await Axios.patch(
+        `http://localhost:8000/orders/updateTrackingOrder/${orderId}`,
+        {
+          status,
+        }
+      );
       console.log("CCCCCCCCCC");
       window.location.href = "/toBeDelivery";
     }

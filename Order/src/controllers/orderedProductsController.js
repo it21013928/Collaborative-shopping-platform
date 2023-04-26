@@ -10,7 +10,7 @@ const create = async (req, res) => {
     ProductID: req.body.productId,
     Quantity: req.body.quantity,
     ProductName: req.body.productName,
-    Confirmation: req.body.confirmation,
+    Confirmation: "Not Recieved",
     sellerID: req.body.sellerId,
   });
 

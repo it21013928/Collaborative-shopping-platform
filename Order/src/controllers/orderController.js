@@ -10,6 +10,7 @@ const createOrder = async (req, res) => {
     ProductCount: req.body.productCount,
     ShipingAddress: req.body.address,
     Phone: req.body.phoneNumber,
+    Tracking: "untracked",
   });
 
   await order.save();
@@ -25,6 +26,11 @@ const getAllOrders = async (req, res) => {
 //Get Paid orders
 const getOrdersByStatus = async (req, res) => {
   const orders = await Order.find({ Status: req.params.status });
+  res.status(200).json(orders);
+};
+
+const getShippedOrders = async (req, res) => {
+  const orders = await Order.find({ Tracking: "Tracked" });
   res.status(200).json(orders);
 };
 
@@ -87,6 +93,21 @@ const updateShippedOrder = async (req, res) => {
   }
 };
 
+const updateTrackingOrder = async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.Status = req.body.status;
+    order.Tracking = "Tracked";
+
+    const updateTrackingOrder = await order.save();
+
+    res.json(updateTrackingOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+};
 const updateProductCount = async (req, res) => {
   const order = await Order.findById(req.params.id);
 
@@ -111,4 +132,6 @@ module.exports = {
   updateShippedOrder,
   getOrdersByStatus,
   updateProductCount,
+  getShippedOrders,
+  updateTrackingOrder,
 };

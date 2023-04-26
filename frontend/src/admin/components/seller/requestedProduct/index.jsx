@@ -17,6 +17,7 @@ export default function () {
   const service = new order();
 
   const [orders, setOrders] = useState(null);
+  const [sellerID, setSellerID] = useState("S02");
 
   useEffect(async () => {
     await service.getOrdersByStatus("Ready to Ship").then((Orderdetails) => {

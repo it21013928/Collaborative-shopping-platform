@@ -16,6 +16,12 @@ const createDelivery = async (req, res) => {
   res.send(delivery);
 };
 
+const getDelivery = async (req, res) => {
+  const order = await Delivery.find({ OrderID: req.params.orderId });
+  res.status(200).json(order);
+};
+
 module.exports = {
   createDelivery,
+  getDelivery,
 };

@@ -11,6 +11,7 @@ const orderSchema = mongoose.Schema({
   CustomerName: { type: String },
   ShipingAddress: { type: String },
   Phone: { type: String },
+  Tracking: { type: String },
 });
 
 const Order = mongoose.model("order", orderSchema);

@@ -45,6 +45,11 @@ const ToBeDelivery = lazy(() => import("./admin/pages/toBeDeliveryPage"));
 const ShippingDetails = lazy(() => import("./admin/pages/shippingDetailsPage"));
 const ReceiveProduct = lazy(() => import("./admin/pages/receiveProductPage"));
 const CheckProduct = lazy(() => import("./admin/pages/checkProductPage"));
+const ShippedOrders = lazy(() => import("./admin/pages/shippedOrdersPage"));
+const TrackOrder = lazy(() => import("./admin/pages/trackOrderPage"));
+const RequestedProduct = lazy(() =>
+  import("./admin/pages/requestedProductPage")
+);
 
 const App = () => {
   return (
@@ -175,6 +180,19 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/checkProduct"}
               element={<CheckProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/shippedOrders"}
+              element={<ShippedOrders />}
+            />
+
+            <Route
+              path={process.env.PUBLIC_URL + "/trackOrder"}
+              element={<TrackOrder />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProduct"}
+              element={<RequestedProduct />}
             />
 
             <Route path="*" element={<NotFound />} />

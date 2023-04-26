@@ -260,6 +260,13 @@ const Sidebar = (props) => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Shipped orders"
+              to="/shippedOrders"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
 
             <Item
               title="Sellers"

@@ -8,6 +8,8 @@ const {
   getOrdersByStatus,
   updateShippedOrder,
   updateProductCount,
+  getShippedOrders,
+  updateTrackingOrder,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -21,6 +23,8 @@ router.get("/", getAllOrders);
 //Get  orders by status
 router.get("/getOrdersByStatus/:status", getOrdersByStatus);
 
+router.get("/getShippedOrders", getShippedOrders);
+
 //Get order by order ID
 router.get("/getorderbyorderid/:orderId", getOrderByOrderId);
 
@@ -31,7 +35,7 @@ router.delete("/:id", deleteOrder);
 router.patch("/:id", updateOrder);
 router.patch("/update/:id", updateShippedOrder);
 router.patch("/updateCount/:id", updateProductCount);
-
+router.patch("/updateTrackingOrder/:id", updateTrackingOrder);
 updateShippedOrder;
 
 module.exports = router;
