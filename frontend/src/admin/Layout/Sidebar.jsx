@@ -165,8 +165,7 @@ const Sidebar = (props) => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-
-{/* Product Sidebar Begin*/}
+              {/* Product Sidebar Begin*/}
               Product
             </Typography>
             <Item
@@ -184,14 +183,13 @@ const Sidebar = (props) => {
               setSelected={setSelected}
             />
 
-{/* Product Sidebar End*/}
+            {/* Product Sidebar End*/}
 
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-
               Pages
             </Typography>
             <Item
@@ -262,6 +260,55 @@ const Sidebar = (props) => {
             <Item
               title="Seller Requests"
               to="/seller-requests"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Seller Order Management
+            </Typography>
+            <Item
+              title="New Orders"
+              to="/requestedProduct"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Sales History"
+              to="/salesHistory"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Delivery Management
+            </Typography>
+            <Item
+              title="Receive Product"
+              to="/receiveProduct"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="To Be shipped"
+              to="/toBeDelivery"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Shipped orders"
+              to="/shippedOrders"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
