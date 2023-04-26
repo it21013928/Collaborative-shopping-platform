@@ -5,46 +5,17 @@ import { useTheme } from "@mui/material";
 import { React, useEffect, useState } from "react";
 import product from "../../../../api/product";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { getUserId } from "../../../../api/user";
 
 const Products = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const navigate = useNavigate();
-
   const service = new product();
   const [products, setProducts] = useState(null);
 
-  const [user, setUser] = useState(''); 
-  console.log(user.id);
-  const userId = user.id;
-  
-  //fetch user ID
-useEffect(() => {
-    const token = localStorage.getItem("token");
-    const fetchUser = async (token) => {
-      try {
-        if (token) {
-          const userData = await getUserId(token);
-          if (!userData) {
-            navigate("/login-register");
-          } else {
-            await setUser(userData);
-          }
-        } else {
-          navigate("/login-register");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUser(token);
-  }, []);
 
   useEffect( async () => {
-    await service.getProductBySeller(userId).then((Productdetails) => {
+    await service.getAllProducts().then((Productdetails) => {
     setProducts(Productdetails.data);
     console.log(Productdetails.data);
     });

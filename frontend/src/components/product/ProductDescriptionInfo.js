@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getProductCartQuantity } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserId } from "../../api/user";
 
 const ProductDescriptionInfo = ({
   product,
