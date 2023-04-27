@@ -16,8 +16,8 @@ const createDelivery = async (req, res) => {
 
   await sendEmail(
     "shehangunasekara2019@gmail.com",
-    "Account - CSP",
-    "You have logged in to CSP account successfully"
+    "Order shipped",
+    "Your order is shipped"
   );
   // await sendSMS("94764103928", "testing API");
   await delivery.save();
