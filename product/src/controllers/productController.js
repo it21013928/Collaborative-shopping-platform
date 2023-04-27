@@ -1,3 +1,4 @@
+const { sendEmail } = require("../../../user/src/services/userServices");
 const Product = require("../models/productModel");
 
 //CREATE a Product
@@ -17,6 +18,8 @@ const createProduct = async (req, res) => {
       date,
       userId,
       saleCount,
+      email,
+      uName,
     } = req.body;
 
     // Check name price quantity is empty
@@ -59,6 +62,15 @@ const createProduct = async (req, res) => {
       saleCount,
     });
     await product.save();
+
+    console.error(email);
+    console.error(uName);
+
+    sendEmail(
+      email,
+      "Product Added Successfully",
+      `Hey ${uName}, You have added the product to the list successfully.`
+    );
 
     res.status(201).json({
       productId: productId,

@@ -7,7 +7,8 @@ import avatar from '../../../assets/product/icon-image.png';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getUserId } from "../../../../api/user";
+import { getUserId, myAccount } from "../../../../api/user";
+// import { sendEmail } from "../../../../../../user/src/services/userServices";
 
 const ProductInputForm = () => {
 
@@ -30,6 +31,10 @@ const ProductInputForm = () => {
   const [user, setUser] = useState(''); 
   console.log(user.id);
   const userId = user.id;
+  const email = user.email;
+  const uName = user.name;
+  console.log(userId);
+  console.log(uName);
   
   //fetch user ID
 useEffect(() => {
@@ -37,7 +42,7 @@ useEffect(() => {
     const fetchUser = async (token) => {
       try {
         if (token) {
-          const userData = await getUserId(token);
+          const userData = await myAccount(token);
           if (!userData) {
             navigate("/login-register");
           } else {
@@ -54,11 +59,10 @@ useEffect(() => {
     fetchUser(token);
   }, []);
 
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId, saleCount};
+    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId, saleCount, email, uName};
     console.log(product);
 
     fetch('http://localhost:8000/product/create', {
@@ -66,7 +70,10 @@ useEffect(() => {
       headers: {'content-type': 'application/json'},
       body: JSON.stringify(product)
     }).then(() => {
-      console.log('new product added'); 
+      console.log('new product added');
+
+      // sendEmail(user.email, 'Product Added Successfully', `Hey ${user.name}, You have added the product to the list successfully.`);
+
       toast.success(`New product added successfully `, {
         position: "bottom-left",
       });
