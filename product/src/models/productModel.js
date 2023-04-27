@@ -40,7 +40,7 @@ const productSchema = new Schema({
   },
   saleCount: {
     type: Number,
-    required: false,
+    required: true,
   },
   userId: {
     type: String,

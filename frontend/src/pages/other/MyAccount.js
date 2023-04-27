@@ -424,7 +424,7 @@ const MyAccount = () => {
                 <div className="entries-info text-center">
                   <p>
                     Currently you have privileges to use our website as a
-                    customer. But if you can be eligible to be a seller on our
+                    customer. But you can be eligible to be a seller on our
                     website. Make a request if you are interested.
                   </p>
                 </div>
@@ -581,6 +581,7 @@ const MyAccount = () => {
             ]}
           />
 
+
           <div className="myaccount-area pb-80 pt-100">
             <div className="container">
               <div className="row">
@@ -709,6 +710,49 @@ const MyAccount = () => {
                       </Accordion.Item>
                     </Accordion>
                   </div>
+
+        <div className="myaccount-area pb-80 pt-100">
+          <div className="container">
+            <div className="row">
+              <div className="ms-auto me-auto col-lg-9">
+                <div className="myaccount-wrapper">
+                  <Accordion defaultActiveKey="0">
+                    <Accordion.Item
+                      eventKey="0"
+                      className="single-my-account mb-20"
+                    >
+                      <Accordion.Header className="panel-heading">
+                        Edit your account information{" "}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <UserForm />
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item
+                      eventKey="1"
+                      className="single-my-account mb-20"
+                    >
+                      <Accordion.Header className="panel-heading">
+                        Change your password
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <UserPasswordForm />
+                      </Accordion.Body>
+                    </Accordion.Item>
+
+                    <Accordion.Item
+                      eventKey="2"
+                      className="single-my-account mb-20"
+                    >
+                      <Accordion.Header className="panel-heading">
+                        Become a seller
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <UserRoleForm />
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
                 </div>
               </div>
             </div>

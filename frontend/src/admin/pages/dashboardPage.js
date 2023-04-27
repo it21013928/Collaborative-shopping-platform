@@ -23,7 +23,7 @@ export default function () {
       try {
         if (token) {
           const userData = await myAccount(token);
-          if (userData.role != "seller-pending" || userData.role != "client") {
+          if (userData.role == "seller-pending" || userData.role == "client") {
             navigate("/login-register");
             window.location.reload();
           } else {
