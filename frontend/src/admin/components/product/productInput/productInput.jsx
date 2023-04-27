@@ -25,6 +25,7 @@ const ProductInputForm = () => {
   const [fullDescription , setFullDescription] = useState('');
   const [category , setCategory] = useState(null);
   const [image, setImage] = useState("");
+  const saleCount = 0;
 
   const [user, setUser] = useState(''); 
   console.log(user.id);
@@ -57,7 +58,7 @@ useEffect(() => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId};
+    const product = {productId, name, price, quantity, shortDescription, fullDescription, category, image, userId, saleCount};
     console.log(product);
 
     fetch('http://localhost:8000/product/create', {
