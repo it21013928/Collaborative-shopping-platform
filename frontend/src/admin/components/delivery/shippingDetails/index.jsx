@@ -19,7 +19,7 @@ import Axios from "axios";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import { getUserEmailPhoneById } from "../../../../api/user";
 export default function () {
   // const orderID = localStorage.getItem("orderID");
   // console.log("FFFFFFFF" + orderID);
@@ -43,9 +43,14 @@ export default function () {
   useEffect(async () => {
     await service
       .getSingleOrder(localStorage.getItem("orderID"))
-      .then((Orderdetails) => {
+      .then(async (Orderdetails) => {
         setSingleOrder(Orderdetails.data[0]);
-        console.log(Orderdetails.data[0]);
+        console.log("ASSSSSSSSS");
+        console.log(Orderdetails.data[0].CustomerID);
+        // const user = await getUserEmailPhoneById(
+        //   Orderdetails.data[0].CustomerID
+        // );
+        // console.log(user);
       });
   }, []);
 
@@ -127,7 +132,7 @@ export default function () {
       data.append("image", fileData);
       console.log("BBBBBBBBBBBB");
       console.log(fileData);
-      fetch("http://localhost:8002/trackingBill", {
+      fetch("http://localhost:8003/trackingBill", {
         method: "POST",
         body: data,
       })

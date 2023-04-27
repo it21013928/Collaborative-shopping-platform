@@ -43,5 +43,10 @@ class ToDoService {
     const url = `http://localhost:8000/orders/orderProduct/getSellerOrderProduct/${sellerID}/${orderID}`;
     return this.request(url);
   }
+
+  getOrdersByCusID(cusID) {
+    const url = `http://localhost:8000/orders/getOrdersByCusID/${cusID}`;
+    return this.request(url);
+  }
 }
 export default ToDoService;

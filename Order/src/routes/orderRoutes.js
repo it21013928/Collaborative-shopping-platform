@@ -10,6 +10,7 @@ const {
   updateProductCount,
   getShippedOrders,
   updateTrackingOrder,
+  getOrdersByCusID,
 } = require("../controllers/orderController");
 
 const router = express.Router();
@@ -28,6 +29,8 @@ router.get("/getShippedOrders", getShippedOrders);
 //Get order by order ID
 router.get("/getorderbyorderid/:orderId", getOrderByOrderId);
 
+router.get("/getOrdersByCusID/:customerID", getOrdersByCusID);
+
 //Delete order by id
 router.delete("/:id", deleteOrder);
 
@@ -36,6 +39,5 @@ router.patch("/:id", updateOrder);
 router.patch("/update/:id", updateShippedOrder);
 router.patch("/updateCount/:id", updateProductCount);
 router.patch("/updateTrackingOrder/:id", updateTrackingOrder);
-updateShippedOrder;
 
 module.exports = router;

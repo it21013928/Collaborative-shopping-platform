@@ -1,5 +1,7 @@
 const Delivery = require("../models/delivery");
 const mongoose = require("mongoose");
+const { sendEmail } = require("../services/deliveryServices");
+const { sendSMS } = require("../services/deliveryServices");
 
 //Create a new order
 const createDelivery = async (req, res) => {
@@ -12,6 +14,12 @@ const createDelivery = async (req, res) => {
     fileName: req.body.file,
   });
 
+  await sendEmail(
+    "shehangunasekara2019@gmail.com",
+    "Account - CSP",
+    "You have logged in to CSP account successfully"
+  );
+  // await sendSMS("94764103928", "testing API");
   await delivery.save();
   res.send(delivery);
 };

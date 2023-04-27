@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
-const { sendEmail } = require('../services/userServices');
-const { sendSMS } = require('../services/userServices');
+const { sendEmail } = require("../services/userServices");
+const { sendSMS } = require("../services/userServices");
 
 // get all users
 const getUsers = async (req, res) => {
@@ -26,6 +26,12 @@ const getCustomers = async (req, res) => {
 // get all sellers
 const getSellers = async (req, res) => {
   const users = await User.find({ role: "seller" });
+  res.status(200).json(users);
+};
+
+// get pending sellers
+const getPendingSellers = async (req, res) => {
+  const users = await User.find({ role: "seller-pending" });
   res.status(200).json(users);
 };
 
@@ -84,10 +90,40 @@ const getUserId = async (req, res) => {
   }
 };
 
+// get user Id
+const getUserEmailPhone = async (req, res) => {
+  const userId = req.body.id;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).json({ error: "User does not exsist" });
+  }
+
+  try {
+    const user = await User.findById(userId).select("email phone");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // register new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, phone, address, city, zipCode, password, confirmPassword, role } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      address,
+      city,
+      zipCode,
+      password,
+      confirmPassword,
+      role,
+    } = req.body;
 
     // Check name or email or password is empty
     if (!name || !email || !password || !confirmPassword) {
@@ -125,7 +161,16 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const user = new User({ name, email, phone, address, city, zipCode, password: hashedPassword, role });
+    const user = new User({
+      name,
+      email,
+      phone,
+      address,
+      city,
+      zipCode,
+      password: hashedPassword,
+      role,
+    });
     await user.save();
 
     // Create JWT token
@@ -165,7 +210,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    
+
     // await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
     // await sendSMS("94764103928", "testing API");
     res.json({ token, userId: user.id, role: user.role });
@@ -236,6 +281,66 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// update user
+const approveSeller = async (req, res) => {
+  try {
+    const { id } = req.body;
+    console.log(id);
+
+    // Find user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user
+    // user.name = user.name;
+    // user.email = user.email;
+    // user.address = user.name;
+    // user.phone = user.phone;
+    // user.city = user.city;
+    // user.zipCode = user.zipCode;
+    user.role = "seller";
+
+    await user.save();
+
+    return res.json({ message: "User updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// downgrade any user role into client
+const downgradeToClient = async (req, res) => {
+  try {
+    const { id } = req.body;
+    console.log(id);
+
+    // Find user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user
+    // user.name = user.name;
+    // user.email = user.email;
+    // user.address = user.name;
+    // user.phone = user.phone;
+    // user.city = user.city;
+    // user.zipCode = user.zipCode;
+    user.role = "client";
+
+    await user.save();
+
+    return res.json({ message: "User updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getUser,
   getUsers,
@@ -247,4 +352,8 @@ module.exports = {
   getSellers,
   getModerators,
   getUserId,
+  getPendingSellers,
+  approveSeller,
+  downgradeToClient,
+  getUserEmailPhone,
 };
