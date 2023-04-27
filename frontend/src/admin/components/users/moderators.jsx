@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataContacts } from "../../data/mockData";
-import { getModerators } from "../../../api/user";
+import { getModerators, downgradeUser } from "../../../api/user";
 import Header from "../../Layout/Header";
 import { useTheme } from "@mui/material";
 import { useEffect, useState, useRef } from "react";
@@ -30,8 +30,13 @@ const Customers = () => {
     // console.log(customers);
   }, [moderators]);
 
+  const handleButtonClick = (id) => {
+    downgradeUser(id);
+    window.location.reload();
+  };
+
   const columns = [
-    { field: "id", headerName: "ID", flex: 2 },
+    { field: "id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
@@ -41,7 +46,7 @@ const Customers = () => {
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "phone",
@@ -64,9 +69,22 @@ const Customers = () => {
       flex: 1,
     },
     {
-      field: "role",
-      headerName: "Role",
-      flex: 1,
+      field: "button",
+
+      headerName: "",
+
+      width: 100,
+
+      renderCell: (params) => {
+        return (
+          <Button
+            color="secondary"
+            onClick={() => handleButtonClick(params.row.id)}
+          >
+            Downgrade{" "}
+          </Button>
+        );
+      },
     },
   ];
 

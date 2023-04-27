@@ -1,7 +1,16 @@
-import { Box, Button, TextField, Select, MenuItem, InputLabel} from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -22,6 +31,12 @@ const Form = () => {
   const onSubmit = async (data) => {
     try {
       await registerAccount(data);
+      toast.success(`Expenses added successfully `, {
+        position: "bottom-left",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (error) {
       setErrorMessage(error.response.data.message);
     }
@@ -29,6 +44,7 @@ const Form = () => {
 
   return (
     <Box m="10px 500px 10px 100px">
+      <ToastContainer />
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="grid"
@@ -38,7 +54,7 @@ const Form = () => {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
           }}
         >
-          {errors.name && <>This field is required</>}
+          {errors.name && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -48,7 +64,7 @@ const Form = () => {
             {...register("name", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.email && <>This field is required</>}
+          {errors.email && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -58,7 +74,7 @@ const Form = () => {
             {...register("email", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.phone && <>This field is required</>}
+          {errors.phone && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -68,7 +84,7 @@ const Form = () => {
             {...register("phone", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.city && <>This field is required</>}
+          {errors.city && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -78,7 +94,7 @@ const Form = () => {
             {...register("city", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.zipCode && <>This field is required</>}
+          {errors.zipCode && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -88,7 +104,7 @@ const Form = () => {
             {...register("zipCode", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.address && <>This field is required</>}
+          {errors.address && <label style={{color: "red"}}>This field is required</label>}
           <TextField
             fullWidth
             variant="filled"
@@ -98,18 +114,24 @@ const Form = () => {
             {...register("address", { required: true })}
             sx={{ gridColumn: "span 4" }}
           />
-          {errors.role && <>This field is required</>}
-          <InputLabel htmlFor="role" sx={{ gridColumn: "span 2" }}>Role:</InputLabel>
-          <Select id="role" {...register("role", { required: true })} sx={{ gridColumn: "span 2" }}>
+          {errors.role && <label style={{color: "red"}}>This field is required</label>}
+          <InputLabel htmlFor="role" sx={{ gridColumn: "span 2" }}>
+            Role:
+          </InputLabel>
+          <Select
+            id="role"
+            {...register("role", { required: true })}
+            sx={{ gridColumn: "span 2" }}
+          >
             <MenuItem value="client">Client</MenuItem>
             <MenuItem value="admin">Admin</MenuItem>
             <MenuItem value="seller">Seller</MenuItem>
           </Select>
           {errors.password?.type === "required" && (
-            <span>This field is required</span>
+            <span style={{color: "red"}}>This field is required</span>
           )}
           {errors.password?.type === "pattern" && (
-            <span>
+            <span style={{color: "red"}}>
               Password must contain at least 8 characters including lowercase,
               uppercase, and special characters.
             </span>
@@ -127,10 +149,10 @@ const Form = () => {
             sx={{ gridColumn: "span 4" }}
           />
           {errors.confirmPassword?.type === "required" && (
-            <span>This field is required</span>
+            <span style={{color: "red"}}>This field is required</span>
           )}
           {errors.confirmPassword?.type === "validate" && (
-            <span>Passwords do not match</span>
+            <span style={{color: "red"}}>Passwords do not match</span>
           )}
           <TextField
             fullWidth

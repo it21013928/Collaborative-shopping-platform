@@ -1,18 +1,39 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import clsx from "clsx";
 import MenuCart from "./sub-components/MenuCart";
+import { myAccount } from "../../api/user";
 
 const IconGroup = ({ iconWhiteClass }) => {
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchUser = async (token) => {
+      try {
+        if (token) {
+          const userData = await myAccount(token);
+          console.log(userData.role);
+          await setUser(userData);
+          await setRole(userData.role);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUser(token);
+  }, []);
 
   const handleLogOutClick = () => {
     localStorage.removeItem("token");
     window.location.reload();
     // navigate("/login-register");
-}
+  };
 
   const handleClick = (e) => {
     e.currentTarget.nextSibling.classList.toggle("active");
@@ -65,10 +86,16 @@ const IconGroup = ({ iconWhiteClass }) => {
                   my account
                 </Link>
               </li>
+
+              {role != "seller-pending" && role != "client" && (
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/dashboard"}>
+                    Dashboard
+                  </Link>
+                </li>
+              )}
               <li>
-                <Link onClick={handleLogOutClick}>
-                  Logout
-                </Link>
+                <Link onClick={handleLogOutClick}>Logout</Link>
               </li>
             </ul>
           )}

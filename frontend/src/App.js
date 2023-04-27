@@ -37,6 +37,7 @@ const CreateUser = lazy(() => import("./admin/pages/createUserPage"));
 const Customers = lazy(() => import("./admin/pages/customersPage"));
 const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
+const PendingSellers = lazy(() => import("./admin/pages/pendingSellersPage"));
 
 const Tracking = lazy(() => import("./admin/pages/tracking"));
 
@@ -121,6 +122,7 @@ const App = () => {
             <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
             <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
             <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
+            <Route path={process.env.PUBLIC_URL + "/seller-requests"} element={<PendingSellers />} />
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}

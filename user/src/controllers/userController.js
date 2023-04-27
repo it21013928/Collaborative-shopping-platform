@@ -29,6 +29,12 @@ const getSellers = async (req, res) => {
   res.status(200).json(users);
 };
 
+// get pending sellers
+const getPendingSellers = async (req, res) => {
+  const users = await User.find({ role: "seller-pending" });
+  res.status(200).json(users);
+};
+
 // get all moderators
 const getModerators = async (req, res) => {
   const users = await User.find({ role: "admin" });
@@ -74,6 +80,27 @@ const getUserId = async (req, res) => {
 
   try {
     const user = await User.findById(userId).select("id");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// get user Id
+const getUserEmailPhone = async (req, res) => {
+
+  const userId = req.body.id;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).json({ error: "User does not exsist" });
+  }
+
+  try {
+    const user = await User.findById(userId).select("email phone");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -166,7 +193,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
     
-    // await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
+    await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
     // await sendSMS("94764103928", "testing API");
     res.json({ token, userId: user.id, role: user.role });
   } catch (err) {
@@ -236,6 +263,66 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// update user
+const approveSeller = async (req, res) => {
+  try {
+    const { id } = req.body;
+    console.log(id);
+
+    // Find user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user
+    // user.name = user.name;
+    // user.email = user.email;
+    // user.address = user.name;
+    // user.phone = user.phone;
+    // user.city = user.city;
+    // user.zipCode = user.zipCode;
+    user.role = "seller";
+
+    await user.save();
+
+    return res.json({ message: "User updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// downgrade any user role into client
+const downgradeToClient = async (req, res) => {
+  try {
+    const { id } = req.body;
+    console.log(id);
+
+    // Find user by ID
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user
+    // user.name = user.name;
+    // user.email = user.email;
+    // user.address = user.name;
+    // user.phone = user.phone;
+    // user.city = user.city;
+    // user.zipCode = user.zipCode;
+    user.role = "client";
+
+    await user.save();
+
+    return res.json({ message: "User updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getUser,
   getUsers,
@@ -247,4 +334,8 @@ module.exports = {
   getSellers,
   getModerators,
   getUserId,
+  getPendingSellers,
+  approveSeller,
+  downgradeToClient,
+  getUserEmailPhone,
 };
