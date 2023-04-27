@@ -1,4 +1,4 @@
-const { sendEmail } = require("../../../user/src/services/userServices");
+const { sendEmail } = require("../services/productServices");
 const Product = require("../models/productModel");
 
 //CREATE a Product
