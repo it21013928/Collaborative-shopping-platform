@@ -45,6 +45,22 @@ const ProductInput = lazy(() => import("./admin/pages/productInput"));
 const ProductList = lazy(() => import("./admin/pages/productList"));
 const ProductDetails = lazy(() => import("./admin/pages/productDetails"));
 
+// Delivery
+
+const ToBeDelivery = lazy(() => import("./admin/pages/toBeDeliveryPage"));
+const ShippingDetails = lazy(() => import("./admin/pages/shippingDetailsPage"));
+const ReceiveProduct = lazy(() => import("./admin/pages/receiveProductPage"));
+const CheckProduct = lazy(() => import("./admin/pages/checkProductPage"));
+const ShippedOrders = lazy(() => import("./admin/pages/shippedOrdersPage"));
+const TrackOrder = lazy(() => import("./admin/pages/trackOrderPage"));
+const RequestedProduct = lazy(() =>
+  import("./admin/pages/requestedProductPage")
+);
+const RequestedProductList = lazy(() =>
+  import("./admin/pages/requestedProductListPage")
+);
+const SalesHistory = lazy(() => import("./admin/pages/salesHistoryPage"));
+
 const App = () => {
   return (
     <Router>
@@ -109,12 +125,10 @@ const App = () => {
               element={<Calendar />}
             />
             <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
-<<<<<<< HEAD
-            <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
-            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
-            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
-            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
-=======
+            <Route
+              path={process.env.PUBLIC_URL + "/create-user"}
+              element={<CreateUser />}
+            />
             <Route
               path={process.env.PUBLIC_URL + "/moderators"}
               element={<Moderators />}
@@ -127,7 +141,6 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/customers"}
               element={<Customers />}
             />
->>>>>>> ffb63a38d79e6c9fe5717509ce308d15140194cc
             <Route
               path={process.env.PUBLIC_URL + "/contacts"}
               element={<Contacts />}
@@ -154,6 +167,47 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/productDetails/:id"}
               element={<ProductDetails />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/tracking"}
+              element={<Tracking />}
+            />
+            {/* Delivery Admin */}
+            <Route
+              path={process.env.PUBLIC_URL + "/toBeDelivery"}
+              element={<ToBeDelivery />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/shippingDetails"}
+              element={<ShippingDetails />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/receiveProduct"}
+              element={<ReceiveProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/checkProduct"}
+              element={<CheckProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/shippedOrders"}
+              element={<ShippedOrders />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/trackOrder"}
+              element={<TrackOrder />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProduct"}
+              element={<RequestedProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProductList"}
+              element={<RequestedProductList />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/salesHistory"}
+              element={<SalesHistory />}
             />
             {/* Product End*/}
             <Route path="*" element={<NotFound />} />
