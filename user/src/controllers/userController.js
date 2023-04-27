@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
-const { sendEmail } = require('../services/userServices');
-const { sendSMS } = require('../services/userServices');
+const { sendEmail } = require("../services/userServices");
+const { sendSMS } = require("../services/userServices");
 
 // get all users
 const getUsers = async (req, res) => {
@@ -92,7 +92,6 @@ const getUserId = async (req, res) => {
 
 // get user Id
 const getUserEmailPhone = async (req, res) => {
-
   const userId = req.body.id;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -114,7 +113,17 @@ const getUserEmailPhone = async (req, res) => {
 // register new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, phone, address, city, zipCode, password, confirmPassword, role } = req.body;
+    const {
+      name,
+      email,
+      phone,
+      address,
+      city,
+      zipCode,
+      password,
+      confirmPassword,
+      role,
+    } = req.body;
 
     // Check name or email or password is empty
     if (!name || !email || !password || !confirmPassword) {
@@ -152,7 +161,16 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create new user
-    const user = new User({ name, email, phone, address, city, zipCode, password: hashedPassword, role });
+    const user = new User({
+      name,
+      email,
+      phone,
+      address,
+      city,
+      zipCode,
+      password: hashedPassword,
+      role,
+    });
     await user.save();
 
     // Create JWT token
@@ -192,6 +210,7 @@ const loginUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
+
     
     await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
     // await sendSMS("94764103928", "testing API");

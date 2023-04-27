@@ -9,33 +9,57 @@ import Header from "../../../Layout/Header";
 import { useEffect, useState } from "react";
 import order from "../../../../api/order";
 import { Link } from "react-router-dom";
-
+import { myAccount, updateUser } from "../../../../api/user";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function () {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const service = new order();
-
+  const navigate = useNavigate();
   const [orders, setOrders] = useState(null);
   const [productList, setProductList] = useState(null);
   const [sellerID, setSellerID] = useState("S02");
 
   useEffect(async () => {
-    await service.getRSellerProduct(sellerID).then(async (productList) => {
-      setProductList(productList.data);
-      const arr = productList.data;
-      const size = arr.length;
-      console.log(arr);
-      console.log(arr.OrderID);
-      const orderList = [];
-      for (var i = 0; i < size; i++) {
-        await service.getSingleOrder(arr[i].OrderID).then((orders) => {
-          if (!orderList.some((obj) => obj._id === orders.data[0]._id))
-            orderList.push(orders.data[0]);
-        });
+    const token = localStorage.getItem("token");
+    const fetchUser = async (token) => {
+      try {
+        if (token) {
+          const userData = await myAccount(token);
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
+          console.log(userData);
+
+          await service
+            .getRSellerProduct(sellerID)
+            .then(async (productList) => {
+              setProductList(productList.data);
+              const arr = productList.data;
+              const size = arr.length;
+              console.log(arr);
+              console.log(arr.OrderID);
+              const orderList = [];
+              for (var i = 0; i < size; i++) {
+                await service.getSingleOrder(arr[i].OrderID).then((orders) => {
+                  if (!orderList.some((obj) => obj._id === orders.data[0]._id))
+                    orderList.push(orders.data[0]);
+                });
+              }
+              setOrders(orderList);
+            });
+
+          if (!userData) {
+            navigate("/login-register");
+          } else {
+          }
+        } else {
+          navigate("/login-register");
+        }
+      } catch (error) {
+        console.error(error);
       }
-      setOrders(orderList);
-    });
+    };
+    fetchUser(token);
   }, []);
 
   useEffect(() => {}, [orders]);

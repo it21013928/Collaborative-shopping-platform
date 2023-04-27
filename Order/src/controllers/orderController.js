@@ -29,6 +29,11 @@ const getOrdersByStatus = async (req, res) => {
   res.status(200).json(orders);
 };
 
+const getOrdersByCusID = async (req, res) => {
+  const orders = await Order.find({ CustomerID: req.params.customerID });
+  res.status(200).json(orders);
+};
+
 const getShippedOrders = async (req, res) => {
   const orders = await Order.find({ Tracking: "Tracked" });
   res.status(200).json(orders);
@@ -134,4 +139,5 @@ module.exports = {
   updateProductCount,
   getShippedOrders,
   updateTrackingOrder,
+  getOrdersByCusID,
 };

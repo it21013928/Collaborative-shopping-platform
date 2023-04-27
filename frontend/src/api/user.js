@@ -32,8 +32,8 @@ export const getUserId = async (token) => {
 };
 
 export const getUserEmailPhoneById = async (id) => {
-  return axios
-    .get("/users/email-phone")
+  return axios.get("http://localhost:8000/users/email-phone")
+
     .then((response) => {
       return response.data;
     })
@@ -64,7 +64,9 @@ export const approveSeller = async (id) => {
   const token = localStorage.getItem("token");
   setAuthToken(token);
 
+
   const userData = {id: id};
+
 
   return axios
     .patch(`/users/approve-seller`, userData)
@@ -89,6 +91,7 @@ export const downgradeUser = async (id) => {
       console.error(error);
     });
 };
+
 
 export const getCustomers = async (token) => {
   return axios
