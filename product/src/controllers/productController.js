@@ -1,4 +1,4 @@
-const { sendEmail } = require("../../../user/src/services/userServices");
+const { sendEmail } = require("../services/productServices");
 const Product = require("../models/productModel");
 
 //CREATE a Product
@@ -34,7 +34,7 @@ const createProduct = async (req, res) => {
       return res.status(401).json({ message: "Product quantity less than 0." });
     }
 
-    //check if price is graeter than 0.
+    //check if price is greater than 0.
     if (price < 0) {
       return res.status(401).json({ message: "Product price is less than 0." });
     }
@@ -66,12 +66,14 @@ const createProduct = async (req, res) => {
     console.error(email);
     console.error(uName);
 
+    //send email when product is added
     sendEmail(
       email,
       "Product Added Successfully",
       `Hey ${uName}, You have added the product to the list successfully.`
     );
 
+    // Return success message when product is added
     res.status(201).json({
       productId: productId,
       name: name,
@@ -79,6 +81,7 @@ const createProduct = async (req, res) => {
       price: price,
       saleCount: saleCount,
     });
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -115,6 +118,8 @@ const getProductBySeller = async (req, res) => {
     //Get product
     console.error("***Product got successfully***");
     return res.status(200).send(product);
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -135,6 +140,8 @@ const getProductByName = async (req, res) => {
     //Get product
     console.error("***Product got successfully***");
     return res.status(200).json(product);
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -154,6 +161,8 @@ const getAllproducts = async (req, res) => {
       res.send(product);
       console.log("***All products got successfully***");
     }
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -210,7 +219,11 @@ const updateProduct = async (req, res) => {
     product.category = category || product.category;
 
     await product.save();
+
+    //send success message
     res.json({ message: "Product updated successfully" });
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -229,11 +242,14 @@ const updateProductQty = async (req, res) => {
     }
 
     // Update product quantity
-    //product.quantity = quantity || product.quantity;
     await product.findOneAndUpdate({ $inc: { quantity: -soldQty } });
 
     await product.save();
+
+    //send success message
     res.json({ message: "Product quantity updated successfully" });
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -256,6 +272,7 @@ const updateSellCount = async (req, res) => {
     await product.findOneAndUpdate({ $inc: { saleCount: sellCount } });
 
     await product.save();
+    //send success message
     res.json({ message: "Product quantity updated successfully" });
   } catch (err) {
     console.error(err);
@@ -275,7 +292,10 @@ const deleteProduct = async (req, res) => {
     // Delete product
     await product.remove();
 
+    //send success message
     res.json({ message: "Product deleted successfully" });
+
+    //If there's an error, throw error
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
