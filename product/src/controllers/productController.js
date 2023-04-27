@@ -1,3 +1,4 @@
+const { sendEmail } = require("../../../user/src/services/userServices");
 const Product = require("../models/productModel");
 
 //CREATE a Product
@@ -16,6 +17,9 @@ const createProduct = async (req, res) => {
       newItem,
       date,
       userId,
+      saleCount,
+      email,
+      uName,
     } = req.body;
 
     // Check name price quantity is empty
@@ -55,14 +59,25 @@ const createProduct = async (req, res) => {
       newItem,
       date,
       userId,
+      saleCount,
     });
     await product.save();
+
+    console.error(email);
+    console.error(uName);
+
+    sendEmail(
+      email,
+      "Product Added Successfully",
+      `Hey ${uName}, You have added the product to the list successfully.`
+    );
 
     res.status(201).json({
       productId: productId,
       name: name,
       quantity: quantity,
       price: price,
+      saleCount: saleCount,
     });
   } catch (err) {
     console.error(err);
@@ -205,7 +220,7 @@ const updateProduct = async (req, res) => {
 //Update a product quantity
 const updateProductQty = async (req, res) => {
   try {
-    const { quantity, soldQty } = req.body;
+    const { soldQty } = req.body;
 
     // Find product by ID
     const product = await Product.findById(req.params.id);
@@ -213,11 +228,35 @@ const updateProductQty = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Update product
-    product.quantity = quantity || product.quantity;
+    // Update product quantity
+    //product.quantity = quantity || product.quantity;
+    await product.findOneAndUpdate({ $inc: { quantity: -soldQty } });
 
     await product.save();
-    res.json({ message: "Product updated successfully" });
+    res.json({ message: "Product quantity updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+//Update sell count
+const updateSellCount = async (req, res) => {
+  try {
+    const { sellCount } = req.body;
+
+    // Find product by ID
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Update product quantity
+    //product.quantity = quantity || product.quantity;
+    await product.findOneAndUpdate({ $inc: { saleCount: sellCount } });
+
+    await product.save();
+    res.json({ message: "Product quantity updated successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -251,4 +290,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProductBySeller,
+  updateSellCount,
+  updateProductQty,
 };

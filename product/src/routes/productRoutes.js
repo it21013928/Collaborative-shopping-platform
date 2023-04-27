@@ -8,6 +8,8 @@ const {
   updateProduct,
   deleteProduct,
   getProductBySeller,
+  updateProductQty,
+  updateSellCount,
 } = require("../controllers/productController");
 
 const router = express.Router(); //
@@ -26,6 +28,12 @@ router.get("/getProductByName/:name", getProductByName);
 
 //GET all products
 router.get("/", getAllproducts);
+
+//Update sell count
+router.get("/updateSellCount/:id", updateSellCount);
+
+//Update a product quantity
+router.get("/updateProductQty/:id", updateProductQty);
 
 // UPDATE a product
 router.patch("/:id", updateProduct);
