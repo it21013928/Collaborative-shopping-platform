@@ -48,8 +48,6 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
-
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
         <Box
@@ -58,7 +56,6 @@ const Calendar = () => {
           p="15px"
           borderRadius="4px"
         >
-          <Typography variant="h5">Events</Typography>
           <List>
             {currentEvents.map((event) => (
               <ListItem

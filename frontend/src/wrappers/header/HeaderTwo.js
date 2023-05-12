@@ -31,16 +31,10 @@ const HeaderTwo = () => {
           <div className="row">
             <div className="col-lg-5 col-md-8 col-12">
               {/* language currency changer */}
-              <LanguageCurrencyChanger
-                currency={currency}
-              />
+              <LanguageCurrencyChanger currency={currency} />
             </div>
             <div className="col-lg-2 d-none d-lg-block text-center">
               {/* header logo */}
-              <Logo
-                imageUrl="/assets/img/logo/logo.png"
-                logoClass="logo-hm-9"
-              />
             </div>
             <div className="col-lg-5 col-md-4 col-12">
               {/* Icon group */}
@@ -56,10 +50,7 @@ const HeaderTwo = () => {
       >
         <div className="container">
           <div className="row">
-            <div className="col-6 d-block d-lg-none">
-              {/* header logo */}
-              <Logo imageUrl="/assets/img/logo/logo.png" />
-            </div>
+            <div className="col-6 d-block d-lg-none">{/* header logo */}</div>
             <div className="col-6 d-block d-lg-none">
               {/* Icon group */}
               <IconGroup />

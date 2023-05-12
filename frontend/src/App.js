@@ -25,20 +25,33 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const Dashboard = lazy(() => import("./admin/pages/dashboardPage"));
-const Calendar = lazy(() => import("./admin/pages/calendarPage"));
-
-const Form = lazy(() => import("./admin/pages/formPage"));
-const Contacts = lazy(() => import("./admin/pages/contactsPage"));
-const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
-const Faq = lazy(() => import("./admin/pages/faqPage"));
-const Team = lazy(() => import("./admin/pages/teamPage"));
 
 const CreateUser = lazy(() => import("./admin/pages/createUserPage"));
 const Customers = lazy(() => import("./admin/pages/customersPage"));
 const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
+const PendingSellers = lazy(() => import("./admin/pages/pendingSellersPage"));
 
-const Tracking = lazy(() => import("./admin/pages/tracking"));
+//Product
+const ProductInput = lazy(() => import("./admin/pages/productInput"));
+const ProductList = lazy(() => import("./admin/pages/productList"));
+const ProductDetails = lazy(() => import("./admin/pages/productDetails"));
+
+// Delivery
+
+const ToBeDelivery = lazy(() => import("./admin/pages/toBeDeliveryPage"));
+const ShippingDetails = lazy(() => import("./admin/pages/shippingDetailsPage"));
+const ReceiveProduct = lazy(() => import("./admin/pages/receiveProductPage"));
+const CheckProduct = lazy(() => import("./admin/pages/checkProductPage"));
+const ShippedOrders = lazy(() => import("./admin/pages/shippedOrdersPage"));
+const TrackOrder = lazy(() => import("./admin/pages/trackOrderPage"));
+const RequestedProduct = lazy(() =>
+  import("./admin/pages/requestedProductPage")
+);
+const RequestedProductList = lazy(() =>
+  import("./admin/pages/requestedProductListPage")
+);
+const SalesHistory = lazy(() => import("./admin/pages/salesHistoryPage"));
 
 const App = () => {
   return (
@@ -56,19 +69,14 @@ const App = () => {
         >
           <Routes>
             {/* Homepages */}
-
             <Route path={process.env.PUBLIC_URL + "/"} element={<Home />} />
-
             {/* Shop pages */}
-
             <Route path={process.env.PUBLIC_URL + "/shop"} element={<Shop />} />
-
             {/* Shop product pages */}
             <Route
               path={process.env.PUBLIC_URL + "/product/:id"}
               element={<Product />}
             />
-
             {/* Other pages */}
             <Route
               path={process.env.PUBLIC_URL + "/about"}
@@ -78,19 +86,15 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/contact"}
               element={<Contact />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/my-account"}
               element={<MyAccount />}
             />
-
             <Route
               path={process.env.PUBLIC_URL + "/login-register"}
               element={<LoginRegister />}
             />
-
             <Route path={process.env.PUBLIC_URL + "/cart"} element={<Cart />} />
-
             <Route
               path={process.env.PUBLIC_URL + "/wishlist"}
               element={<Wishlist />}
@@ -103,43 +107,82 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/checkout"}
               element={<Checkout />}
             />
-
             {/* ---------admin-------------- */}
-
             <Route
               path={process.env.PUBLIC_URL + "/dashboard"}
               element={<Dashboard />}
             />
-
             <Route
-              path={process.env.PUBLIC_URL + "/calendar"}
-              element={<Calendar />}
+              path={process.env.PUBLIC_URL + "/create-user"}
+              element={<CreateUser />}
             />
-
-            <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
-            <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
-            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
-            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
-            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
             <Route
-              path={process.env.PUBLIC_URL + "/contacts"}
-              element={<Contacts />}
+              path={process.env.PUBLIC_URL + "/moderators"}
+              element={<Moderators />}
             />
-
             <Route
-              path={process.env.PUBLIC_URL + "/invoices"}
-              element={<Invoices />}
+              path={process.env.PUBLIC_URL + "/sellers"}
+              element={<Sellers />}
             />
-
-            <Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
-
-            <Route path={process.env.PUBLIC_URL + "/faq"} element={<Faq />} />
-
             <Route
-              path={process.env.PUBLIC_URL + "/tracking"}
-              element={<Tracking />}
+              path={process.env.PUBLIC_URL + "/customers"}
+              element={<Customers />}
             />
-
+            <Route
+              path={process.env.PUBLIC_URL + "/seller-requests"}
+              element={<PendingSellers />}
+            />
+            {/* Product Start*/}ProductView
+            <Route
+              path={process.env.PUBLIC_URL + "/productInput"}
+              element={<ProductInput />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/productList"}
+              element={<ProductList />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/productDetails/:id"}
+              element={<ProductDetails />}
+            />
+            {/* Delivery Admin */}
+            <Route
+              path={process.env.PUBLIC_URL + "/toBeDelivery"}
+              element={<ToBeDelivery />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/shippingDetails"}
+              element={<ShippingDetails />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/receiveProduct"}
+              element={<ReceiveProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/checkProduct"}
+              element={<CheckProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/shippedOrders"}
+              element={<ShippedOrders />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/trackOrder"}
+              element={<TrackOrder />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProduct"}
+              element={<RequestedProduct />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/requestedProductList"}
+              element={<RequestedProductList />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/salesHistory"}
+              element={<SalesHistory />}
+            />
+            {/* Product End*/}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

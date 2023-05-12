@@ -32,6 +32,7 @@ const LoginRegister = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
     try {
       await login(email, password);
       navigate("/my-account");
@@ -96,6 +97,7 @@ const LoginRegister = () => {
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={handleLoginSubmit}>
+                              {errorMessage && <span>{errorMessage}</span>}
                               <input
                                 type="email"
                                 name="email"
@@ -111,13 +113,6 @@ const LoginRegister = () => {
                                 onChange={handlePasswordChange}
                               />
                               <div className="button-box">
-                                <div className="login-toggle-btn">
-                                  <input type="checkbox" />
-                                  <label className="ml-10">Remember me</label>
-                                  <Link to={process.env.PUBLIC_URL + "/"}>
-                                    Forgot Password?
-                                  </Link>
-                                </div>
                                 <button type="submit">
                                   <span>Login</span>
                                 </button>
@@ -131,38 +126,28 @@ const LoginRegister = () => {
                           <div className="login-register-form">
                             <form onSubmit={handleSubmit(onSubmit)}>
                               <div>
+                                {errors.name && (
+                                  <span>This field is required</span>
+                                )}
                                 <input
                                   type="text"
                                   name="user-name"
                                   placeholder="Username"
                                   {...register("name", { required: true })}
                                 />
-                                {errors.name && (
-                                  <span>This field is required</span>
-                                )}
                               </div>
                               <div>
+                                {errors.email && (
+                                  <span>This field is required</span>
+                                )}
                                 <input
                                   name="user-email"
                                   placeholder="Email"
                                   type="email"
                                   {...register("email", { required: true })}
                                 />
-                                {errors.email && (
-                                  <span>This field is required</span>
-                                )}
                               </div>
                               <div>
-                                <input
-                                  type="password"
-                                  name="user-password"
-                                  placeholder="Password"
-                                  {...register("password", {
-                                    required: true,
-                                    pattern:
-                                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
-                                  })}
-                                />
                                 {errors.password?.type === "required" && (
                                   <span>This field is required</span>
                                 )}
@@ -173,8 +158,26 @@ const LoginRegister = () => {
                                     characters.
                                   </span>
                                 )}
+                                <input
+                                  type="password"
+                                  name="user-password"
+                                  placeholder="Password"
+                                  {...register("password", {
+                                    required: true,
+                                    pattern:
+                                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                                  })}
+                                />
                               </div>
                               <div>
+                                {errors.confirmPassword?.type ===
+                                  "required" && (
+                                  <span>This field is required</span>
+                                )}
+                                {errors.confirmPassword?.type ===
+                                  "validate" && (
+                                  <span>Passwords do not match</span>
+                                )}
                                 <input
                                   type="password"
                                   name="user-password"
@@ -185,14 +188,6 @@ const LoginRegister = () => {
                                       value === watch("password"),
                                   })}
                                 />
-                                {errors.confirmPassword?.type ===
-                                  "required" && (
-                                  <span>This field is required</span>
-                                )}
-                                {errors.confirmPassword?.type ===
-                                  "validate" && (
-                                  <span>Passwords do not match</span>
-                                )}
                               </div>
 
                               <div className="button-box">

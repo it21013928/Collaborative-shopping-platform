@@ -31,17 +31,17 @@ const Customers = () => {
   }, [customers]);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 2 },
+    { field: "id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      flex: 2,
       cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "phone",
@@ -62,12 +62,7 @@ const Customers = () => {
       field: "zipCode",
       headerName: "Zip Code",
       flex: 1,
-    },
-    {
-      field: "role",
-      headerName: "Role",
-      flex: 1,
-    },
+    }
   ];
 
   return (

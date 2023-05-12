@@ -31,6 +31,21 @@ export const getUserId = async (token) => {
     });
 };
 
+export const getUserEmailPhoneById = async (id) => {
+  return axios.get("http://localhost:8000/users/email-phone")
+
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response.status === 401) {
+        localStorage.removeItem("token"); // delete token from local storage
+        return null;
+      }
+    });
+};
+
 export const updateUser = async (userData) => {
   const token = localStorage.getItem("token");
   setAuthToken(token);
@@ -44,6 +59,39 @@ export const updateUser = async (userData) => {
       console.error(error);
     });
 };
+
+export const approveSeller = async (id) => {
+  const token = localStorage.getItem("token");
+  setAuthToken(token);
+
+
+  const userData = {id: id};
+
+
+  return axios
+    .patch(`/users/approve-seller`, userData)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+export const downgradeUser = async (id) => {
+
+  const userData = {id: id};
+
+  return axios
+    .patch(`/users/downgrade-user`, userData)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 
 export const getCustomers = async (token) => {
   return axios
@@ -63,6 +111,21 @@ export const getCustomers = async (token) => {
 export const getSellers = async (token) => {
   return axios
     .get("/users/sellers", setAuthToken(token))
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+      if (error.response.status === 401) {
+        localStorage.removeItem("token"); // delete token from local storage
+        return null;
+      }
+    });
+};
+
+export const getPendingSellers = async (token) => {
+  return axios
+    .get("/users/pending-sellers", setAuthToken(token))
     .then((response) => {
       return response.data;
     })
