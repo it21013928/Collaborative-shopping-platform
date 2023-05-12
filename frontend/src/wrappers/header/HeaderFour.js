@@ -24,7 +24,10 @@ const HeaderFour = () => {
 
   return (
     <header
-      className={clsx("header-area sticky-bar header-padding-3 header-res-padding clearfix transparent-bar", scroll > headerTop & "stick")}
+      className={clsx(
+        "header-area sticky-bar header-padding-3 header-res-padding clearfix transparent-bar",
+        (scroll > headerTop) & "stick"
+      )}
     >
       <div className="container-fluid">
         <div className="row">
@@ -37,9 +40,10 @@ const HeaderFour = () => {
               <Link className="sticky-none" to={process.env.PUBLIC_URL + "/"}>
                 <img alt="" src="assets/img/logo/logo-2.png" />
               </Link>
-              <Link className="sticky-block" to={process.env.PUBLIC_URL + "/"}>
-                <img alt="" src="assets/img/logo/logo.png" />
-              </Link>
+              <Link
+                className="sticky-block"
+                to={process.env.PUBLIC_URL + "/"}
+              ></Link>
             </div>
           </div>
           <div className="col-xl-5 col-lg-4 col-md-6 col-8">

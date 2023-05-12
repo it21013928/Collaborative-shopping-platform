@@ -19,7 +19,7 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"Contacts Information"} />
+          <Sidebar selected={"Seller Requests"} />
           <main className="content">
             <Topbar />
             <Box m="20px">

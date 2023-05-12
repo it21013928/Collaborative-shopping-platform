@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import clsx from "clsx";
 import MenuCart from "./sub-components/MenuCart";
 import { myAccount } from "../../api/user";
+import filterBySearch from "../../wrappers/product/ProductGrid";
 
 const IconGroup = ({ iconWhiteClass }) => {
   const [user, setUser] = useState(null);

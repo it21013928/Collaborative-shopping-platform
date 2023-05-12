@@ -32,7 +32,7 @@ router.get("/", getAllproducts);
 //Update sell count
 router.get("/updateSellCount/:id", updateSellCount);
 
-//Update a product quantity
+//Update product quantity
 router.get("/updateProductQty/:id", updateProductQty);
 
 // UPDATE a product

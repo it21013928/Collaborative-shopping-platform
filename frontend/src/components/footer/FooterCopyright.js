@@ -5,10 +5,8 @@ import { Link } from "react-router-dom";
 const FooterCopyright = ({ footerLogo, spaceBottomClass, colorClass }) => {
   return (
     <div className={clsx("copyright", spaceBottomClass, colorClass)}>
-      <div className="footer-logo">
-        <Link to={process.env.PUBLIC_URL + "/"}>
-          <img alt="" src={process.env.PUBLIC_URL + footerLogo} />
-        </Link>
+      <div className="footer-logo" style={{ marginTop: "-12px" }}>
+        <h1>Herbal Lanka</h1>
       </div>
       <p>
         <br /> CSSE_WE_31

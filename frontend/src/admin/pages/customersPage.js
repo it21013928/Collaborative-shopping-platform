@@ -19,7 +19,7 @@ export default function () {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar selected={"Contacts Information"} />
+          <Sidebar selected={"Customers"} />
           <main className="content">
             <Topbar />
             <Box m="20px">
@@ -29,10 +29,7 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header
-                  title="Customers"
-                  subtitle="List of Customers"
-                />
+                <Header title="Customers" subtitle="List of Customers" />
               </Box>
               <Customers />
             </Box>

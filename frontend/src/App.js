@@ -25,21 +25,12 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
 const Dashboard = lazy(() => import("./admin/pages/dashboardPage"));
-const Calendar = lazy(() => import("./admin/pages/calendarPage"));
-
-const Form = lazy(() => import("./admin/pages/formPage"));
-const Contacts = lazy(() => import("./admin/pages/contactsPage"));
-const Invoices = lazy(() => import("./admin/pages/invoicesPage"));
-const Faq = lazy(() => import("./admin/pages/faqPage"));
-const Team = lazy(() => import("./admin/pages/teamPage"));
 
 const CreateUser = lazy(() => import("./admin/pages/createUserPage"));
 const Customers = lazy(() => import("./admin/pages/customersPage"));
 const Moderators = lazy(() => import("./admin/pages/moderatorsPage"));
 const Sellers = lazy(() => import("./admin/pages/sellersPage"));
 const PendingSellers = lazy(() => import("./admin/pages/pendingSellersPage"));
-
-const Tracking = lazy(() => import("./admin/pages/tracking"));
 
 //Product
 const ProductInput = lazy(() => import("./admin/pages/productInput"));
@@ -122,29 +113,24 @@ const App = () => {
               element={<Dashboard />}
             />
             <Route
-              path={process.env.PUBLIC_URL + "/calendar"}
-              element={<Calendar />}
-            />
-            <Route path={process.env.PUBLIC_URL + "/team"} element={<Team />} />
-
-            <Route path={process.env.PUBLIC_URL + "/create-user"} element={<CreateUser />} />
-            <Route path={process.env.PUBLIC_URL + "/moderators"} element={<Moderators />} />
-            <Route path={process.env.PUBLIC_URL + "/sellers"} element={<Sellers />} />
-            <Route path={process.env.PUBLIC_URL + "/customers"} element={<Customers />} />
-            <Route path={process.env.PUBLIC_URL + "/seller-requests"} element={<PendingSellers />} />
-            <Route
-              path={process.env.PUBLIC_URL + "/contacts"}
-              element={<Contacts />}
+              path={process.env.PUBLIC_URL + "/create-user"}
+              element={<CreateUser />}
             />
             <Route
-              path={process.env.PUBLIC_URL + "/invoices"}
-              element={<Invoices />}
+              path={process.env.PUBLIC_URL + "/moderators"}
+              element={<Moderators />}
             />
-            <Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
-            <Route path={process.env.PUBLIC_URL + "/faq"} element={<Faq />} />
             <Route
-              path={process.env.PUBLIC_URL + "/tracking"}
-              element={<Tracking />}
+              path={process.env.PUBLIC_URL + "/sellers"}
+              element={<Sellers />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/customers"}
+              element={<Customers />}
+            />
+            <Route
+              path={process.env.PUBLIC_URL + "/seller-requests"}
+              element={<PendingSellers />}
             />
             {/* Product Start*/}ProductView
             <Route
@@ -158,10 +144,6 @@ const App = () => {
             <Route
               path={process.env.PUBLIC_URL + "/productDetails/:id"}
               element={<ProductDetails />}
-            />
-            <Route
-              path={process.env.PUBLIC_URL + "/tracking"}
-              element={<Tracking />}
             />
             {/* Delivery Admin */}
             <Route

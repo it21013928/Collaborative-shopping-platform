@@ -33,7 +33,7 @@ export default function () {
               >
                 <Header
                   title="Parcel Shipping"
-                  subtitle="Check order details and Enter the tracking details here"
+                  subtitle="Enter shipping details here"
                 />
               </Box>
               <ShippingDetails />

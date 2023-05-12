@@ -39,12 +39,6 @@ const ProductGrid = ({ spaceBottomClass, category, type, limit }) => {
 
   return (
     <Fragment>
-      <input
-        type="search"
-        placeholder="Search here"
-        onChange={(e) => setQuery(e.target.value)}
-      />
-
       {products.map((product) => {
         return (
           <div
