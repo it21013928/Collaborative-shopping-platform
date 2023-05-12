@@ -166,8 +166,8 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
     
-    // await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
-    // await sendSMS("94764103928", "testing API");
+    await sendEmail(user.email, 'Account - CSP', 'You have logged in to CSP account successfully');
+    await sendSMS(user.phone, 'You have logged in to CSP account successfully');
     res.json({ token, userId: user.id, role: user.role });
   } catch (err) {
     console.error(err);
