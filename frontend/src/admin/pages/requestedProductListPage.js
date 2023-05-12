@@ -20,7 +20,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Shipped orders"} />
+            <Sidebar selected={""} />
           </div>
           <main className="content">
             <Topbar />
@@ -32,8 +32,8 @@ export default function () {
                 alignItems="center"
               >
                 <Header
-                  title="Parcel Shipping"
-                  subtitle="Check order details and Enter the tracking details here"
+                  title="Order details"
+                  subtitle="Check order details here"
                 />
               </Box>
               <RequestedProductList />

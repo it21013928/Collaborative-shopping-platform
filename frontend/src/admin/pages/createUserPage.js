@@ -20,7 +20,7 @@ export default function () {
         <CssBaseline />
         <div className="app">
           <div className="slideBar">
-            <Sidebar selected={"Profile Form"} />
+            <Sidebar selected={"Create"} />
           </div>
           <main className="content">
             <Topbar />
@@ -31,7 +31,10 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header title="CREATE USER" subtitle="Create a New User Profile" />
+                <Header
+                  title="CREATE USER"
+                  subtitle="Create a New User Profile"
+                />
               </Box>
               <UserForm />
             </Box>

@@ -32,8 +32,8 @@ export default function () {
                 alignItems="center"
               >
                 <Header
-                  title="Parcel Shipping"
-                  subtitle="Check order details and Enter the tracking details here"
+                  title="Shipped orders"
+                  subtitle="Check shipped order details here"
                 />
               </Box>
               <ShippedOrders />

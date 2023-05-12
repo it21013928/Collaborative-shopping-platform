@@ -31,10 +31,7 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header
-                  title="Parcel Shipping"
-                  subtitle="Check order details and Enter the tracking details here"
-                />
+                <Header title="Track Order" subtitle="Track your order here" />
               </Box>
               <TrackOrders />
             </Box>

@@ -31,7 +31,10 @@ export default function () {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Header title="Team" subtitle="Welcome to your Team" />
+                <Header
+                  title="Check Product"
+                  subtitle="You can mark product here"
+                />
               </Box>
               <CheckProduct />
             </Box>

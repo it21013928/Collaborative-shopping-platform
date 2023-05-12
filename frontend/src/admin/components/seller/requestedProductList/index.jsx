@@ -285,15 +285,6 @@ export default function () {
           </Box>
         </Box>
       </Box>
-      <div className="buttonADJ">
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={() => setVisible(true)}
-        >
-          Enter tracking details
-        </Button>
-      </div>
     </Box>
   );
 }

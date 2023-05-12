@@ -24,16 +24,16 @@ const HeaderSix = ({ layout, headerPaddingClass, headerBgClass }) => {
     setScroll(window.scrollY);
   };
 
-  const getActiveState = state => {
+  const getActiveState = (state) => {
     setOffcanvasActive(state);
   };
 
   return (
     <header
       className={clsx(
-        "header-area sticky-bar header-padding-3 header-res-padding clearfix transparent-bar header-hm-7", 
-        headerBgClass, 
-        headerPaddingClass, 
+        "header-area sticky-bar header-padding-3 header-res-padding clearfix transparent-bar header-hm-7",
+        headerBgClass,
+        headerPaddingClass,
         scroll > headerTop && "stick"
       )}
     >
@@ -56,9 +56,10 @@ const HeaderSix = ({ layout, headerPaddingClass, headerBgClass }) => {
               <Link className="sticky-none" to={process.env.PUBLIC_URL + "/"}>
                 <img alt="" src="assets/img/logo/logo-2.png" />
               </Link>
-              <Link className="sticky-block" to={process.env.PUBLIC_URL + "/"}>
-                <img alt="" src="assets/img/logo/logo.png" />
-              </Link>
+              <Link
+                className="sticky-block"
+                to={process.env.PUBLIC_URL + "/"}
+              ></Link>
             </div>
           </div>
           <div className="col-xl-5 col-lg-4 col-md-6 col-6">
@@ -81,7 +82,7 @@ const HeaderSix = ({ layout, headerPaddingClass, headerBgClass }) => {
 HeaderSix.propTypes = {
   headerBgClass: PropTypes.string,
   headerPaddingClass: PropTypes.string,
-  layout: PropTypes.string
+  layout: PropTypes.string,
 };
 
 export default HeaderSix;

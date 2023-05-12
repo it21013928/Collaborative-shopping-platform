@@ -31,7 +31,7 @@ export default function () {
           console.log(userData);
 
           await service
-            .getRSellerProduct(sellerID)
+            .getRSellerProduct(userData.id)
             .then(async (productList) => {
               setProductList(productList.data);
               const arr = productList.data;
@@ -47,6 +47,7 @@ export default function () {
               }
               setOrders(orderList);
             });
+          setSellerID(userData.id);
 
           if (!userData) {
             navigate("/login-register");
@@ -116,7 +117,6 @@ export default function () {
   const getRowId = (row) => row._id;
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
       <Box
         m="40px 0 0 0"
         height="75vh"
