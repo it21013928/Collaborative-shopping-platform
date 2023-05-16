@@ -10,6 +10,7 @@ const orderSchema = mongoose.Schema({
   ProductCount: { type: Number },
   CustomerName: { type: String },
   ShipingAddress: { type: String },
+  CusEmail:{type: String},
   Phone: { type: String },
   Tracking: { type: String },
 });
