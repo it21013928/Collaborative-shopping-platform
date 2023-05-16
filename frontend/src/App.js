@@ -18,6 +18,12 @@ const MyAccount = lazy(() => import("./pages/other/MyAccount"));
 const LoginRegister = lazy(() => import("./pages/other/LoginRegister"));
 
 const Cart = lazy(() => import("./pages/other/Cart"));
+const CheckoutForm = lazy(() => import("./pages/other/CardForm"));
+//const CheckoutForm2 = lazy(() => import("./pages/other/checkoutForm2"))
+const ConfirmShippingDetails = lazy(() => import ("./pages/other/CartConfirmationForm"))
+const Form = lazy(() => import("./admin/pages/formPage"));
+const AdminOrders = lazy(() => import("./admin/pages/ordersPage"));
+
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
@@ -94,7 +100,27 @@ const App = () => {
               path={process.env.PUBLIC_URL + "/login-register"}
               element={<LoginRegister />}
             />
-            <Route path={process.env.PUBLIC_URL + "/cart"} element={<Cart />} />
+
+            <Route path={process.env.PUBLIC_URL + "/cart"} 
+            element={<Cart />}
+             />
+
+<Route path={process.env.PUBLIC_URL + "/shipto"} element={<ConfirmShippingDetails />} />
+
+<Route  path={process.env.PUBLIC_URL + "/checkout2"}
+            element={<CheckoutForm />}
+
+            />
+
+<Route  path={process.env.PUBLIC_URL + "/Orders"}
+            element={<AdminOrders />}
+
+            />
+
+
+
+<Route path={process.env.PUBLIC_URL + "/form"} element={<Form />} />
+
             <Route
               path={process.env.PUBLIC_URL + "/wishlist"}
               element={<Wishlist />}
