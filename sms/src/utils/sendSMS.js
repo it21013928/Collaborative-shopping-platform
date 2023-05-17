@@ -23,7 +23,7 @@ const sendSMS = async (to, message) => {
   console.log(smsURL);
   await console.log("SMS sent to", to, message);
 
-  await axios.post(smsURL, smsData);
+  // await axios.post(smsURL, smsData);
 };
 
 module.exports = sendSMS;
