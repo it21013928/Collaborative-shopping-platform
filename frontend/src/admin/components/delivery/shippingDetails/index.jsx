@@ -46,7 +46,7 @@ export default function () {
       .then(async (Orderdetails) => {
         setSingleOrder(Orderdetails.data[0]);
         console.log("ASSSSSSSSS");
-        console.log(Orderdetails.data[0].CustomerID);
+        console.log(Orderdetails.data[0].cusEmail);
         // const user = await getUserEmailPhoneById(
         //   Orderdetails.data[0].CustomerID
         // );
@@ -90,12 +90,9 @@ export default function () {
   ];
   const getRowId = (row) => row._id;
 
-  const fileChangeHandler = (e) => {
-    setFileData(e.target.files[0]);
-    setfileName(e.target.files[0].name);
-  };
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  console.log("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+  console.log(singleOrder.Phone);
 
   const handleFormSubmit = async (values) => {
     console.log(values);
@@ -122,38 +119,17 @@ export default function () {
 
     // setFileData(values.reciptUpload.target.files[0]);
     // setfileName(values.reciptUpload.target.files[0].name);
-    console.log("CCCCCCCCCCCCCCC");
 
-    console.log("AAAAAAAA");
     // e.preventDefault();
     if (true) {
-      const data = new FormData();
-
-      data.append("image", fileData);
-      console.log("BBBBBBBBBBBB");
-      console.log(fileData);
-      fetch("http://localhost:8003/trackingBill", {
-        method: "POST",
-        body: data,
-      })
-        .then((result) => {
-          console.log(result);
-          console.log("File sent successful");
-          console.log(fileData);
-          // setfileName("");
-          // setFileData(null);
-        })
-        .catch((error) => {
-          console.log(error.message);
-        });
-
       await Axios.post("http://localhost:8000/delivery/", {
         orderId,
         trackingNo,
         serviceName,
         expectedDate,
         status,
-        file,
+        cusemail: singleOrder.CusEmail,
+        cusPhone: singleOrder.Phone,
       });
       await Axios.patch(
         `http://localhost:8000/orders/updateTrackingOrder/${orderId}`,
@@ -253,19 +229,6 @@ export default function () {
                     error={!!touched.deliveryDate && !!errors.deliveryDate}
                     helperText={touched.deliveryDate && errors.deliveryDate}
                     sx={{ gridColumn: "span 4" }}
-                  />
-
-                  <TextField
-                    type="file"
-                    label="Upload tracking recipt"
-                    onBlur={handleBlur}
-                    id="imageFile"
-                    name="reciptUpload"
-                    sx={{ gridColumn: "span 4" }}
-                    defaultValue={values.reciptUpload}
-                    InputLabelProps={{ shrink: true }}
-                    onChange={fileChangeHandler}
-                    required
                   />
                 </Box>
                 <Box display="flex" justifyContent="end" mt="20px">

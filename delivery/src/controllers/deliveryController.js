@@ -11,15 +11,22 @@ const createDelivery = async (req, res) => {
     serviceName: req.body.serviceName,
     expectedDate: req.body.expectedDate,
     status: req.body.status,
-    fileName: req.body.file,
+    cusemail: req.body.cusemail,
+    cusPhone: req.body.cusPhone,
   });
-
+  const email = req.body.cusemail;
+  const phone = req.body.cusPhone;
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  console.log(email);
   await sendEmail(
-    "shehangunasekara2019@gmail.com",
+    email,
     "Order shipped",
-    "Your order is shipped"
+    "Your order is shipped , track your order via our website"
   );
-  // await sendSMS("94764103928", "testing API");
+  await sendSMS(
+    phone,
+    "Your order is shipped , track your order via our website"
+  );
   await delivery.save();
   res.send(delivery);
 };
