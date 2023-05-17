@@ -1,5 +1,7 @@
 const Order = require("../models/order");
 const mongoose = require("mongoose");
+require("dotenv").config();
+const { sendEmail } = require("../../services/userServices");
 
 //Create a new order
 const createOrder = async (req, res) => {
@@ -9,12 +11,15 @@ const createOrder = async (req, res) => {
     CustomerName: req.body.recieverName,
     ProductCount: req.body.productCount,
     ShipingAddress: req.body.address,
+    CusEmail: req.body.emailAddress,
     Phone: req.body.phoneNumber,
     Tracking: "untracked",
   });
 
   await order.save();
+   
   res.send(order);
+  await sendEmail(order.CusEmail,'message', 'message');
 };
 
 //Get all orders

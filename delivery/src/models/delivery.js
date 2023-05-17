@@ -10,7 +10,11 @@ const deliverySchema = mongoose.Schema({
   serviceName: { type: String },
   expectedDate: { type: String },
   status: { type: String },
-  fileName: {
+
+  cusemail: {
+    type: String,
+  },
+  cusPhone: {
     type: String,
   },
 });
